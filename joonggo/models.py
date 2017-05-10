@@ -13,7 +13,7 @@ class Item(models.Model):
     title = models.CharField('제목', db_index=True, max_length=50, default='')
     content = models.TextField('내용', default='')
     price = models.PositiveIntegerField('가격', default=0)
-    site = models.CharField('사이트', max_length=20, default='', )
+    site = models.CharField('사이트', db_index=True, max_length=20, default='', )
     url = models.CharField('링크', max_length=150, default='', help_text='해당 글 주소')
 
     # 옵션 항목
