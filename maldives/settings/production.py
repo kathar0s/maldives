@@ -40,10 +40,10 @@ ADMINS = (
 
 PROJECT_APPS = [
     'joonggo',
+    'joonggobot',
 ]
 
 THIRD_PARTY_APPS = [
-
 ]
 
 INSTALLED_APPS = PROJECT_APPS + THIRD_PARTY_APPS + [
@@ -68,7 +68,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 ]
 
 ROOT_URLCONF = 'maldives.urls'
