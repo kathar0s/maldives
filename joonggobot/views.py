@@ -2,6 +2,7 @@ import json
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
+from joonggobot.joonggobot_main import JoonggoBot
 import telegram
 
 
@@ -19,9 +20,8 @@ def webhook(request):
 @csrf_exempt
 def webhook_polling(request):
     if request.method == 'POST':
-        data = request.data
-        bot = telegram.Bot(token='369457948:AAG0fIhoWTVEp4h38DG-bAkY0lDuDe7YNpc')
-        bot.sendMessage(340859851, json.dumps(data, ensure_ascii=False))
-        return HttpResponse(json.dumps(data), content_type='application/json')
+        bot = JoonggoBot()
+        bot.handle(request.data['id'], request.data['type'], request.data['text'])
+        return HttpResponse(json.dumps(request.data), content_type='application/json')
     else:
         return HttpResponse('Hello Maldives bot, webhook!')

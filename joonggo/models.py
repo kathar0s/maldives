@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 # 중고 물건 내용
@@ -33,12 +34,14 @@ class Item(models.Model):
         verbose_name_plural = '물건 목록'
 
 
-# 사용자별 / TOKEN별 알림 내용
+# 봇에서 시작한 사용자 Profile
+class ChatProfile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    chat = models.PositiveIntegerField('채팅 아이디', default=0)
+
+# 사용자별 / ID별 알림 내용
 class Alarm(models.Model):
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True, verbose_name='로그인')
-
-    token = models.CharField('토큰', max_length=100, default='', help_text='텔레그램 token')
+    profile = models.ForeignKey(ChatProfile, on_delete=models.CASCADE, default=None, null=True, blank=True, verbose_name='로그인')
 
     keyword = models.CharField('키워드', max_length=50, default='')
     price = models.PositiveIntegerField('가격', default=0)
@@ -59,3 +62,4 @@ class SearchKeyword(models.Model):
     class Meta:
         verbose_name = '검색 키워드'
         verbose_name_plural = '검색 키워드 목록'
+
