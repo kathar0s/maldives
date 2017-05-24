@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from joonggo.models import ChatProfile, Item, Alarm
+from joonggo.models import ChatProfile, Article, Alarm
 from django.contrib.auth.models import User
 from django.db.models import Q
 from functools import reduce
@@ -110,7 +110,7 @@ class JoonggoBot:
         keyword_list = message.split()
         query = reduce(operator.and_, (Q(title__contains=item) | Q(content__contains=item) | Q(tags__contains=item)\
                      for item in keyword_list))
-        item_list = Item.objects.filter(query).order_by('created')[:10]
+        item_list = Article.objects.filter(query).order_by('created')[:10]
 
         query_result = "검색 결과 = %d 개\n\n" % (len(item_list))
         for item in item_list:

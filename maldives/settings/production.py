@@ -36,6 +36,8 @@ ADMINS = (
     ('kathar0s', 'kathar0s.dev@gmail.com'),
 )
 
+SITE_ID = 1
+
 # Application definition
 
 PROJECT_APPS = [
@@ -44,6 +46,8 @@ PROJECT_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'dynamic_scraper',
+    'reversion',
 ]
 
 INSTALLED_APPS = PROJECT_APPS + THIRD_PARTY_APPS + [
@@ -62,6 +66,7 @@ MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'reversion.middleware.RevisionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
