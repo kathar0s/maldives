@@ -19,8 +19,14 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from joonggo import views
+from rest_framework import routers
+from joonggo.views import ArticleViewSet, AlarmViewSet
 
+router = routers.DefaultRouter()
+router.register(r'Article', ArticleViewSet)
+router.register(r'Alarm', AlarmViewSet)
 urlpatterns = [
+    url(r'^api/', include(router.urls)),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^joonggobot/', include('joonggobot.urls')),
