@@ -32,7 +32,6 @@ pycparser==2.17
 PyDispatcher==2.0.5
 pyOpenSSL==17.0.0
 pyparsing==2.2.0
-pypiwin32==219
 python-telegram-bot==6.0.1
 pytz==2017.2
 qt5reactor==0.4

@@ -28,8 +28,6 @@ class ArticleSpider(DjangoSpider):
 
         super(ArticleSpider, self).__init__(self, *args, **kwargs)
 
-    # def init_request(self):
-    #     return Request(url=self.login_page, callback=self.login)
     def start_requests(self):
         index = 0
         start_urls = ['https://nid.naver.com/nidlogin.login'] + self.start_urls
