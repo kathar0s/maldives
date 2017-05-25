@@ -277,5 +277,15 @@
     "scraper": 1,
     "scraper_runtime": 1
   }
+},
+{
+  "model": "dynamic_scraper.schedulerruntime",
+  "pk": 1,
+  "fields": {
+    "runtime_type": "S",
+    "next_action_time": "2017-05-22T23:12:08",
+    "next_action_factor": 3.502,
+    "num_zero_actions": 0
+  }
 }
 ]
