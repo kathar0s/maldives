@@ -9,7 +9,7 @@ import operator
 import telegram
 
 class JoonggoBot:
-    WEBHOOK_URL = 'http://52.198.6.89/joonggobot/webhook_polling'
+    WEBHOOK_URL = 'http://52.78.186.61/joonggobot/webhook_polling'
     TELEGRAM_TOKEN = '369457948:AAG0fIhoWTVEp4h38DG-bAkY0lDuDe7YNpc'
 
     @staticmethod

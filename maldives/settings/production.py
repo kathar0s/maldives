@@ -50,6 +50,8 @@ THIRD_PARTY_APPS = [
     'dynamic_scraper',
     'djcelery',
     'reversion',
+    'rest_framework',
+    'rest_framework_swagger'
 ]
 
 INSTALLED_APPS = PROJECT_APPS + THIRD_PARTY_APPS + [
