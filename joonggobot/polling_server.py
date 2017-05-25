@@ -26,7 +26,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 def sendToJoonggodives(message):
-    url = 'http://52.198.6.89/joonggobot/webhook_polling'
+    url = 'http://52.78.186.61/joonggobot/webhook_polling'
     headers = {'Content-Type': 'application/json; charset=utf-8'}
     cookies = {'webhook_id': 'test'}
     response = requests.post(url, data=json.dumps(message), headers=headers, cookies=cookies)
