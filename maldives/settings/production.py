@@ -48,6 +48,7 @@ PROJECT_APPS = [
 
 THIRD_PARTY_APPS = [
     'dynamic_scraper',
+    'kombu.transport.django',
     'djcelery',
     'reversion',
     'rest_framework',
