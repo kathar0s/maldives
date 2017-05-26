@@ -20,6 +20,7 @@ import json
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 import requests
+import sys
 
 
 # Enable logging
@@ -28,7 +29,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 def sendToJoonggodives(message):
-    url = 'http://52.78.186.61//joonggobot/webhook_polling'
+    url = 'http://52.78.186.61/joonggobot/webhook_polling'
     headers = {'Content-Type': 'application/json; charset=utf-8'}
     cookies = {'webhook_id': 'test'}
     response = requests.post(url, data=json.dumps(message), headers=headers, cookies=cookies)
@@ -59,8 +60,11 @@ def error(bot, update, error):
 
 
 def main():
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
+
     # Create the EventHandler and pass it your bot's token.
-    updater = Updater('369457948:AAG0fIhoWTVEp4h38DG-bAkY0lDuDe7YNpc')
+    updater = Updater('373562267:AAGVYqG7JFud4tCePUdq-Bkd-Y6-dZsP568')
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -68,11 +72,11 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("stop", stop))
-    dp.add_handler(CommandHandler("도움말", help))
+    dp.add_handler(CommandHandler(u"도움말", help))
 
-    dp.add_handler(CommandHandler("알림등록", add_alarm))
-    dp.add_handler(CommandHandler("알림목록", list_alarm))
-    dp.add_handler(CommandHandler("알림삭제", remove_alarm))
+    dp.add_handler(CommandHandler(u"알림등록", add_alarm))
+    dp.add_handler(CommandHandler(u"알림목록", list_alarm))
+    dp.add_handler(CommandHandler(u"알림삭제", remove_alarm))
     dp.add_handler(MessageHandler(Filters.text, search))
 
     # on noncommand i.e message - echo the message on Telegram

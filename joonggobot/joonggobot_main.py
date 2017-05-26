@@ -8,10 +8,11 @@ from django.db.models import Q
 from functools import reduce
 import operator
 import telegram
+import sys
 
 class JoonggoBot:
-    WEBHOOK_URL = 'http://52.78.186.61//joonggobot/webhook_polling'
-    TELEGRAM_TOKEN = '369457948:AAG0fIhoWTVEp4h38DG-bAkY0lDuDe7YNpc'
+    WEBHOOK_URL = 'http://52.78.186.61/joonggobot/webhook_polling'
+    TELEGRAM_TOKEN = '373562267:AAGVYqG7JFud4tCePUdq-Bkd-Y6-dZsP568'
 
     @staticmethod
     def get_token():
@@ -29,6 +30,8 @@ class JoonggoBot:
         return profile
 
     def __init__(self):
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
         self.token =  JoonggoBot.TELEGRAM_TOKEN
         self.telegram_bot = telegram.Bot(JoonggoBot.TELEGRAM_TOKEN)
         self.handler = {'start' : self.handle_start,
