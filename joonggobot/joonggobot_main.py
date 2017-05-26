@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 #!/usr/bin/env python
 
 from joonggo.models import ChatProfile, Article, Alarm
@@ -9,7 +10,7 @@ import operator
 import telegram
 
 class JoonggoBot:
-    WEBHOOK_URL = 'http://52.78.186.61/joonggobot/webhook_polling'
+    WEBHOOK_URL = 'http://127.0.0.1/joonggobot/webhook_polling'
     TELEGRAM_TOKEN = '369457948:AAG0fIhoWTVEp4h38DG-bAkY0lDuDe7YNpc'
 
     @staticmethod
@@ -30,13 +31,13 @@ class JoonggoBot:
     def __init__(self):
         self.token =  JoonggoBot.TELEGRAM_TOKEN
         self.telegram_bot = telegram.Bot(JoonggoBot.TELEGRAM_TOKEN)
-        self.handler = {'시작하기' : self.handle_start,
-                        '종료하기': self.handle_stop,
-                        '도움말': self.handle_help,
-                        '검색하기': self.handle_search,
-                        '알림등록': self.handle_add_alarm,
-                        '알림보기': self.handle_list_alarm,
-                        '알림삭제': self.handle_remove_alarm,}
+        self.handler = {'start' : self.handle_start,
+                        'stop': self.handle_stop,
+                        'help': self.handle_help,
+                        'search': self.handle_search,
+                        'register_alarm': self.handle_add_alarm,
+                        'list_alarm': self.handle_list_alarm,
+                        'remove_alarm': self.handle_remove_alarm,}
 
     def handle_start(self, id, message):
 
@@ -121,10 +122,11 @@ class JoonggoBot:
 
         self.send_message(id, query_result)
 
-
     def send_message(self, id, message):
         self.telegram_bot.sendMessage(id, message)
 
     def handle(self, id, type, message):
         if type in self.handler:
             self.handler[type](id, message)
+        else:
+            print("handler error")
