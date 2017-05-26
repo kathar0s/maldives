@@ -34,25 +34,25 @@ def sendToJoonggodives(message):
     response = requests.post(url, data=json.dumps(message), headers=headers, cookies=cookies)
 
 def start(bot, update):
-    sendToJoonggodives({'type' : u"start", 'id' : update.message.chat_id, 'text' : update.message.text})
+    sendToJoonggodives({'type' : "start", 'id' : update.message.chat_id, 'text' : update.message.text})
 
 def stop(bot, update):
-    sendToJoonggodives({'type' : u"stop", 'id' : update.message.chat_id, 'text' : update.message.text})
+    sendToJoonggodives({'type' : "stop", 'id' : update.message.chat_id, 'text' : update.message.text})
 
 def help(bot, update):
-    sendToJoonggodives({'type': u"도움말", 'id': update.message.chat_id, 'text': update.message.text})
+    sendToJoonggodives({'type': "help", 'id': update.message.chat_id, 'text': update.message.text})
 
 def search(bot, update):
-    sendToJoonggodives({'type': u"검색하기", 'id': update.message.chat_id, 'text': update.message.text})
+    sendToJoonggodives({'type': "search", 'id': update.message.chat_id, 'text': update.message.text})
 
 def add_alarm(bot, update):
-    sendToJoonggodives({'type': u"알림등록", 'id': update.message.chat_id, 'text': update.message.text})
+    sendToJoonggodives({'type': "register_alarm", 'id': update.message.chat_id, 'text': update.message.text})
 
 def list_alarm(bot, update):
-    sendToJoonggodives({'type': u"알림목록", 'id': update.message.chat_id, 'text': update.message.text})
+    sendToJoonggodives({'type': "list_alarm", 'id': update.message.chat_id, 'text': update.message.text})
 
 def remove_alarm(bot, update):
-    sendToJoonggodives({'type': u"알림삭제", 'id': update.message.chat_id, 'text': update.message.text})
+    sendToJoonggodives({'type': "remove_alarm", 'id': update.message.chat_id, 'text': update.message.text})
 
 def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))

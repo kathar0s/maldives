@@ -31,13 +31,13 @@ class JoonggoBot:
     def __init__(self):
         self.token =  JoonggoBot.TELEGRAM_TOKEN
         self.telegram_bot = telegram.Bot(JoonggoBot.TELEGRAM_TOKEN)
-        self.handler = {u'start' : self.handle_start,
-                        u'stop': self.handle_stop,
-                        u'도움말': self.handle_help,
-                        u'검색하기': self.handle_search,
-                        u'알람등록': self.handle_add_alarm,
-                        u'알람목록': self.handle_list_alarm,
-                        u'알람삭제': self.handle_remove_alarm,}
+        self.handler = {'start' : self.handle_start,
+                        'stop': self.handle_stop,
+                        'help': self.handle_help,
+                        'search': self.handle_search,
+                        'register_alarm': self.handle_add_alarm,
+                        'list_alarm': self.handle_list_alarm,
+                        'remove_alarm': self.handle_remove_alarm,}
 
     def handle_start(self, id, message):
 
@@ -128,4 +128,4 @@ class JoonggoBot:
         if type in self.handler:
             self.handler[type](id, message)
         else:
-            print(u"handler error")
+            print("handler error")
