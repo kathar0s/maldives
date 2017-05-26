@@ -66,13 +66,13 @@ def main():
     dp = updater.dispatcher
 
     # on different commands - answer in Telegram
-    dp.add_handler(CommandHandler(u"start", start))
-    dp.add_handler(CommandHandler(u"stop", stop))
-    dp.add_handler(CommandHandler(u"도움말", help))
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("stop", stop))
+    dp.add_handler(CommandHandler("도움말", help))
 
-    dp.add_handler(CommandHandler(u"알림등록", add_alarm))
-    dp.add_handler(CommandHandler(u"알림목록", list_alarm))
-    dp.add_handler(CommandHandler(u"알림삭제", remove_alarm))
+    dp.add_handler(CommandHandler("알림등록", add_alarm))
+    dp.add_handler(CommandHandler("알림목록", list_alarm))
+    dp.add_handler(CommandHandler("알림삭제", remove_alarm))
     dp.add_handler(MessageHandler(Filters.text, search))
 
     # on noncommand i.e message - echo the message on Telegram
