@@ -29,7 +29,7 @@ SECRET_KEY = 'ix^)at8hb#ijnd5@1@1=as0o7v2tx)oel3-&)tvcasla7-s%s#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', ]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
 DEFAULT_FROM_EMAIL = 'kathar0s.dev@gmail.com'
 
