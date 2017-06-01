@@ -357,9 +357,10 @@
 	}
 	.infocenter-infotex .col-md-12 {
 		padding-top: 31px;
+		padding-bottom: 41px;
 	}
 	.infocenter-infotex .col-md-12 p input {
-		margin-top: 51px;
+		/*margin-top: 51px;*/
 	}
 	/* header-top */
 	#header-top {
