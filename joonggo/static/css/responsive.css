@@ -8,8 +8,8 @@
 
 
 .grid_1200 .the-title,.grid_1200 .the-username,.grid_1200 .the-email,.grid_1200 .video_id,.grid_1200 .the-textarea,.grid_1200 .taglist .input input,.grid_1200 .form-style-5.form-style input[type="text"],.grid_1200 .form-style-5.form-style input[type="email"],.grid_1200 .form-style-5.form-style input[type="password"],.grid_1200 .form-style-5.form-style textarea {
-		width: 100%;
-	}
+	width: 100%;
+}
 
 
 
@@ -25,16 +25,16 @@
 
 @media (min-width: 768px) {
 	.question-author {
-    border-right: 1px solid #e5eaef;
-    width: 90px;
-    height: 50%;
-    padding-right: 20px;
-}
+		border-right: 1px solid #e5eaef;
+		width: 90px;
+		height: 50%;
+		padding-right: 20px;
+	}
 }
 
 @media (max-width: 991px) {
 	li.tab a span {
-	display:none;
+		display:none;
 	}
 }
 /*------------------------------------------------------------------------------*/
@@ -114,9 +114,9 @@
 	.grid_1200 .block-stats-1 {
 		width: 30%;
 	}
-	
-	
-	
+
+
+
 	.grid_1200 .form-style-2 .fileinputs {
 		width: 85%;
 	}
@@ -434,7 +434,7 @@
 		margin-bottom: 10px !important;
 	}
 	#menu-login-top-bar li ul li a{
-	padding: 3px 10px 3px 190px;
+		padding: 3px 10px 3px 190px;
 	}
 }
 /*------------------------------------------------------------------------------*/

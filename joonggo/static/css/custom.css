@@ -2240,7 +2240,42 @@ article.single-question {
 .result-section .table > tbody > tr > td {
   border-top-width: 0;
   line-height: 25px;
+  vertical-align: middle;
 }
 .result-section .website-line {
   height: 25px;
+}
+.result-section .website-line-detail {
+  height: 80px;
+  width: 80px;
+  text-align: center;
+}
+.result-section .nav-tabs {
+  background: #f1f2f4;
+  border-bottom: 2px solid #0f2c53;
+}
+.result-section .nav-tabs > li {
+  width: 187px;
+  text-align: center;
+}
+.result-section .nav-tabs > li .count {
+  color: #f84a44;
+}
+.result-section .nav-tabs > li.active > a,
+.result-section .nav-tabs > li.active > a:hover,
+.result-section .nav-tabs > li.active > a:focus {
+  line-height: 31px;
+  background-color: #0e2a4f;
+  color: #FFF;
+}
+.result-section .header-content {
+  border: 5px solid #E7E7E7;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.result-section .article-detail .table > tbody > tr > td {
+  padding: 20px 8px;
+}
+.result-section .article .title {
+  font-weight: 800;
 }

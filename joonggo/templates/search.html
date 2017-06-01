@@ -21,70 +21,139 @@
         </div><!-- End container -->
     </div><!-- End section-warp -->
     <div class="container main-content page-right-sidebar result-section">
-        <h1 class="title">V10 F630-SDF <small>검색결과</small></h1>
+        <div class="no-result text-center alert alert-info" style="line-height: 25px;">
+            키워드를 입력하시면 해당 키워드에 대한 결과를 보실 수 있습니다.
+        </div>
+        <h1 class="title">사용자 검색 키워드 <small>검색결과</small></h1>
         <hr>
         <div class="row">
-            <div class="with-sidebar-container">
+            <div class="result">
                 <div class="col-md-8">
-                    <article class="post single-post post-249 type-post status-publish format-standard has-post-thumbnail hentry category-web-design tag-design tag-knowledge" id="post-249" itemscope="">
+                    <article class="post single-post post-249 type-post status-publish format-standard has-post-thumbnail hentry category-web-design tag-design tag-knowledge">
                         <div class="post-inner">
-                            <h1 class="nodisplay">BY Author</h1>
-                            <h2 style="font-weight: bold;">최저가/최고가</h2>
-                            <div class="price-range">
-                                <span class="lowest-price">190,500</span><span class="unit">원</span> ~ <span class="highest-price">200,500</span><span class="unit">원</span>
-                                <button class="btn btn-primary btn-md pull-right" style="font-size: 12px;">최저가 보러가기</button>
+                            <div class="header-content">
+                                <h2 style="font-weight: bold;">최저가/최고가</h2>
+                                <div class="price-range">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div style="margin-bottom: 10px;">
+                                                <span class="lowest-price">190,500</span><span class="unit">원</span> ~ <span class="highest-price">200,500</span><span class="unit">원</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div style="margin-bottom: 10px;">
+                                                <button class="btn btn-primary btn-md btn-block" style="font-size: 12px;">최저가 보러가기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <strong>최저가 상위 10개</strong>
+                                <div class="table-responsive" style="margin: 10px 0;">
+                                    <table class="table" style="margin-bottom: 0;">
+                                        <colgroup>
+                                            <col class="col-xs-3">
+                                            <col class="col-xs-5">
+                                            <col class="col-xs-2">
+                                            <col class="col-xs-2">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>사이트</th>
+                                                <th class="text-right">판매가</th>
+                                                <th class="text-center">배송비</th>
+                                                <th class="text-right">보러가기</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for x in "111" %}
+                                            <tr>
+                                                <td><img class="website-line" src="{% static "images/websites/joonggonara_line.png" %}"></td>
+                                                <td class="text-right"><span class="text-danger">최저 190,500</span></td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-right"><span class="label label-default">바로가기</span></td>
+                                            </tr>
+                                        {% endfor %}
+                                        {% for x in "111" %}
+                                            <tr>
+                                                <td><img class="website-line" src="{% static "images/websites/cetizen_line.png" %}"></td>
+                                                <td class="text-right"><span class="">190,500</span></td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-right"><span class="label label-default">바로가기</span></td>
+                                            </tr>
+                                        {% endfor %}
+                                        {% for x in "1111" %}
+                                            <tr>
+                                                <td><img class="website-line" src="{% static "images/websites/momsholic_line.png" %}"></td>
+                                                <td class="text-right"><span class="">190,500</span></td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-right"><span class="label label-default">바로가기</span></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+
+                            <ul class="nav nav-tabs">
+                                <li role="presentation" class="active"><a>판매 등록수 <span class="count">23</span></a></li>
+{#                                <li role="presentation"><a href="#">Profile</a></li>#}
+{#                                <li role="presentation"><a href="#">Messages</a></li>#}
+                            </ul>
+                            <br/>
                             <strong>최저가순</strong>
-                            <div class="table-responsive" style="margin: 10px 0 30px;">
+                            <div class="table-responsive article-detail" style="margin: 10px 0 30px;">
                                 <table class="table">
                                     <colgroup>
-                                        <col class="col-xs-3">
-                                        <col class="col-xs-5">
-                                        <col class="col-xs-2">
-                                        <col class="col-xs-2">
+                                        <col style="width: 16%">
+                                        <col style="width: 50%">
+                                        <col style="width: 17%">
+                                        <col style="width: 17%">
                                     </colgroup>
                                     <thead>
                                         <tr>
                                             <th>사이트</th>
+                                            <th>제목</th>
                                             <th class="text-right">판매가</th>
                                             <th class="text-center">배송비</th>
-                                            <th class="text-right">보러가기</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {% for x in "12312" %}
                                         <tr>
-                                            <td><img class="website-line" src="{% static "images/websites/joonggonara_line.png" %}"></td>
+                                            <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/joonggonara_w150.png" %}"></td>
+                                            <td class="article">
+                                                <div class="title">샤오미 2세대 보조배터리 PLM02ZM</div>
+                                                <div class="content">
+                                                    [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
+                                                </div>
+                                            </td>
                                             <td class="text-right"><span class="text-danger">최저 190,500</span></td>
                                             <td class="text-center">-</td>
-                                            <td class="text-right"><span class="label label-default">바로가기</span></td>
                                         </tr>
-                                    {% endfor %}
-                                    {% for x in "12312" %}
                                         <tr>
-                                            <td><img class="website-line" src="{% static "images/websites/cetizen_line.png" %}"></td>
-                                            <td class="text-right"><span class="">190,500</span></td>
+                                            <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/momsholic_w150.png" %}"></td>
+                                            <td class="article">
+                                                <div class="title">샤오미 2세대 보조배터리 PLM02ZM</div>
+                                                <div class="content">
+                                                    [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
+                                                </div>
+                                            </td>
+                                            <td class="text-right"><span class="text-danger">최저 190,500</span></td>
                                             <td class="text-center">-</td>
-                                            <td class="text-right"><span class="label label-default">바로가기</span></td>
                                         </tr>
-                                    {% endfor %}
-                                    {% for x in "12312" %}
                                         <tr>
-                                            <td><img class="website-line" src="{% static "images/websites/momsholic_line.png" %}"></td>
-                                            <td class="text-right"><span class="">190,500</span></td>
+                                            <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/cetizen_w150.png" %}"></td>
+                                            <td class="article">
+                                                <div class="title">샤오미 2세대 보조배터리 PLM02ZM</div>
+                                                <div class="content">
+                                                    [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
+                                                </div>
+                                            </td>
+                                            <td class="text-right"><span class="text-danger">최저 190,500</span></td>
                                             <td class="text-center">-</td>
-                                            <td class="text-right"><span class="label label-default">바로가기</span></td>
                                         </tr>
-                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
-
-                            <div class="entry-footer">
-                                <div class="post-admin"> <i class="icon-profile-male"></i>Posted by <a href="http://fluentthemes.com/wp/knowledge/author/reader87/" title="Posts by Mcgrah" rel="author">Mcgrah</a></div>
-                                <div class="post-tags"> <i class="fa fa-tags"></i> <a href="http://fluentthemes.com/wp/knowledge/tag/design/" rel="tag">Design</a> , <a href="http://fluentthemes.com/wp/knowledge/tag/knowledge/" rel="tag">Knowledge</a></div>
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
                     </article>
                 </div>
@@ -100,11 +169,6 @@
                         <div class="">
                             평균가 차트 들어가는 곳
                         </div>
-                    </div>
-                    <div class="advertising">
-                        <a href="javascript:void(0)">
-                            <img alt="" src="http://fluentthemes.com/wp/knowledge/wp-content/uploads/2017/02/your-ad-here.jpg" style="width: 100%;">
-                        </a>
                     </div>
                     <div class="advertising">
                         <a href="javascript:void(0)">
