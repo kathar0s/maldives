@@ -359,8 +359,13 @@
 		padding-top: 31px;
 		padding-bottom: 41px;
 	}
+	form.form-style.form-style-2 {
+		width: 100% !important;
+		display: block;
+	}
 	.infocenter-infotex .col-md-12 p input {
 		/*margin-top: 51px;*/
+		padding-right: 12px;
 	}
 	/* header-top */
 	#header-top {
