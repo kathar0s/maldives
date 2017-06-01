@@ -16,3 +16,9 @@ class AlarmSerializer(serializers.ModelSerializer):
         model = Alarm
         #fields = ('id','title','content','price','created')
         fields = '__all__'
+
+class TrendSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Article
+        fields = ('title', 'price','created')
