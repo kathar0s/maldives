@@ -28,7 +28,12 @@ router.register(r'Alarm', AlarmViewSet)
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^admin/', admin.site.urls),
+
     url(r'^$', views.index, name='index'),
+    url(r'^search/$', views.search, name='search'),
+    url(r'^alarm/$', views.alarm, name='alarm'),
+    url(r'^sell/$', views.sell, name='sell'),
+
     url(r'^joonggobot/', include('joonggobot.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

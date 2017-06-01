@@ -361,7 +361,7 @@
 	}
 	form.form-style.form-style-2 {
 		width: 100% !important;
-		display: block;
+		display: block !important;
 	}
 	.infocenter-infotex .col-md-12 p input {
 		/*margin-top: 51px;*/

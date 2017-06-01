@@ -13,6 +13,21 @@ def index(request):
     return render(request, 'index.html', template_data)
 
 
+def search(request):
+    template_data = {}
+    return render(request, 'search.html', template_data)
+
+
+def alarm(request):
+    template_data = {}
+    return render(request, 'alarm.html', template_data)
+
+
+def sell(request):
+    template_data = {}
+    return render(request, 'sell.html', template_data)
+
+
 class PaginationClass(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'limit'

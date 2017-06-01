@@ -5,7 +5,7 @@
             <div class="col-lg-4 col-md-4 col-sm-6 hidden-xs">
 
                 <ul id="menu-left-top-bar" class="top-nav nav-left">
-                    <li><a href="http://www.naver.com">HOME</a></li>
+                    <li><a href="{% url "index" %}">HOME</a></li>
                 </ul>
 
             </div><!-- End col-md-6 -->
@@ -28,7 +28,7 @@
 <header id="header" class=''>
     <div class="container clearfix" itemscope="" itemtype="http://schema.org/Thing">
         <div class="logo">
-            <a class="logo-img" href="http://localhost/wordpress/" itemprop="url" title="중고다이브">
+            <a class="logo-img" href="{% url "index" %}" itemprop="url" title="중고다이브">
                 <img class="default_logo" itemprop="logo" alt="중고다이브" src="{% static "images/logo.png" %}">
                 <img class="retina_logo" itemprop="logo" alt="중고다이브" src="{% static "images/logo-retina.png" %}">
             </a>
@@ -37,9 +37,15 @@
         <nav class="navigation">
             <div class="header-menu">
                 <ul>
-                    <li id="menu-item-174" class="menu-item menu-item-type-post_type current_page_item menu-item-object-page menu-item-home menu-item-174"><a href="http://localhost/wordpress/">가격 검색</a></li>
-                    <li id="menu-item-6" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6"><a href="http://fluentthemes.com/wp/knowledge/questions/">알림 관리</a></li>
-                    <li id="menu-item-6" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6"><a href="http://fluentthemes.com/wp/knowledge/questions/">중고 판매</a></li>
+                    <li id="menu-item-174" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-174 {% if 'search' in request.path %}current_page_item{% endif %}">
+                        <a href="{% url "search" %}">가격 검색</a>
+                    </li>
+                    <li id="menu-item-6" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6 {% if 'alarm' in request.path %}current_page_item{% endif %}">
+                        <a href="{% url "alarm" %}">알림 관리</a>
+                    </li>
+                    <li id="menu-item-6" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6 {% if 'sell' in request.path %}current_page_item{% endif %}">
+                        <a href="{% url "sell" %}">중고 판매</a>
+                    </li>
                     {#                        <li id="menu-item-7" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-7"><a href="#">Pages</a>#}
                     {#                            <ul class="sub-menu">#}
                     {#                                <li id="menu-item-175" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-175"><a href="http://localhost/wordpress/">Home</a></li>#}
@@ -55,7 +61,7 @@
                     {#                            </ul>#}
                     {#                        </li>#}
                     <li class="menu-item-pq publish-question publish-question-widget">
-                        <a href="http://www.naver.com">ONESHOT 물건등록</a>
+                        <a href="{% url "sell" %}">ONESHOT 물건등록</a>
                     </li>
                 </ul>
             </div>

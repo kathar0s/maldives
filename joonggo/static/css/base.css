@@ -584,7 +584,7 @@ mark.dark {
 	background-color: #333;
 	color: #FFF;
 }
-.table-style-1 table,table,.table-style-2 table {
+.table-style-1 table,.table-style-2 table {
 	margin: 0 0 30px 0;
 	text-align: left;
 	border: 1px solid #dbdbdb;
@@ -595,18 +595,16 @@ mark.dark {
 }
 .table-style-1 th,
 .table-style-1 td,
-th,
-td,
 .table-style-2 th,
 .table-style-2 td {
 	padding: 10px;
 	vertical-align: middle;
 	border: 1px solid #e2e2e2;
 }
-.table-style-1 tr:hover,tr:hover,.table-style-2 tr:hover {
+.table-style-1 tr:hover,.table-style-2 tr:hover {
 	background: #fafafa;
 }
-.table-style-1 thead th,thead th,.table-style-2 thead th {
+.table-style-1 thead th,.table-style-2 thead th {
 	color: #333;
 	font-size: 14px;
 	font-weight: 700;

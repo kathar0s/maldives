@@ -28,7 +28,7 @@ Input, textarea:	'Roboto', sans-serif;
 /* FONT IMPORTS and BASICS */
 /*Main heading color of article, main menu*/
 body {
-  background-color: #f5f5f5;
+  /*background-color: #f5f5f5;*/
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   font-weight: 400;

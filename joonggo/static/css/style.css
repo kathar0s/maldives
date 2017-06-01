@@ -1083,7 +1083,7 @@ div[class*="slider_shadow"]:before,div[class^="header_shadow"] {
 }
 
 .single-post .post-inner {
-	padding: 0 20px 0;
+	padding: 0;
 	position: relative;
 }
 
