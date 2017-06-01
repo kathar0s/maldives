@@ -966,9 +966,9 @@ div[class*="slider_shadow"]:before,div[class^="header_shadow"] {
 	 background-color: #FFF;
     border: none;
     color: #777;
-    font-size: 15px;    
+    font-size: 25px;
     resize: none;
-    font-weight: 100;
+    font-weight: 900;
     text-indent: 10px;
     line-height: 48px;
     -moz-border-radius: 2px;
@@ -978,6 +978,11 @@ div[class*="slider_shadow"]:before,div[class^="header_shadow"] {
     margin-top: 10px;
 	padding-right: 104px;
 }
+
+input:-ms-input-placeholder { color: #777; }
+input::-webkit-input-placeholder { color: #777; }
+input::-moz-placeholder { color: #777; }
+input::-moz-placeholder { color: #777; }
 
 .infocenter-infotex .col-md-12 .ask-question {
 	bottom: 6px;

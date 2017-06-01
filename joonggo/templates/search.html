@@ -10,7 +10,7 @@
                         <div>
                             <form role="search" class="form-style form-style-2" method="get" action="">
                                 <p>
-                                    <input name="s" type="search" value="중고 물품 검색어를 입력해주세요." onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;">
+                                    <input name="q" type="search" value="{% if request.GET.q %}{{ request.GET.q }}{% endif %}" placeholder="중고 물품 검색어를 입력해주세요.">
                                     <button class="ask-question-new-class" type="submit"><span class="color button small publish-question">검색</span></button>
                                 </p>
                             </form>
@@ -21,13 +21,14 @@
         </div><!-- End container -->
     </div><!-- End section-warp -->
     <div class="container main-content page-right-sidebar result-section">
-        <div class="no-result text-center alert alert-info" style="line-height: 25px;">
-            키워드를 입력하시면 해당 키워드에 대한 결과를 보실 수 있습니다.
+        <div class="page-content text-center {% if request.GET.q %}hide{% endif %}">
+            <i style="font-size: 300px; color: #be161e;" class="icon-warning-sign"></i>
+            <h2>키워드를 입력해주세요.</h2>
+            <p>키워드를 입력하시면 해당 물품이 검색됩니다. 검색어는 자세히 입력할 수록 결과가 더 정확해집니다.</p>
         </div>
-        <h1 class="title">사용자 검색 키워드 <small>검색결과</small></h1>
-        <hr>
-        <div class="row">
-            <div class="result">
+        <div class="result {% if not request.GET.q %}hide{% endif %}">
+            <h1 class="title">{{ request.GET.q }} <small>검색결과</small></h1>
+            <div class="row">
                 <div class="col-md-8">
                     <article class="post single-post post-249 type-post status-publish format-standard has-post-thumbnail hentry category-web-design tag-design tag-knowledge">
                         <div class="post-inner">
@@ -93,67 +94,6 @@
                                     </table>
                                 </div>
                             </div>
-
-                            <ul class="nav nav-tabs">
-                                <li role="presentation" class="active"><a>판매 등록수 <span class="count">23</span></a></li>
-{#                                <li role="presentation"><a href="#">Profile</a></li>#}
-{#                                <li role="presentation"><a href="#">Messages</a></li>#}
-                            </ul>
-                            <br/>
-                            <strong>최저가순</strong>
-                            <div class="table-responsive article-detail" style="margin: 10px 0 30px;">
-                                <table class="table">
-                                    <colgroup>
-                                        <col style="width: 16%">
-                                        <col style="width: 50%">
-                                        <col style="width: 17%">
-                                        <col style="width: 17%">
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th>사이트</th>
-                                            <th>제목</th>
-                                            <th class="text-right">판매가</th>
-                                            <th class="text-center">배송비</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/joonggonara_w150.png" %}"></td>
-                                            <td class="article">
-                                                <div class="title">샤오미 2세대 보조배터리 PLM02ZM</div>
-                                                <div class="content">
-                                                    [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
-                                                </div>
-                                            </td>
-                                            <td class="text-right"><span class="text-danger">최저 190,500</span></td>
-                                            <td class="text-center">-</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/momsholic_w150.png" %}"></td>
-                                            <td class="article">
-                                                <div class="title">샤오미 2세대 보조배터리 PLM02ZM</div>
-                                                <div class="content">
-                                                    [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
-                                                </div>
-                                            </td>
-                                            <td class="text-right"><span class="text-danger">최저 190,500</span></td>
-                                            <td class="text-center">-</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/cetizen_w150.png" %}"></td>
-                                            <td class="article">
-                                                <div class="title">샤오미 2세대 보조배터리 PLM02ZM</div>
-                                                <div class="content">
-                                                    [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
-                                                </div>
-                                            </td>
-                                            <td class="text-right"><span class="text-danger">최저 190,500</span></td>
-                                            <td class="text-center">-</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                         </div>
                     </article>
                 </div>
@@ -176,7 +116,68 @@
                         </a>
                     </div>
                 </aside>
-                <div class="clearfix"></div>
+                <article class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active"><a>판매 등록수 <span class="count">23</span></a></li>
+{#                                <li role="presentation"><a href="#">Profile</a></li>#}
+{#                                <li role="presentation"><a href="#">Messages</a></li>#}
+                    </ul>
+                    <br/>
+                    <strong>최저가순</strong>
+                    <div class="table-responsive article-detail" style="margin: 10px 0 30px;">
+                        <table class="table">
+                            <colgroup>
+                                <col style="width: 16%">
+                                <col style="width: 50%">
+                                <col style="width: 17%">
+                                <col style="width: 17%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>사이트</th>
+                                    <th>제목</th>
+                                    <th class="text-right">판매가</th>
+                                    <th class="text-center">배송비</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/joonggonara_w150.png" %}"></td>
+                                    <td class="article">
+                                        <div class="title">샤오미 2세대 보조배터리 PLM02ZM</div>
+                                        <div class="content">
+                                            [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
+                                        </div>
+                                    </td>
+                                    <td class="text-right"><span class="text-danger">최저 190,500</span></td>
+                                    <td class="text-center">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/momsholic_w150.png" %}"></td>
+                                    <td class="article">
+                                        <div class="title">샤오미 2세대 보조배터리 PLM02ZM</div>
+                                        <div class="content">
+                                            [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
+                                        </div>
+                                    </td>
+                                    <td class="text-right"><span class="text-danger">최저 190,500</span></td>
+                                    <td class="text-center">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/cetizen_w150.png" %}"></td>
+                                    <td class="article">
+                                        <div class="title">샤오미 2세대 보조배터리 PLM02ZM</div>
+                                        <div class="content">
+                                            [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
+                                        </div>
+                                    </td>
+                                    <td class="text-right"><span class="text-danger">최저 190,500</span></td>
+                                    <td class="text-center">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
             </div>
         </div>
     </div>

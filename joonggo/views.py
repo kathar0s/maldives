@@ -9,7 +9,15 @@ from rest_framework.pagination import PageNumberPagination
 
 # Create your views here.
 def index(request):
-    template_data = {}
+
+    counter = {
+        'joonggonara': Article.objects.filter(source__name='중고나라').count()
+    }
+
+    template_data = {
+        'counter': counter
+    }
+
     return render(request, 'index.html', template_data)
 
 

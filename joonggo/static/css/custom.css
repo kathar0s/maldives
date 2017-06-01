@@ -573,7 +573,6 @@ img#logo-footer {
   overflow: hidden;
   position: relative;
   width: 100%;
-  margin-bottom: 30px;
 }
 .page-template-template-blog_1 span.post-view {
   display: none;
@@ -2229,6 +2228,7 @@ article.single-question {
 .result-section h1.title {
   color: #1b1b1b;
   font-weight: 700;
+  margin-bottom: 20px;
 }
 .result-section thead th {
   color: #333;
