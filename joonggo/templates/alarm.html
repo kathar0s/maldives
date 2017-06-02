@@ -1,23 +1,456 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% block stylesheet %}
+<style>
+    body {
+        background-color: rgb(245, 245, 245);
+    }
+</style>
+{% endblock %}
+{% block modal %}
+    <div class="infocenter-panel-pop" id="signup" xmlns:v-on="http://www.w3.org/1999/xhtml">
+        <h2>JGDV ID 발급받기<i class="icon-remove"></i></h2>
+        <div class="form-style form-style-3">
+            <p>Step 1. 동영상을 만들어볼까??</p>
+            <p>Step 1. 텔레그램에 접속하세요.</p>
+            <p>Step 1. 텔레그램에 접속하세요.</p>
+            <p>Step 1. 텔레그램에 접속하세요.</p>
+            <p>Step 1. 텔레그램에 접속하세요.</p>
+            <p>Step 1. 텔레그램에 접속하세요.</p>
+            <p>Step 1. 텔레그램에 접속하세요.</p>
+            <p>Step 1. 텔레그램에 접속하세요.</p>
+            <p>Step 1. 텔레그램에 접속하세요.</p>
+            <p>Step 1. 텔레그램에 접속하세요.</p>
+            <p>Step 1. 텔레그램에 접속하세요.</p>
+            <p>Step 1. 텔레그램에 접속하세요.</p>
+        </div>
+    </div>
+{% endblock %}
 {% block body %}
-    <div class="section-warp infocenter-infotex light">
-        <div class="container clearfix">
-            <div class="box_icon box_warp box_no_border box_no_background">
-                <div class="row">
+    <div class="breadcrumbs">
+        <section class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>텔레그램으로 알림 받을 물건을 등록하세요</h1>
+                    <div class="clearfix"></div>
+                    <div class="crumbs">
+                        <a href="{% url "index" %}">Home</a><span class="crumbs-span">/</span> <span class="current">알림 관리</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div id="app">
+        <div class="container main-content page-full-width">
+            <div class="row">
+                <div class="with-sidebar-container">
                     <div class="col-md-12">
-                        <h2>텔레그램 아이디를 입력하세요.</h2>
-                        <div>
-                            <form role="search" class="form-style form-style-2" method="get" action="">
-                                <p>
-                                    <input name="q" type="search" value="{% if request.GET.q %}{{ request.GET.q }}{% endif %}" placeholder="텔레그램 아이디를 입력하세요.">
-                                    <button class="ask-question-new-class" type="submit"><span class="color button small publish-question">검색</span></button>
-                                </p>
-                            </form>
+                        <login-component ref="login"></login-component>
+                        <keyword-component ref="keyword" :app="this"></keyword-component>
+                    </div>
+                    <!-- End main -->
+                    <div class="clearfix"></div>
+                </div>
+                <!-- End with-sidebar-container -->
+            </div>
+            <!-- End row -->
+        </div>
+    </div>
+    <script type="text/x-template" id="login-component">
+        <div class="login" v-show="!isLogin">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="page-content">
+                        <h2>중고다이브 텔레그램 봇</h2>
+                        <div class="form-style form-style-3">
+                            <div class="ask_form inputs">
+                                <form class="login-form ask_login" action="" method="post" @submit.stop.prevent="onSubmit">
+                                    <div class="form-inputs clearfix">
+                                        <p class="login-text" style="position: relative;">
+                                            <span class="loader_2" style="position: absolute; right: 10px; top: 10px;" v-show="isLoginProgress"></span>
+                                            <input class="required-item" type="text" v-model="id" placeholder="JGDV id" name="id">
+                                            <i class="icon-user"></i>
+                                        </p>
+                                    </div>
+                                    <p class="form-submit login-submit">
+                                        <input type="submit" value="로그인" class="button color small login-submit submit sidebar_submit">
+                                    </p>
+                                    <div class="errorlogin"></div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div><!-- End row -->
-            </div><!-- End box_icon -->
-        </div><!-- End container -->
-    </div><!-- End section-warp -->
+                    <!-- End page-content -->
+                </div>
+                <!-- End col-md-6 -->
+                <div class="col-md-6">
+                    <div class="page-content">
+                        <h2>알림</h2>
+                        <p>
+                            중고다이브에서는 텔레그램을 통해 알림을 받을 수 있습니다.<br/>
+                            텔레그램을 통해 JGDV ID를 발급받으세요.<br/>
+                            텔레그램에서 Joonggodives bot을 검색하신 후에 등록을 어떻게 하면.. JGDV ID를 받을 수 있습니다.
+                            텔레그램에서 어떻게 하면 어떻게 등록을 할 수 있습니다.
+                        </p>
+                        <a class="button small color signup" style="padding: 20px;">등록하는 방법 알아보기</a>
+                    </div>
+                    <!-- End page-content -->
+                </div>
+                <!-- End col-md-6 -->
+            </div>
+            <!-- End row -->
+        </div>
+    </script>
+    <script type="text/x-template" id="keyword-component">
+        <div class="keyword-manager" v-show="app.$refs.login.isLogin">
+            <section class="keywordapp">
+                <h1>알림 등록</h1>
+                <header class="list-wrapper clearfix">
+                    <input class="toggle-all" type="checkbox" v-model="allDone">
+                    <div class="col-xs-7">
+                        <div class="checker">
+                            <input class="new-alarm new-keyword"
+                                       autofocus autocomplete="off"
+                                       placeholder="키워드"
+                                       v-model="newAlarm"
+                                       maxlength="14"
+                                       @keyup.enter="addAlarm">
+                        </div>
+                    </div>
+                    <div class="col-xs-5 col-sm-3">
+                        <div class="checker">
+                            <input class="new-alarm text-right"
+                                   autofocus autocomplete="off"
+                                   placeholder="가격(옵션)"
+                                   v-model="newPrice"
+                                   maxlength="9"
+                                   @keyup.enter="addAlarm">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2">
+                        <div class="register">
+                            <button class="btn btn-block btn-secondary" @click="addAlarm">등록</button>
+                        </div>
+                    </div>
+                </header>
+                <section class="main" v-show="alarms.length" v-cloak>
+                    <ul class="alarm-list">
+                        <li v-for="alarm in filteredAlarms"
+                            class="alarm"
+                            :key="alarm.id"
+                            :class="{ disabled: alarm.disabled, editing: alarm == editedAlarm }">
+                            <div class="view">
+                                <div class="row">
+                                    <input class="toggle" type="checkbox" v-model="alarm.disabled">
+                                    <div class="col-xs-7">
+                                        <label class="keyword" @dblclick="editAlarm(alarm)">[[ alarm.keyword ]]</label>
+
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label class="price" @dblclick="editAlarm(alarm)">[[ alarm.price ]]</label>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <div class="destroy-wrapper">
+                                            <button class="destroy outline" @click="removeAlarm(alarm)"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="view-edit">
+                                <div class="row">
+                                    <div class="col-xs-7">
+                                        <input class="edit keyword" type="text"
+                                               v-model="alarm.keyword"
+{#                                               @blur="doneEdit(alarm)"#}
+{#                                               v-alarm-focus="{alarm == editedAlarm}"#}
+                                               maxlength="14"
+                                               @keydown.enter="doneEdit(alarm)"
+                                               @keyup.esc="cancelEdit(alarm)">
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <input class="edit price text-right" type="text"
+                                               v-model="alarm.price"
+{#                                               v-alarm-focus="{focus: alarm == editedAlarm, target: 'price'}"#}
+                                               maxlength="9"
+{#                                               @blur="doneEdit(alarm)"#}
+                                               @keydown.enter="doneEdit(alarm)"
+                                               @keyup.esc="cancelEdit(alarm)">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <div class="register edit-element">
+                                            <button class="btn btn-block btn-info" @click="doneEdit(alarm)">수정</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+                <footer class="footer" v-show="alarms.length" v-cloak>
+                    <span class="alarm-count">
+                      <strong>[[ remaining ]]</strong> 개 활성화
+                    </span>
+                    <ul class="filters">
+                        <li><a href="#/all" :class="{ selected: visibility == 'all' }">전체</a></li>
+                        <li><a href="#/enabled" :class="{ selected: visibility == 'enabled' }">활성화</a></li>
+                        <li><a href="#/disabled" :class="{ selected: visibility == 'disabled' }">비활성화</a></li>
+                    </ul>
+                    <button class="clear-disabled outline" @click="removeCompleted" v-show="alarms.length > remaining">
+                        비활성화 모두 삭제
+                    </button>
+                </footer>
+            </section>
+{#            <footer class="info">#}
+{#                <p>더블클릭하시면 키워드/가격을 수정하실 수 있습니다.</p>#}
+{#                <p>Written by <a href="http://evanyou.me">Evan You</a></p>#}
+{#                <p>Part of <a href="http://alarmmvc.com">AlarmMVC</a></p>#}
+{#            </footer>#}
+        </div>
+    </script>
+{% endblock %}
+{% block javascript %}
+<script>
+    var setComma = function(value) {
+        value = value.toString()
+        value = parseFloat(value.replace(/\,/g,""));
+        var reg = /(^[+-]?\d+)(\d{3})/;
+        var n = (value + '');
+        while (reg.test(n)) n = n.replace(reg,'$1' + ',' + '$2');
+
+        return n;
+    }
+
+    var STORAGE_KEY = 'alarms-vuejs-2.0'
+    var alarmStorage = {
+        fetch: function () {
+            var alarms = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+            alarms.forEach(function (alarm, index) {
+                alarm.id = index;
+            });
+            alarmStorage.uid = alarms.length;
+            return alarms;
+        },
+        save: function (alarms) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(alarms));
+        }
+    }
+
+    // visibility filters
+    var filters = {
+        all: function (alarms) {
+            return alarms;
+        },
+        enabled: function (alarms) {
+            return alarms.filter(function (alarm) {
+                return !alarm.disabled;
+            })
+        },
+        disabled: function (alarms) {
+            return alarms.filter(function (alarm) {
+                return alarm.disabled
+            })
+        }
+    }
+
+    Vue.component('keyword-component', {
+        props: ['app'],
+        delimiters: ['[[', ']]'],
+        template: '#keyword-component',
+        data: function () {
+            return {
+                alarms: alarmStorage.fetch(),
+                newAlarm: '',
+                newPrice: '',
+                editedAlarm: null,
+                visibility: 'all',
+                target: '',
+            }
+        },
+        // watch todos change for localStorage persistence
+        watch: {
+            alarms: {
+                handler: function (alarms) {
+                    alarmStorage.save(alarms)
+                },
+                deep: true
+            },
+            newPrice: function(value) {
+                var _this = this;
+                value = value || 0;
+
+                var n = setComma(value);
+                console.log(n);
+
+
+                Vue.nextTick(function(){
+                    _this.newPrice = n;
+                });
+            }
+        },
+
+        // computed properties
+        // http://vuejs.org/guide/computed.html
+        computed: {
+            filteredAlarms: function () {
+                return filters[this.visibility](this.alarms)
+            },
+            remaining: function () {
+                return filters.enabled(this.alarms).length
+            },
+            allDone: {
+                get: function () {
+                    return this.remaining === 0
+                },
+                set: function (value) {
+                    this.alarms.forEach(function (alarm) {
+                        alarm.disabled = value
+                    })
+                }
+            }
+        },
+
+        // methods that implement data logic.
+        // note there's no DOM manipulation here at all.
+        methods: {
+            addAlarm: function () {
+                var value = this.newAlarm && this.newAlarm.trim();
+                var price = this.newPrice && this.newPrice.trim();
+
+                if (!price) {
+                    price = "-";
+                }
+
+                if (!value) {
+                    return;
+                }
+                var alarm = _.find(this.alarms, function(alarm) { return alarm['keyword'] == value });
+
+                // 키워드가 없는 경우에만 등록한다.
+                if (!alarm) {
+                    this.alarms.push({
+                        id: alarmStorage.uid++,
+                        keyword: value,
+                        price: price,
+                        disabled: false
+                    });
+                } else {
+                    alert('이미 등록된 키워드입니다');
+                }
+
+                this.newAlarm = '';
+                this.newPrice = '';
+            },
+
+            removeAlarm: function (alarm) {
+                this.alarms.splice(this.alarms.indexOf(alarm), 1)
+            },
+
+            editAlarm: function (alarm) {
+                this.beforeEditCacheKeyword = alarm.keyword
+                this.beforeEditCachePrice = alarm.price
+                this.editedAlarm = alarm
+            },
+
+            doneEdit: function (alarm) {
+                if (!this.editedAlarm) {
+                    return
+                }
+                this.editedAlarm = null
+
+                var test = _.filter(this.alarms, function(x) { return x['keyword'] == alarm.keyword });
+                var unique = (test.length < 2) ? true : false;
+
+                alarm.keyword = alarm.keyword.trim();
+                alarm.price = setComma(alarm.price);
+                if (!unique) {
+                    this.cancelEdit(alarm);
+                    alert('이미 등록된 키워드입니다.');
+                } else {
+
+                    if (!alarm.keyword) {
+                        this.removeAlarm(alarm)
+                    }
+                }
+            },
+
+            cancelEdit: function (alarm) {
+                this.editedTodo = null
+                alarm.keyword = this.beforeEditCacheKeyword
+                alarm.price = this.beforeEditCachePrice
+            },
+
+            removeCompleted: function () {
+                this.alarms = filters.enabled(this.alarms)
+            }
+        },
+
+        // a custom directive to wait for the DOM to be updated
+        // before focusing on the input field.
+        // http://vuejs.org/guide/custom-directive.html
+{#        directives: {#}
+{#            'alarm-focus': function (el, binding) {#}
+{#                var focus = binding.value.focus#}
+{#                var target = binding.value.target#}
+{#                if (focus == true) {#}
+{#                    console.log(this.target)#}
+{#                    console.log(el)#}
+{#                    console.log(focus, target)#}
+{#                }#}
+{#                if (focus) {#}
+{#                    el.focus()#}
+{#                }#}
+{#            }#}
+{#        },#}
+        mounted: function() {
+            // handle routing
+            var _this = this;
+            var onHashChange = function() {
+                var visibility = window.location.hash.replace(/#\/?/, '');
+                if (filters[visibility]) {
+                    _this.visibility = visibility;
+                } else {
+                    window.location.hash = '';
+                    _this.visibility = 'all';
+                }
+            }
+            window.addEventListener('hashchange', onHashChange);
+            onHashChange();
+        }
+    });
+
+    Vue.component('login-component', {
+        props: ['app'],
+        delimiters: ['[[', ']]'],
+        template: '#login-component',
+        data: function () {
+            return {
+                /* 현재 활성화탭 */
+                isLogin: true,
+                isLoginProgress: false,
+                id: ''
+            }
+        },
+        methods: {
+            onSubmit: function() {
+                var _this = this;
+                _this.isLoginProgress = true;
+
+                setTimeout(function(){
+                    _this.isLoginProgress = false;
+                    _this.isLogin = true;
+                }, 1000);
+                return false;
+            }
+        }
+    });
+
+    var vm = new Vue({
+        el: '#app',
+        delimiters: ['[[', ']]'],
+        data: {
+            dummy: null
+        }
+    });
+
+</script>
 {% endblock %}

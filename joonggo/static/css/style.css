@@ -250,7 +250,7 @@ body.single-question {
 	width: 580px;
 	position: absolute;
 	padding: 20px;
-	top: -100%;
+	top: 2%;
 	left: 50%;
 	margin-left: -290px;
 	z-index: 998;
@@ -1846,11 +1846,11 @@ input::-moz-placeholder { color: #777; }
 }
 
 .loader_2,.loader_3 {
-	background: url(images/loading.gif) no-repeat center center;
+	background: url(../images/loading.gif) no-repeat center center;
 	height: 20px;
 	width: 20px;
 	margin: 10px auto;
-	display: none;
+	/*display: none;*/
 }
 
 .single-question-vote li.loader_3 {
@@ -4167,18 +4167,18 @@ input[type="checkbox"] {
 	-moz-border-radius: 2px;
 	outline: 0 !important;
 }
-input[type="checkbox"]:checked::before {
-	-webkit-margin-start: 0;
-	font-family: "FontAwesome";
-	content: "\f00c";
-	font-size: 12px;
-	height: 22px;
-	display: block;
-	position: relative;
-	top: 0;
-	text-align: center;
-	outline: 0 !important;
-}
+/*input[type="checkbox"]:checked::before {*/
+	/*-webkit-margin-start: 0;*/
+	/*font-family: "FontAwesome";*/
+	/*content: "\f00c";*/
+	/*font-size: 12px;*/
+	/*height: 22px;*/
+	/*display: block;*/
+	/*position: relative;*/
+	/*top: 0;*/
+	/*text-align: center;*/
+	/*outline: 0 !important;*/
+/*}*/
 .login .tabs-register-forget .form-style input[type="checkbox"] {
 	background-color: #2f3239;
 }
@@ -6748,11 +6748,11 @@ html[xmlns] .slides {
 	color: #2f3239;
 }
 .panel_light .loader_2,.panel_light .loader_3 {
-	background-image: url(images/loading.gif);
+	background-image: url(../images/loading.gif);
 }
 /* panel_dark */
 .panel_dark .loader_2,.panel_dark .loader_3 {
-	background-image: url(images/loading-top-dark.gif);
+	background-image: url(../images/loading-top-dark.gif);
 }
 /* header_light */
 #header.header_light {

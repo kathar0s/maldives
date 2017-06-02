@@ -58,7 +58,15 @@
 </head>
 <body  class="home logged-in admin-bar no-customize-support custom-background">
 <div class="background-cover"></div>
-<div class="loader"><div class="loader_html"></div></div>
+<div class="loader">
+    <div class="loader_html" style="position: relative;">
+        <div class="message text-center" style="position: absolute; top: -30px; left: -35px; width: 140px;">
+            로딩중입니다.
+        </div>
+    </div>
+</div>
+{% block modal %}
+{% endblock %}
 <div id="wrap" class=" wrap-nicescroll">
     {% block header %}
         {% include "header.html" %}
@@ -145,6 +153,8 @@
 {#<script type='text/javascript' src='/s/lib/plugins/contact-form-7/includes/js/scripts.js?ver=4.8'></script>#}
 <script type='text/javascript' src='/s/libs/jquery/jquery.js?ver=1.12.4'></script>
 <script type='text/javascript' src='/s/libs/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='/s/js/underscore-min.js?ver=1.8.3'></script>
+<script type='text/javascript' src="/s/js/vue.js?ver=2.3.3"></script>
 <script type='text/javascript' src='/s/js/html5.js?ver=1.0.0'></script>
 <script type='text/javascript' src='/s/js/modernizr.js?ver=1.0.0'></script>
 <script type='text/javascript' src='/s/js/jquery.tipsy.js?ver=1.0.0'></script>

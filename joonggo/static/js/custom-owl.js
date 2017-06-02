@@ -1421,40 +1421,40 @@ jQuery(document).ready(function($) {
 	
 	/* Login */
 	
-	jQuery(".login-form").submit(function() {
-		var thisform = jQuery(this);
-		jQuery('.required-error',thisform).remove();
-		jQuery('input[type="submit"]',thisform).hide();
-		jQuery('.loader_2',thisform).show().css({"display":"block"});
-		var fields = jQuery('.inputs',thisform);
-		jQuery('.required-item',thisform).each(function () {
-			var required = jQuery(this);
-			if (required.val() == '') {
-				required.after('<span class=required-error>'+ask_error_text+'</span>');
-				return false;
-			}
-		});
-	    var data = {
-			action: 		'ask_ajax_login_process',
-			security: 		jQuery('input[name=\"login_nonce\"]',thisform).val(),
-			log: 			jQuery('input[name=\"log\"]',thisform).val(),
-			pwd: 			jQuery('input[name=\"pwd\"]',thisform).val(),
-			redirect_to:	jQuery('input[name=\"redirect_to\"]',thisform).val()
-		};
-		jQuery.post(jQuery('input[name=\"ajax_url\"]',thisform).val(),data,function(response) {
-			var result = jQuery.parseJSON(response);
-			if (result.success == 1) {
-				window.location = result.redirect;
-			}else if (result.error) {
-				jQuery(".ask_error",thisform).hide(10).slideDown(300).html('<strong>'+result.error+'</strong>').delay(3000).slideUp(300);
-			}else {
-				return true;
-			}
-			jQuery('.loader_2',thisform).hide().css({"display":"none"});
-			jQuery('input[type="submit"]',thisform).show();
-		});
-		return false;
-	});
+	// jQuery(".login-form").submit(function() {
+	// 	var thisform = jQuery(this);
+	// 	jQuery('.required-error',thisform).remove();
+	// 	jQuery('input[type="submit"]',thisform).hide();
+	// 	jQuery('.loader_2',thisform).show().css({"display":"block"});
+	// 	var fields = jQuery('.inputs',thisform);
+	// 	jQuery('.required-item',thisform).each(function () {
+	// 		var required = jQuery(this);
+	// 		if (required.val() == '') {
+	// 			required.after('<span class=required-error>'+ask_error_text+'</span>');
+	// 			return false;
+	// 		}
+	// 	});
+	//     var data = {
+	// 		action: 		'ask_ajax_login_process',
+	// 		security: 		jQuery('input[name=\"login_nonce\"]',thisform).val(),
+	// 		log: 			jQuery('input[name=\"log\"]',thisform).val(),
+	// 		pwd: 			jQuery('input[name=\"pwd\"]',thisform).val(),
+	// 		redirect_to:	jQuery('input[name=\"redirect_to\"]',thisform).val()
+	// 	};
+	// 	jQuery.post(jQuery('input[name=\"ajax_url\"]',thisform).val(),data,function(response) {
+	// 		var result = jQuery.parseJSON(response);
+	// 		if (result.success == 1) {
+	// 			window.location = result.redirect;
+	// 		}else if (result.error) {
+	// 			jQuery(".ask_error",thisform).hide(10).slideDown(300).html('<strong>'+result.error+'</strong>').delay(3000).slideUp(300);
+	// 		}else {
+	// 			return true;
+	// 		}
+	// 		jQuery('.loader_2',thisform).prop("disabled", "disabled");
+	// 		jQuery('input[type="submit"]',thisform).show();
+	// 	});
+	// 	return false;
+	// });
 	
 	/* Login */
 	
@@ -1600,16 +1600,16 @@ jQuery(document).ready(function($) {
 	/* Panel pop */
 	
 	jQuery(".infocenter-panel-pop h2 i").click(function () {
-		jQuery(this).parent().parent().animate({"top":"-100%"},500).fadeOut(function () {
-			jQuery(this).animate({"top":"-100%"},500);
+		jQuery(this).parent().parent().fadeOut(function () {
+			// jQuery(this).animate({"top":"-100%"},300);
 		});
 		jQuery(".wrap-pop").remove();
 	});
 	
 	function wrap_pop() {
 		jQuery(".wrap-pop").click(function () {
-			jQuery(".infocenter-panel-pop").animate({"top":"-100%"},500).fadeOut(function () {
-				jQuery(this).animate({"top":"-100%"},500);
+			jQuery(".infocenter-panel-pop").fadeOut(function () {
+				// jQuery(this).animate({"top":"-100%"},300);
 			});
 			jQuery(this).remove();
 		});

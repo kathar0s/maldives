@@ -374,6 +374,23 @@
 		margin-bottom: 20px;
 	}
 
+	.result-section .icon-warning-sign {
+		font-size: 200px;
+		color: #be161e;
+	}
+
+	.keywordapp .new-alarm {
+		font-size: 16px;
+	}
+
+	.keywordapp .alarm-list li .view .destroy-wrapper {
+		padding: 5px 0;
+	}
+
+	.keywordapp .alarm-list li label {
+		font-size: 16px;
+	}
+
 	/* header-top */
 	#header-top {
 		height: auto;
