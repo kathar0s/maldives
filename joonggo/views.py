@@ -5,12 +5,12 @@ from pandas import json
 from django.db.models import Avg
 from django_pandas.io import read_frame
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from rest_framework.decorators import list_route
 from rest_framework.generics import GenericAPIView
 from rest_framework import serializers, mixins
 from rest_framework import viewsets
-from joonggo.models import Article, Alarm
+from joonggo.models import Article, Alarm, ChatProfile
 from joonggo.serializers import ArticleSerializer, AlarmSerializer, TrendSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -19,7 +19,19 @@ import numpy as np
 
 # Create your views here.
 def index(request):
-    return HttpResponse('Hello Maldives!')
+        return HttpResponse('Hello Maldives!')
+
+def write(request):
+    if request.session.get('naverTokenId') is None:
+        print('naverTokenId : None')
+        return render_to_response('write_test.html')
+    else:
+        return HttpResponse('글쓰기로 이동!!')
+
+
+def getNaverLoginResult(request):
+    prin("1111")
+    return HttpResponse('Testing!!!')
 
 class PaginationClass(PageNumberPagination):
     page_size = 10
@@ -41,6 +53,15 @@ class AlarmViewSet(viewsets.ModelViewSet):
     queryset = Alarm.objects.all()
     serializer_class = AlarmSerializer
     pagination_class = PaginationClass
+
+    def get_queryset(self):
+        chatting_id = self.request.query_params.get('chatting_id', None)
+        print(chatting_id)
+        if chatting_id is not None:
+            qs = ChatProfile.objects.filter(chat=chatting_id)
+            print(qs)
+            #queryset = Alarm.objects.filter(profile=)
+        return qs
 
 class TrendViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()

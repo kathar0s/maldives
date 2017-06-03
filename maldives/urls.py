@@ -30,6 +30,9 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
+    url(r'^test/$', views.write, name='write'),
+    url(r'^getNaverLoginResult/$', views.getNaverLoginResult, name='getNaverLoginResult'),
+
     url(r'^joonggobot/', include('joonggobot.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
