@@ -30,6 +30,10 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
+    url(r'^search/$', views.search, name='search'),
+    url(r'^alarm/$', views.alarm, name='alarm'),
+    url(r'^sell/$', views.sell, name='sell'),
+
     url(r'^test/$', views.write, name='write'),
     url(r'^getNaverLoginResult/$', views.getNaverLoginResult, name='getNaverLoginResult'),
 

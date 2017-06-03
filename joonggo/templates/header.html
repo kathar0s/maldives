@@ -1,0 +1,74 @@
+{% load staticfiles %}
+<div class="top-bar hide">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6 hidden-xs">
+
+                <ul id="menu-left-top-bar" class="top-nav nav-left">
+                    <li><a href="{% url "index" %}">HOME</a></li>
+                </ul>
+
+            </div><!-- End col-md-6 -->
+            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+                <ul id="menu-login-top-bar" class="top-nav nav-right">
+                    <li class=" dropdown  menu-item-even menu-item-depth-0 menu-item-has-children"><a href="http://localhost/wordpress/author/admin/" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-animations="fadeInUp"><i class="fa fa-user" aria-hidden="true"></i>admin &nbsp;<i class="fa fa-caret-down"></i></a>
+                        <ul class="dropdown-menu menu-odd  menu-depth-1">
+                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/author/admin/"><i class="fa fa-user-o" aria-hidden="true"></i>MY PROFILE</a></li>
+                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-gears" aria-hidden="true"></i>PROFILE SETTINGS</a></li>
+                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-bargraph" aria-hidden="true"></i>MY QUESTIONS</a></li>
+                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-heart" aria-hidden="true"></i>MY ANSWERS</a></li>
+                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/wp-login.php?action=logout&amp;redirect_to=http%3A%2F%2Flocalhost%2Fwordpress%2Fsample-page%2F&amp;_wpnonce=78c2cb5d9b"><i class="icon-lock" aria-hidden="true"></i>LOGOUT</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- End col-md-6 -->
+        </div><!-- End row -->
+    </div><!-- End container -->
+</div><!-- End header-top -->
+<header id="header" class=''>
+    <div class="container clearfix" itemscope="" itemtype="http://schema.org/Thing">
+        <div class="logo">
+            <a class="logo-img" href="{% url "index" %}" itemprop="url" title="중고다이브">
+                <img class="default_logo" itemprop="logo" alt="중고다이브" src="{% static "images/logo.png" %}">
+                <img class="retina_logo" itemprop="logo" alt="중고다이브" src="{% static "images/logo-retina.png" %}">
+            </a>
+            <meta itemprop="name" content="중고다이브">
+        </div>
+        <nav class="navigation">
+            <div class="header-menu">
+                <ul>
+                    <li id="menu-item-174" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-174 {% if 'search' in request.path %}current_page_item{% endif %}">
+                        <a href="{% url "search" %}">가격 검색</a>
+                    </li>
+                    <li id="menu-item-6" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6 {% if 'alarm' in request.path %}current_page_item{% endif %}">
+                        <a href="{% url "alarm" %}">알림 관리</a>
+                    </li>
+                    <li id="menu-item-6" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6 {% if 'sell' in request.path %}current_page_item{% endif %}">
+                        <a href="{% url "sell" %}">중고 판매</a>
+                    </li>
+                    {#                        <li id="menu-item-7" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-7"><a href="#">Pages</a>#}
+                    {#                            <ul class="sub-menu">#}
+                    {#                                <li id="menu-item-175" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-175"><a href="http://localhost/wordpress/">Home</a></li>#}
+                    {#                                <li id="menu-item-51" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51"><a href="http://fluentthemes.com/wp/knowledge/questions/">Questions Page</a></li>#}
+                    {#                                <li id="menu-item-10" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10"><a href="http://fluentthemes.com/wp/knowledge/questions/bootstrap-fixed-sidebar-causes-main-content-to-overlap/">Question Detail</a></li>#}
+                    {#                                <li id="menu-item-50" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-50"><a href="http://localhost/wordpress/add-question/">Add Question Page</a></li>#}
+                    {#                                <li id="menu-item-180" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-180"><a href="http://localhost/wordpress/blog/">Blog</a></li>#}
+                    {#                                <li id="menu-item-181" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-181"><a href="http://localhost/wordpress/2017/01/27/lorem-ipsum-dolor-sit-amet/">Blog Single</a></li>#}
+                    {#                                <li id="menu-item-49" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-49"><a href="http://localhost/wordpress/sign-in-to-your-account/">Login Page</a></li>#}
+                    {#                                <li id="menu-item-183" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-183"><a href="http://localhost/wordpress/users/">Users</a></li>#}
+                    {#                                <li id="menu-item-182" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-182"><a href="http://localhost/wordpress/contact/">Contact</a></li>#}
+                    {#                                <li id="menu-item-11" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11"><a href="http://fluentthemes.com/wp/knowledge/error/">Error Page</a></li>#}
+                    {#                            </ul>#}
+                    {#                        </li>#}
+                    <li class="menu-item-pq publish-question publish-question-widget">
+                        <a href="{% url "sell" %}">ONESHOT 물건등록</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <nav class="navigation_mobile navigation_mobile_main">
+            <div class="infocenter_mobile_click">Go to...</div>
+            <ul></ul>
+        </nav><!-- End navigation_mobile -->
+    </div><!-- End container -->
+</header><!-- End header -->

@@ -5,6 +5,7 @@ from pandas import json
 from django.db.models import Avg
 from django_pandas.io import read_frame
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.shortcuts import render, render_to_response
 from rest_framework.decorators import list_route
 from rest_framework.generics import GenericAPIView
@@ -19,7 +20,32 @@ import numpy as np
 
 # Create your views here.
 def index(request):
-        return HttpResponse('Hello Maldives!')
+
+    counter = {
+        'joonggonara': Article.objects.filter(source__name='중고나라').count()
+    }
+
+    template_data = {
+        'counter': counter
+    }
+
+    return render(request, 'index.html', template_data)
+
+
+def search(request):
+    template_data = {}
+    return render(request, 'search.html', template_data)
+
+
+def alarm(request):
+    template_data = {}
+    return render(request, 'alarm.html', template_data)
+
+
+def sell(request):
+    template_data = {}
+    return render(request, 'sell.html', template_data)
+
 
 def write(request):
     if request.session.get('naverTokenId') is None:

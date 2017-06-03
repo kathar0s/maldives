@@ -20,9 +20,12 @@ class Source(models.Model):
     def __str__(self):
         return '[{name}] {category}'.format(name=self.name, category=self.category)
 
+    def __unicode__(self):
+        return u'[{name}] {category}'.format(name=self.name, category=self.category)
+
     class Meta:
-        verbose_name = '출처'
-        verbose_name_plural = '출처 목록'
+        verbose_name = u'출처'
+        verbose_name_plural = u'출처 목록'
 
 
 # 중고 물건 내용
@@ -51,6 +54,9 @@ class Article(models.Model):
 
     def __str__(self):
         return '[{source}] {title}'.format(source=self.source, title=self.title)
+
+    def __unicode__(self):
+        return u'[{source}] {title}'.format(source=self.source, title=self.title)
 
     class Meta:
         verbose_name = '게시물'

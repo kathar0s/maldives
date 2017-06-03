@@ -1,0 +1,227 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="ko-KR" class="no-js">
+<head>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-9770830443832980",
+            enable_page_level_ads: true
+        });
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+{#    <link rel="profile" href="http://gmpg.org/xfn/11">#}
+    <title>중고다이브 - 개인거래 중고 가격 비교 사이트</title>
+{#    <meta name='robots' content='noindex,follow' />#}
+    <link rel='dns-prefetch' href='//fonts.googleapis.com' />
+    <link rel='dns-prefetch' href='//s.w.org' />
+{#    <link rel='stylesheet' id='dashicons-css'  href='/s/css/dashicons.min.css?ver=4.7.5' type='text/css' media='all' />#}
+{#    <link rel='stylesheet' id='admin-bar-css'  href='/s/css/admin-bar.min.css?ver=4.7.5' type='text/css' media='all' />#}
+{#    <link rel='stylesheet' id='contact-form-7-css'  href='/s/lib/plugins/contact-form-7/includes/css/styles.css?ver=4.8' type='text/css' media='all' />#}
+    <link rel='stylesheet' id='open-sans-css'  href='https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&#038;subset=latin%2Clatin-ext%2Ccyrillic%2Ccyrillic-ext&#038;ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='droidarabickufi-css'  href='https://fonts.googleapis.com/css?family=Droid+Arabic+Kufi%3A400%2C700&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
+    <link rel='stylesheet' id='merriweather-css'  href='https://fonts.googleapis.com/css?family=Merriweather%3A300%2C300i%2C400%2C400i%2C700%2C700i&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter-base-css'  href='/s/css/base.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter-lists-css'  href='/s/css/lists.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='prettyPhoto-css'  href='/s/css/prettyPhoto.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter-font_awesome_old-css'  href='/s/css/font-awesome-old/css/font-awesome.min.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='font-awesome-css'  href='/s/css/font-awesome/css/font-awesome.min.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='fontello-css'  href='/s/css/fontello/css/fontello.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter-stylesheet-css'  href='/s/css/style.css' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter-custom-css'  href='/s/css/custom.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='bootstrap-css'  href='/s/css/bootstrap.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter-responsive-css'  href='/s/css/responsive.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter_style-css'  href='/s/css/more-style.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter_shCoreDefault-css'  href='/s/css/styles/shCoreDefault.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter_animate-css'  href='/s/css/animate.min.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter_dropdownhover-css'  href='/s/css/bootstrap-dropdownhover.min.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter_select2-css'  href='/s/css/select2.min.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel='stylesheet' id='infocenter_et-line-fonts-css'  href='/s/css/et-line-fonts.css?ver=4.7.5' type='text/css' media='all' />
+    <link rel="stylesheet" id="infocenter-skin-css" href="/s/css/skins.css?ver=4.7.5" type="text/css" media="all">
+    <link rel="stylesheet" id="infotex-tablet-css" href="/s/css/tablet.css?ver=4.7.5" type="text/css" media="all">
+    <link rel="stylesheet" id="infotex-style-css" href="/s/css/infotex-style.css?ver=4.7.5" type="text/css" media="all">
+    <meta property="og:site_name" content="중고다이브" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="개인거래 중고 가격 비교 사이트" />
+    <meta property="og:image" content="/s/lib/uploads/2017/06/logo-1.png" />
+    <meta property="og:title" content="Edit comment" />
+    <meta property="og:url" content="http://localhost/wordpress/edit_comment/" />
+    <style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+    <link rel="icon" href="/s/lib/uploads/2017/06/logo-50x50.png" sizes="32x32" />
+    <link rel="icon" href="/s/lib/uploads/2017/06/logo.png" sizes="192x192" />
+    <link rel="apple-touch-icon-precomposed" href="{% static "images/logo.png" %}" />
+    <meta name="msapplication-TileImage" content="{% static "images/logo.png" %}" />
+    {% block stylesheet %}
+    {% endblock %}
+</head>
+<body  class="home logged-in admin-bar no-customize-support custom-background">
+<div class="background-cover"></div>
+<div class="loader">
+    <div class="loader_html" style="position: relative;">
+        <div class="message text-center" style="position: absolute; top: -30px; left: -35px; width: 140px;">
+            로딩중입니다.
+        </div>
+    </div>
+</div>
+{% block modal %}
+{% endblock %}
+<div id="wrap" class=" wrap-nicescroll">
+    {% block header %}
+        {% include "header.html" %}
+    {% endblock %}
+    {% block body %}
+    <div class="section-warp infocenter-infotex">
+        <div class="container clearfix">
+            <div class="box_icon box_warp box_no_border box_no_background">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>중고 물품을 검색하세요</h2>
+                        <p>찾는 물건 검색어를 입력하시면 해당 물품의 최저가 추이를 알려드립니다.</p>
+                        <div class="clearfix"></div>
+                        <div class="clearfix"></div>
+                        <div>
+                            <form role="search" class="form-style form-style-2" method="get" action="http://localhost/wordpress/">
+                                <p>
+                                    <input name="s" type="search" value="중고 물품 검색어를 입력해주세요." onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;">
+                                    <button class="ask-question-new-class" type="submit"><span class="color button small publish-question">검색</span></button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div><!-- End row -->
+            </div><!-- End box_icon -->
+        </div><!-- End container -->
+    </div><!-- End section-warp -->
+    <div class="container main-content page-right-sidebar">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="main-heading text-center">
+                    <h2>등록된 사이트 목록</h2>
+                    <div class="slices">
+                        <span class="slice"></span>
+                        <span class="slice"></span>
+                        <span class="slice"></span>
+                    </div>
+                    <p>중고다이브에서는 다음의 웹사이트, 카페에서 게시물을 가져오고 있습니다.</p>
+                </div>
+                <ul class="home-cats-list">
+                    <li>
+                        <a href="http://fluentthemes.com/wp/knowledgebase/category/account-settings/" title="Account Settings">
+                            <span class="wrap-icon">
+                                <img src="{% static "images/websites/joonggonara_w150.png" %}">
+                            </span>
+                            <span class="text">중고나라 <span class="number">(5)</span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://fluentthemes.com/wp/knowledgebase/category/account-settings/" title="Account Settings">
+                            <span class="wrap-icon">
+                                <img src="{% static "images/websites/momsholic_w150.png" %}">
+                            </span>
+                            <span class="text">맘스홀릭 <span class="number">(5)</span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://fluentthemes.com/wp/knowledgebase/category/account-settings/" title="Account Settings">
+                            <span class="wrap-icon">
+                                <img src="{% static "images/websites/cetizen_w150.png" %}">
+                            </span>
+                            <span class="text">세티즌 <span class="number">(5)</span></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div><!-- End container -->
+    {% endblock %}
+    <!-- =-=-=-=-=-=-= FOOTER =-=-=-=-=-=-= -->
+    {% block footer %}
+        {% include "footer.html" %}
+    {% endblock %}
+</div><!-- End wrap -->
+
+<div class="go-up"><i class="icon-chevron-up"></i></div>
+
+{#<script type='text/javascript' src='/s/js/admin-bar.min.js?ver=4.7.5'></script>#}
+{#<script type='text/javascript'>#}
+{#    /* <![CDATA[ */#}
+{#    var wpcf7 = {"apiSettings":{"root":"http:\/\/localhost\/wordpress\/wp-json\/","namespace":"contact-form-7\/v1"},"recaptcha":{"messages":{"empty":"Please verify that you are not a robot."}}};#}
+{#    /* ]]> */#}
+{#</script>#}
+{#<script type='text/javascript' src='/s/lib/plugins/contact-form-7/includes/js/scripts.js?ver=4.8'></script>#}
+<script type='text/javascript' src='/s/libs/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='/s/libs/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='/s/js/underscore-min.js?ver=1.8.3'></script>
+<script type='text/javascript' src="/s/js/vue.js?ver=2.3.3"></script>
+<script type='text/javascript' src='/s/js/html5.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/modernizr.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/jquery.tipsy.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/tabs.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/jquery.prettyPhoto.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/jquery.scrollTo.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/jquery.nav.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/tags.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/bootstrap.min.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/jquery.countTo.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/jquery.waypoints.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/jquery.stellar.min.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/bootstrap-dropdownhover.min.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/scripts/shCore.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/js/scripts/shBrushPhp.js?ver=1.0.0'></script>
+<script type='text/javascript' src='/s/libs/jquery/ui/core.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='/s/libs/jquery/ui/widget.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='/s/libs/jquery/ui/mouse.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='/s/libs/jquery/ui/sortable.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='/s/js/custom.js?ver=1.0.0'></script>
+{#<script type='text/javascript' src='/s/js/wp-embed.min.js?ver=4.7.5'></script>#}
+<!--[if lte IE 8]>
+		<script type="text/javascript">
+			document.body.className = document.body.className.replace( /(^|\s)(no-)?customize-support(?=\s|$)/, '' ) + ' no-customize-support';
+		</script>
+	<![endif]-->
+<!--[if gte IE 9]><!-->
+<script type="text/javascript">
+    (function() {
+        var request, b = document.body, c = 'className', cs = 'customize-support', rcs = new RegExp('(^|\\s+)(no-)?'+cs+'(\\s+|$)');
+
+        request = true;
+
+        b[c] = b[c].replace( rcs, ' ' );
+        // The customizer requires postMessage and CORS (if the site is cross domain)
+        b[c] += ( window.postMessage && request ? ' ' : ' no-' ) + cs;
+    }());
+</script>
+<script type='text/javascript'>
+    /* <![CDATA[ */
+    var products_excerpt_title = [""];
+    var go_to = "Go to...";
+    var ask_error_text = "Please fill the required field.";
+    var ask_error_captcha = "The captcha is incorrect, please try again.";
+    var captcha_answer = "Cairo";
+    var ask_error_empty = "Fill in all the required fields.";
+    var no_vote_more = "Sorry, you cannot vote on the same Question more than once.";
+    var no_vote_user = "Rating is available to members only.";
+    var no_vote_more_comment = "Sorry, you cannot vote on the same comment more than once.";
+    var sure_report = "Are you sure you want to Report?";
+    var sure_delete = "Are you sure you want to delete the Question?";
+    var sure_delete_post = "Are you sure you want to delete the post?";
+    var reported_question = "We are reported for the Question!";
+    var choose_best_answer = "Select as Best Answer";
+    var cancel_best_answer = "Cancel the Best Answer";
+    var best_answer = "Best Answer";
+    var follow_question_attr = "Follow the Question";
+    var unfollow_question_attr = "Unfollow the Question";
+    var follow_question = "Follow";
+    var unfollow_question = "Unfollow";
+    var select_file = "Select file";
+    var browse = "Browse";
+    var question_tab = "localhost";
+    /* ]]> */
+</script>
+{% block javascript %}
+{% endblock %}
+<!--<![endif]-->
+</body>
+</html>

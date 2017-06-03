@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -18,6 +20,7 @@ import json
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 import requests
+import sys
 
 
 # Enable logging
@@ -32,33 +35,36 @@ def sendToJoonggodives(message):
     response = requests.post(url, data=json.dumps(message), headers=headers, cookies=cookies)
 
 def start(bot, update):
-    sendToJoonggodives({'type' : "시작하기", 'id' : update.message.chat_id, 'text' : update.message.text})
+    sendToJoonggodives({'type' : "start", 'id' : update.message.chat_id, 'text' : update.message.text})
 
 def stop(bot, update):
-    sendToJoonggodives({'type' : "종료하기", 'id' : update.message.chat_id, 'text' : update.message.text})
+    sendToJoonggodives({'type' : "stop", 'id' : update.message.chat_id, 'text' : update.message.text})
 
 def help(bot, update):
-    sendToJoonggodives({'type': "도움말", 'id': update.message.chat_id, 'text': update.message.text})
+    sendToJoonggodives({'type': "help", 'id': update.message.chat_id, 'text': update.message.text})
 
 def search(bot, update):
-    sendToJoonggodives({'type': "검색하기", 'id': update.message.chat_id, 'text': update.message.text})
+    sendToJoonggodives({'type': "search", 'id': update.message.chat_id, 'text': update.message.text})
 
 def add_alarm(bot, update):
-    sendToJoonggodives({'type': "알림등록", 'id': update.message.chat_id, 'text': update.message.text})
+    sendToJoonggodives({'type': "register_alarm", 'id': update.message.chat_id, 'text': update.message.text})
 
 def list_alarm(bot, update):
-    sendToJoonggodives({'type': "알림보기", 'id': update.message.chat_id, 'text': update.message.text})
+    sendToJoonggodives({'type': "list_alarm", 'id': update.message.chat_id, 'text': update.message.text})
 
 def remove_alarm(bot, update):
-    sendToJoonggodives({'type': "알림삭제", 'id': update.message.chat_id, 'text': update.message.text})
+    sendToJoonggodives({'type': "remove_alarm", 'id': update.message.chat_id, 'text': update.message.text})
 
 def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
 
 
 def main():
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
+
     # Create the EventHandler and pass it your bot's token.
-    updater = Updater('369457948:AAG0fIhoWTVEp4h38DG-bAkY0lDuDe7YNpc')
+    updater = Updater('373562267:AAGVYqG7JFud4tCePUdq-Bkd-Y6-dZsP568')
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -66,11 +72,11 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("stop", stop))
-    dp.add_handler(CommandHandler("도움말", help))
+    dp.add_handler(CommandHandler(u"도움말", help))
 
-    dp.add_handler(CommandHandler("알림등록", add_alarm))
-    dp.add_handler(CommandHandler("알림목록", list_alarm))
-    dp.add_handler(CommandHandler("알림삭제", remove_alarm))
+    dp.add_handler(CommandHandler(u"알림등록", add_alarm))
+    dp.add_handler(CommandHandler(u"알림목록", list_alarm))
+    dp.add_handler(CommandHandler(u"알림삭제", remove_alarm))
     dp.add_handler(MessageHandler(Filters.text, search))
 
     # on noncommand i.e message - echo the message on Telegram

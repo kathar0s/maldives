@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import djcelery
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +29,7 @@ SECRET_KEY = 'ix^)at8hb#ijnd5@1@1=as0o7v2tx)oel3-&)tvcasla7-s%s#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', ]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
 DEFAULT_FROM_EMAIL = 'kathar0s.dev@gmail.com'
 
@@ -47,6 +48,8 @@ PROJECT_APPS = [
 
 THIRD_PARTY_APPS = [
     'dynamic_scraper',
+    'kombu.transport.django',
+    'djcelery',
     'reversion',
     'rest_framework',
     'rest_framework_swagger'
@@ -144,13 +147,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ko-KR'
 
-# TIME_ZONE = 'Asia/Seoul'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
 USE_L10N = True
 
-# USE_TZ = True
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -165,8 +168,24 @@ STATICFILES_FINDERS = (
 )
 
 STATICFILES_DIRS = [
-    STATIC_ROOT,
+
 ]
 
 MEDIA_URL = '/m/'
 MEDIA_ROOT = '/mnt/data/media/'
+
+# For Crawler Scheduling
+djcelery.setup_loader()
+
+# Celery settings
+BROKER_URL = 'amqp://guest:guest@localhost//'
+
+BROKER_TRANSPORT = "django"
+
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
