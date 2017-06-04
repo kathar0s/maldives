@@ -62,7 +62,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     pagination_class = PaginationClass
 
     @list_route()
-    def search(self, request):
+    def retrieve_item(self, request):
         #최근 2주일 데이터만 조회
         end_date = datetime.date.today()  # 현재 날짜 가져오기
         period = datetime.timedelta(days=13)
@@ -168,7 +168,7 @@ class AlarmViewSet(viewsets.ModelViewSet):
     pagination_class = PaginationClass
 
     @list_route()
-    def search(self, request):
+    def retrieve_alarm(self, request):
         queryset = ChatProfile.objects.all()
         get = request.GET.copy()
         if 'chat_id' in get:
