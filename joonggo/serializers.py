@@ -7,8 +7,8 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        #fields = ('id','title','content','price','created')
-        fields = '__all__'
+        fields = ('id','uid', 'title','price','url', 'created', 'source_id')
+        #fields = '__all__'
 
 class AlarmSerializer(serializers.ModelSerializer):
 
@@ -16,9 +16,3 @@ class AlarmSerializer(serializers.ModelSerializer):
         model = Alarm
         #fields = ('id','title','content','price','created')
         fields = '__all__'
-
-class TrendSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Article
-        fields = ('title', 'price','created')
