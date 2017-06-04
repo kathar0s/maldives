@@ -115,7 +115,7 @@ class JoonggoBot:
         keyword_list = message.split()
         query = reduce(operator.and_, (Q(title__contains=item) | Q(content__contains=item) | Q(tags__contains=item)\
                      for item in keyword_list))
-        item_list = Article.objects.filter(query).order_by('created')[:10]
+        item_list = Article.objects.filter(query).order_by('-created')[:10]
         query_result = u"검색 결과 = %d 개\n\n" % (len(item_list))
         for item in item_list:
             query_result += u"가격 : %s\n" % (item.price)

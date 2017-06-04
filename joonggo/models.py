@@ -40,7 +40,7 @@ class Article(models.Model):
     title = models.CharField('제목', db_index=True, max_length=200, default='')
     content = models.TextField('내용', default='', blank=True)
     price = models.PositiveIntegerField('가격', default=0, blank=True)
-    url = models.URLField('링크', default='', blank=True, help_text='해당 글 주소')
+    url = models.URLField('링크', default='', blank=True,  max_length=512, help_text='해당 글 주소')
 
     # 옵션 항목
     tags = models.TextField('태그', default='', blank=True, help_text='콤마로 구분')

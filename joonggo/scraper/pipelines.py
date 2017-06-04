@@ -37,6 +37,7 @@ class DjangoWriterPipeline(object):
 
 
     def adjust_price(self, item, spider):
+        new_price = 0
         price_candidate = []
         price_search = [item['title']]
         for target in price_search:
