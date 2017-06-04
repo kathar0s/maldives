@@ -31,8 +31,9 @@ class ArticleSpider(DjangoSpider):
     def start_requests(self):
         index = 0
         start_urls = ['https://nid.naver.com/nidlogin.login'] + self.start_urls
-        for url in start_urls:
 
+        print('start_requests')
+        for url in start_urls:
             if index == 0 and 'login' in url:
                 yield Request(
                     url=self.login_page,
@@ -70,6 +71,9 @@ class ArticleSpider(DjangoSpider):
             self.dds_logger.info(self.bcolors['BOLD'] +
                                  '======================================================================================' +
                                  self.bcolors['ENDC'])
+
+            print('end start_requests')
+
             index += 1
             if rpt.request_type == 'R':
                 yield Request(url, callback=self.parse, method=rpt.method, dont_filter=rpt.dont_filter, **kwargs)
@@ -79,8 +83,13 @@ class ArticleSpider(DjangoSpider):
 
     def login(self, response):
         print('login try')
+
+        login_data = {'id': 'sep521', 'pw': 'sep521sep521'}
+        if self.ref_object.name == "맘스홀릭":
+            login_data = {'id': 'sweetyjei', 'pw': 'wldus123!'}
+
         return FormRequest.from_response(response,
-                                         formdata={'id': 'sep521', 'pw': 'sep521sep521'},
+                                         formdata=login_data,
                                          callback=self.check_login_response)
 
     def check_login_response(self, response):
