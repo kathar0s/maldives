@@ -9,6 +9,7 @@ def run_spiders():
     t = TaskUtils()
 
     t.run_spiders(Source, 'scraper', 'scraper_runtime', 'article_spider')
+    t.run_spiders(Source, 'scraper', 'scraper_runtime', 'cetizen_article_spider')
 
 
 @task()
