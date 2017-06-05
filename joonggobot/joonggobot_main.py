@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #!/usr/bin/env python
+from django_pandas.io import read_frame
 
 from joonggo.models import ChatProfile, Article, Alarm
 from django.contrib.auth.models import User
@@ -9,6 +10,7 @@ from functools import reduce
 import operator
 import telegram
 import sys
+import datetime
 
 class JoonggoBot:
     WEBHOOK_URL = 'http://52.78.186.61/joonggobot/webhook_polling'
@@ -112,17 +114,40 @@ class JoonggoBot:
 
 
     def handle_search(self, id, message):
-        keyword_list = message.split()
-        query = reduce(operator.and_, (Q(title__contains=item) | Q(content__contains=item) | Q(tags__contains=item)\
-                     for item in keyword_list))
-        item_list = Article.objects.filter(query).order_by('-created')[:10]
-        query_result = u"검색 결과 = %d 개\n\n" % (len(item_list))
-        for item in item_list:
-            query_result += u"가격 : %s\n" % (item.price)
-            query_result += u"제목 : %s\n" % (item.title)
-            query_result += u"%s\n\n" % (item.url)
+        #keyword_list = message.split()
+        #query = reduce(operator.and_, (Q(title__contains=item) | Q(content__contains=item) | Q(tags__contains=item)\
+        #             for item in keyword_list))
+        #item_list = Article.objects.filter(query).order_by('-created')[:10]
+        end_date = datetime.date.today()  # 현재 날짜 가져오기
+        period = datetime.timedelta(days=13)
+        start_date = end_date - period
+        queryset = Article.objects.filter(created__gte=start_date).order_by('-created')
+        queryset = queryset.filter(title__contains=message)
+        title_exclude = ['삽니다', '구합니다', '배터리']
+        for t in title_exclude:
+            queryset = queryset.exclude(title__contains=t)
+        if (queryset.count() > 0):
+            article_data = read_frame(queryset,
+                                      fieldnames=['title', 'price', 'url', 'created'])
+            # title 중복 제거
+            article_data = article_data.sort_values('price', ascending=True).drop_duplicates('title')
+
+            # 평균값의 20%의 가격으로 최저가 책정/ 평균값의 3배 가격으로 최고가 책정
+            avg = article_data['price'].mean()
+            article_data = article_data[article_data['price'] >= avg * 0.2]
+            article_data = article_data[article_data['price'] < avg * 3]
+            article_data = article_data.reset_index(drop=True)
+            item_list = article_data[:10]
+            query_result = u"검색 결과 = %d 개\n\n" % (len(item_list))
+            for index, row in item_list.iterrows():
+                query_result += u"가격 : %s\n" % (row['price'])
+                query_result += u"제목 : %s\n" % (row['title'])
+                query_result += u"%s\n\n" % (row['url'])
 
         self.send_message(id, query_result)
+
+
+
 
     def send_message(self, id, message):
         self.telegram_bot.sendMessage(id, message)
