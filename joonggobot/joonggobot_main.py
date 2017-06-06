@@ -127,7 +127,6 @@ class JoonggoBot:
                                       fieldnames=['title', 'price', 'url', 'created', 'source', 'uid'])
             # title 중복 제거
             article_data = article_data.sort_values('price', ascending=True).drop_duplicates('title')
-            article_data['url'] =
 
             # 평균값의 20%의 가격으로 최저가 책정/ 평균값의 3배 가격으로 최고가 책정
             avg = article_data['price'].mean()
