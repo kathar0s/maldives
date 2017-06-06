@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^search/$', views.search, name='search'),
     url(r'^alarm/$', views.alarm, name='alarm'),
     url(r'^sell/$', views.sell, name='sell'),
+    url(r'^callback/$', views.callback, name='callback'),
 
     url(r'^joonggobot/', include('joonggobot.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \

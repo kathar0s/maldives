@@ -81,10 +81,20 @@ def alarm(request):
 
 
 def sell(request):
-    source = Source.objects.all()
-    template_data = {'source' :source}
-    return render(request, 'sell.html', template_data)
+    get = request.GET.copy()
+    print(get)
+    if 'token' in get:
+        html_file = 'sell.html'
+        source = Source.objects.all()
+        template_data = {'source': source}
+    else:
+        html_file = 'naverlogin.html'
+        template_data = {}
+    return render(request, html_file,  template_data)
 
+def callback(request):
+    template_data = {}
+    return render(request, 'callback.html', template_data)
 class PaginationClass(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'limit'
