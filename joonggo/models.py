@@ -16,6 +16,8 @@ class Source(models.Model):
     login_url = models.URLField('Login URL', blank=True, default='')
     scraper = models.ForeignKey(Scraper, blank=True, null=True, on_delete=models.SET_NULL)
     scraper_runtime = models.ForeignKey(SchedulerRuntime, blank=True, null=True, on_delete=models.SET_NULL)
+    base_url = models.URLField('PC Base URL', blank=True, default='')
+    mobile_base_url = models.URLField('mobile Base URL', blank=True, default='')
 
     def __str__(self):
         return '[{name}] {category}'.format(name=self.name, category=self.category)
