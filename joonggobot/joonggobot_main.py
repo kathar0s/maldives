@@ -143,9 +143,9 @@ class JoonggoBot:
                 query_result += u"제목 : %s\n" % (row['title'])
 
                 default_url = u"%s\n\n" % (row['url'])
-                words = re.search(r"\[(\w+)\]", row['source_id'])
+                words = re.search(r"\[(.*)\]", row['source_id'])
                 if words:
-                    source = Source.objects.filter(name=words.group(0)).first()
+                    source = Source.objects.filter(name=words.group(0)[1:-1]).first()
                     if source is not None:
                         default_url = u"%s%s\n\n" % (source.mobile_base_url, row['uid'])
                 query_result += default_url
