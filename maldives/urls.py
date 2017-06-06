@@ -33,8 +33,6 @@ urlpatterns = [
 
     url(r'^logout/$', logout, {'next_page': '/'}, name='logout'),
 
-    url(r'^logout/$', logout, {'next_page': '/'}, name='logout'),
-
     url(r'^joonggobot/', include('joonggobot.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

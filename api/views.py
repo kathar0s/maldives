@@ -162,7 +162,13 @@ def login(request):
         if user is not None:
             if user.is_active:
                 django_login(request, user)
-                response_data['user'] = user
+                response_data['user'] = {
+                    'id': user.id,
+                    'username': user.username,
+                    'profile': {
+                        'id': user.chatprofile.id
+                    }
+                }
                 response_data['error'] = False
                 response_data['message'] = 'You"re logged in'
             else:

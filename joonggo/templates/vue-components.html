@@ -236,6 +236,16 @@
         },
         // watch todos change for localStorage persistence
         watch: {
+            token: function (value){
+                var _this = this;
+                // 등록된 알림을 가져오는 일을 한다.
+                this.$http.get('/api/alarm/',
+                    {params: {profile__chat: value}}
+                ).then(function(data){
+                    var result = data.body;
+                    _this.alarms = result.results;
+                });
+            },
             alarms: {
                 handler: function (oldAlarms, newAlarms) {
 
@@ -418,13 +428,14 @@
             window.addEventListener('hashchange', onHashChange);
             onHashChange();
 
-            // 등록된 알림을 가져오는 일을 한다.
-            this.$http.get('/api/alarm/',
-                {params: {profile__chat: this.token}}
-            ).then(function(data){
-                var result = data.body;
-                _this.alarms = result.results;
-            });
+            if (this.token != '') {
+                this.$http.get('/api/alarm/',
+                    {params: {profile__chat: this.token}}
+                ).then(function(data){
+                    var result = data.body;
+                    _this.alarms = result.results;
+                });
+            }
         }
     });
 
@@ -462,7 +473,7 @@
                             _this.app.userId = result.user.id;
                             _this.app.userName = result.user.username;
                             _this.app.alarmId = _this.user.id;
-                            _this.app.profileId = _this.user.chatprofile.id;
+                            _this.app.profileId = result.user.profile.id;
                             _this.isLogin = true;
                         }
                         _this.isLoginProgress = false;
