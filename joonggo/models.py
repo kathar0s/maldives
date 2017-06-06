@@ -87,6 +87,7 @@ pre_delete.connect(pre_delete_handler)
 class ChatProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     chat = models.PositiveIntegerField('채팅 아이디', default=0)
+    password = models.CharField('패스워드', max_length=50, default='')
 
     def __unicode__(self):
         return u'[{user}] {chat_id}'.format(user=self.user, chat_id=self.chat)

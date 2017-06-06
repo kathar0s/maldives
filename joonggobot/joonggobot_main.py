@@ -43,7 +43,8 @@ class JoonggoBot:
                         'search': self.handle_search,
                         'register_alarm': self.handle_add_alarm,
                         'list_alarm': self.handle_list_alarm,
-                        'remove_alarm': self.handle_remove_alarm,}
+                        'remove_alarm': self.handle_remove_alarm,
+                        'password_alarm': self.handle_password_alarm,}
 
     def handle_start(self, id, message):
 
@@ -104,12 +105,29 @@ class JoonggoBot:
             send_message = u"%d 토큰의 사용자 정보가 존재하지 않습니다\n다시 봇을 시작해주세요" % (id)
         else:
             keyword = message.split(u"/알림삭제")
-            if len(keyword) < 2:
+            if len(keyword) < 1 or len(keyword[1]) < 1:
                 Alarm.objects.filter(profile=profile).delete()
                 send_message = u"%d 토큰의 모든 알림을 삭제하였습니다" % (id)
             else:
                 Alarm.objects.filter(profile=profile, keyword=keyword[1]).delete()
                 send_message = u"%d 토큰의 \"%s\" 알림을 삭제하였습니다" % (id, keyword[1])
+
+        self.send_message(id, send_message)
+
+    def handle_password_alarm(self, id, message):
+
+        profile = self.get_chat_profile(id)
+        if profile is None:
+            send_message = u"%d 토큰의 사용자 정보가 존재하지 않습니다\n다시 봇을 시작해주세요" % (id)
+        else:
+            keyword = message.split(u"/알림암호")
+            if len(keyword) < 1 or len(keyword[1]) < 1:
+                Alarm.objects.filter(profile=profile).delete()
+                send_message = u"%d 토큰의 암호는 \'%s\' 입니다" % (id, profile.password)
+            else:
+                profile.password = keyword[1]
+                profile.save()
+                send_message = u"%d 토큰의 암호를 \'%s\' 로 설정하였습니다" % (id, profile.password)
 
         self.send_message(id, send_message)
 

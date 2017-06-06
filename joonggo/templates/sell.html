@@ -2,6 +2,31 @@
 {% load staticfiles %}
 {% block body %}
     <div class="container">
-        판매글 페이지
+         <ul class="home-cats-list">
+                    <li>
+                        <a href="https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=LRrB5VpRxkF0nWoMiTaQ&redirect_uri=http://cafe.naver.com/joonggonara" target="_blank" title="Account Settings">
+                            <span class="wrap-icon">
+                                <img src="{% static "images/websites/joonggonara_w150.png" %}">
+                            </span>
+                            <span class="text">중고나라 <span class="number"></span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://fluentthemes.com/wp/knowledgebase/category/account-settings/" title="Account Settings">
+                            <span class="wrap-icon">
+                                <img src="{% static "images/websites/momsholic_w150.png" %}">
+                            </span>
+                            <span class="text">맘스홀릭 <span class="number"></span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://fluentthemes.com/wp/knowledgebase/category/account-settings/" title="Account Settings">
+                            <span class="wrap-icon">
+                                <img src="{% static "images/websites/cetizen_w150.png" %}">
+                            </span>
+                            <span class="text">세티즌 <span class="number"></span></span>
+                        </a>
+                    </li>
+                </ul>
     </div>
 {% endblock %}
