@@ -141,12 +141,12 @@ class JoonggoBot:
                 query_result += u"날짜 : %s\n" % (row['created'])
                 query_result += u"제목 : %s\n" % (row['title'])
 
-                words = re.findall(r'\[([\w]+)\]', row['source'])
-                short_url = words[0] + row['uid'] if len(words) > 0 else row['url']
-                query_result += u"%s\n\n" % (short_url)
+                words = re.search(r"\[(\w+)\]", row['source'])
+                if words:
+                    row['url'] = words.group(0) + row['uid']
+                query_result += u"%s\n\n" % (row['url'])
 
         self.send_message(id, query_result)
-
 
 
 
