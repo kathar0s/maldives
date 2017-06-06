@@ -3,7 +3,7 @@
 #!/usr/bin/env python
 from django_pandas.io import read_frame
 
-from joonggo.models import ChatProfile, Article, Alarm
+from joonggo.models import ChatProfile, Article, Alarm, Source
 from django.contrib.auth.models import User
 from django.db.models import Q
 from functools import reduce
@@ -114,10 +114,6 @@ class JoonggoBot:
 
 
     def handle_search(self, id, message):
-        #keyword_list = message.split()
-        #query = reduce(operator.and_, (Q(title__contains=item) | Q(content__contains=item) | Q(tags__contains=item)\
-        #             for item in keyword_list))
-        #item_list = Article.objects.filter(query).order_by('-created')[:10]
         end_date = datetime.date.today()  # 현재 날짜 가져오기
         period = datetime.timedelta(days=13)
         start_date = end_date - period
@@ -128,7 +124,7 @@ class JoonggoBot:
             queryset = queryset.exclude(title__contains=t)
         if (queryset.count() > 0):
             article_data = read_frame(queryset,
-                                      fieldnames=['title', 'price', 'url', 'created'])
+                                      fieldnames=['title', 'price', 'url', 'created', 'source', 'uid'])
             # title 중복 제거
             article_data = article_data.sort_values('price', ascending=True).drop_duplicates('title')
 
@@ -141,8 +137,11 @@ class JoonggoBot:
             query_result = u"검색 결과 = %d 개\n\n" % (len(item_list))
             for index, row in item_list.iterrows():
                 query_result += u"가격 : %s\n" % (row['price'])
+                query_result += u"날짜 : %s\n" % (row['created'])
                 query_result += u"제목 : %s\n" % (row['title'])
-                query_result += u"%s\n\n" % (row['url'])
+
+                source = Source.objects.filter(name=row['source'].split()[0])
+                query_result += u"%s%s\n" % (source.mobile_base_url, row['uid'])
 
         self.send_message(id, query_result)
 
