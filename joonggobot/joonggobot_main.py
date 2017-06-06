@@ -133,6 +133,7 @@ class JoonggoBot:
             avg = article_data['price'].mean()
             article_data = article_data[article_data['price'] >= avg * 0.2]
             article_data = article_data[article_data['price'] < avg * 3]
+            article_data = article_data[article_data['price'] % 100 == 0]
             article_data = article_data.reset_index(drop=True)
             item_list = article_data[:10]
             query_result = u"검색 결과 = %d 개\n\n" % (len(item_list))
