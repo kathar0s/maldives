@@ -141,7 +141,7 @@ class JoonggoBot:
                 query_result += u"제목 : %s\n" % (row['title'])
 
                 source = Source.objects.filter(source=row['source'])
-                query_result += u"%s\n\n" % (source.mobile_base_url, row['uid'])
+                query_result += u"%s%s\n" % (source.mobile_base_url, row['uid'])
 
         self.send_message(id, query_result)
 
