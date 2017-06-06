@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load humanize %}
 {% block body %}
     <div class="section-warp infocenter-infotex">
         <div class="container clearfix">
@@ -39,7 +40,7 @@
                             <span class="wrap-icon">
                                 <img src="{% static "images/websites/joonggonara_w150.png" %}">
                             </span>
-                            <span class="text">중고나라 <span class="number">({{ counter.joonggonara }})</span></span>
+                            <span class="text">중고나라 <span class="number">({{ counter.joonggonara | intcomma }})</span></span>
                         </a>
                     </li>
                     <li>
@@ -47,7 +48,7 @@
                             <span class="wrap-icon">
                                 <img src="{% static "images/websites/momsholic_w150.png" %}">
                             </span>
-                            <span class="text">맘스홀릭 <span class="number">(5)</span></span>
+                            <span class="text">맘스홀릭 <span class="number">({{ counter.momsholic | intcomma }})</span></span>
                         </a>
                     </li>
                     <li>
@@ -55,7 +56,7 @@
                             <span class="wrap-icon">
                                 <img src="{% static "images/websites/cetizen_w150.png" %}">
                             </span>
-                            <span class="text">세티즌 <span class="number">(5)</span></span>
+                            <span class="text">세티즌 <span class="number">({{ counter.cetizen | intcomma }})</span></span>
                         </a>
                     </li>
                 </ul>
