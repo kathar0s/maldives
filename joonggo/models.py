@@ -100,10 +100,13 @@ class ChatProfile(models.Model):
 
 # 사용자별 / ID별 알림 내용
 class Alarm(models.Model):
-    profile = models.ForeignKey(ChatProfile, on_delete=models.CASCADE, default=None, null=True, blank=True, verbose_name='로그인')
+    profile = models.ForeignKey(ChatProfile, on_delete=models.CASCADE, default=None, null=True, blank=True,
+                                verbose_name='로그인')
 
     keyword = models.CharField('키워드', max_length=50, default='')
     price = models.PositiveIntegerField('가격', default=0)
+
+    disabled = models.BooleanField('활성화 여부', default=True)
 
     created = models.DateTimeField('등록일', auto_now_add=True)
 
