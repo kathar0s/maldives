@@ -36,9 +36,6 @@ urlpatterns = [
     url(r'^alarm/$', views.alarm, name='alarm'),
     url(r'^sell/$', views.sell, name='sell'),
 
-    url(r'^test/$', views.write, name='write'),
-    url(r'^getNaverLoginResult/$', views.getNaverLoginResult, name='getNaverLoginResult'),
-
     url(r'^joonggobot/', include('joonggobot.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
   + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

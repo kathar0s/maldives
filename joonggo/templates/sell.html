@@ -1,32 +1,39 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load to_pc_url %}
 {% block body %}
     <div class="container">
-         <ul class="home-cats-list">
-                    <li>
-                        <a href="https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=LRrB5VpRxkF0nWoMiTaQ&redirect_uri=http://cafe.naver.com/joonggonara" target="_blank" title="Account Settings">
-                            <span class="wrap-icon">
-                                <img src="{% static "images/websites/joonggonara_w150.png" %}">
-                            </span>
-                            <span class="text">중고나라 <span class="number"></span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://fluentthemes.com/wp/knowledgebase/category/account-settings/" title="Account Settings">
-                            <span class="wrap-icon">
-                                <img src="{% static "images/websites/momsholic_w150.png" %}">
-                            </span>
-                            <span class="text">맘스홀릭 <span class="number"></span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://fluentthemes.com/wp/knowledgebase/category/account-settings/" title="Account Settings">
-                            <span class="wrap-icon">
-                                <img src="{% static "images/websites/cetizen_w150.png" %}">
-                            </span>
-                            <span class="text">세티즌 <span class="number"></span></span>
-                        </a>
-                    </li>
-                </ul>
+        <div class="table-responsive" style="margin: 10px 0;">
+            <table class="table" style="margin-bottom: 0;">
+                <colgroup>
+                    <col class="col-xs-4">
+                    <col class="col-xs-3">
+                    <col class="col-xs-3">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="text-center">사이트</th>
+                        <th class="text-center">카테고리</th>
+                        <th class="text-center">글쓰기</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for site in source %}
+                    <tr>
+                        <td class="text-center"><img class="website-line" src="{% static site.site_image_url %}"></td>
+                        <td class="text-center"><span class="text-priority-high">{{ site.category }}</span></td>
+                        {% if site.name == "세티즌" %}
+                            <td class="text-center"><a href="http://market.cetizen.com/market.php?auc_sale=1" target="_blank" ><span class="label label-default">글쓰기</span></a></td>
+                        {% else %}
+                            <!--<td class="text-center"><a href="https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=LRrB5VpRxkF0nWoMiTaQ&redirect_uri={{ site.url|to_pc_url }}" target="_blank" > -->
+                            <td class="text-center"><a href="{{ site.url|to_pc_url }}" target="_blank" >
+                                <span class="label label-default">글쓰기</span></a></td>
+                        {% endif %}
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

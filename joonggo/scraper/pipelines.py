@@ -16,9 +16,9 @@ class DjangoWriterPipeline(object):
             try:
                 item['source'] = spider.ref_object
 
-                checker_rt = SchedulerRuntime(runtime_type='C')
-                checker_rt.save()
-                item['checker_runtime'] = checker_rt
+                #checker_rt = SchedulerRuntime(runtime_type='C')
+                #checker_rt.save()
+                #item['checker_runtime'] = checker_rt
                 item['price'] = self.adjust_price(item, spider)
 
                 item.save()

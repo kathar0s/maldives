@@ -8,7 +8,7 @@ from django.shortcuts import render, render_to_response
 from pandas.io import json
 from rest_framework.decorators import list_route
 from rest_framework import viewsets
-from joonggo.models import Article, Alarm, ChatProfile
+from joonggo.models import Article, Alarm, ChatProfile, Source
 from joonggo.serializers import ArticleSerializer, AlarmSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -17,7 +17,6 @@ import collections
 
 # Create your views here.
 from joonggo.utils import paginate_list
-
 
 def index(request):
 
@@ -82,21 +81,9 @@ def alarm(request):
 
 
 def sell(request):
-    template_data = {}
+    source = Source.objects.all()
+    template_data = {'source' :source}
     return render(request, 'sell.html', template_data)
-
-
-def write(request):
-    if request.session.get('naverTokenId') is None:
-        print('naverTokenId : None')
-        return render_to_response('write_test.html')
-    else:
-        return HttpResponse('글쓰기로 이동!!')
-
-
-def getNaverLoginResult(request):
-    return HttpResponse('Testing!!!')
-
 
 class PaginationClass(PageNumberPagination):
     page_size = 10
