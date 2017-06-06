@@ -102,6 +102,7 @@ class ChatProfile(models.Model):
 class Alarm(models.Model):
     profile = models.ForeignKey(ChatProfile, on_delete=models.CASCADE, default=None, null=True, blank=True,
                                 verbose_name='로그인')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, verbose_name='사용자')
 
     keyword = models.CharField('키워드', max_length=50, default='')
     price = models.PositiveIntegerField('가격', default=0)
