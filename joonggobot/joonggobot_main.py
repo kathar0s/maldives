@@ -11,6 +11,7 @@ import operator
 import telegram
 import sys
 import datetime
+import re
 
 class JoonggoBot:
     WEBHOOK_URL = 'http://52.78.186.61/joonggobot/webhook_polling'
@@ -140,8 +141,9 @@ class JoonggoBot:
                 query_result += u"날짜 : %s\n" % (row['created'])
                 query_result += u"제목 : %s\n" % (row['title'])
 
-                source = Source.objects.filter(name=row['source'].split()[0])
-                query_result += u"%s%s\n" % (source.mobile_base_url, row['uid'])
+                words = re.findall(r'\[([\w]+)\]', row['source'])
+                short_url = words[0] + row['uid'] if len(words) > 0 else row['url']
+                query_result += u"%s\n\n" % (short_url)
 
         self.send_message(id, query_result)
 
