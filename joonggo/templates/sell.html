@@ -5,23 +5,29 @@
         <div class="table-responsive" style="margin: 10px 0;">
             <table class="table" style="margin-bottom: 0;">
                 <colgroup>
+                    <col class="col-xs-4">
                     <col class="col-xs-3">
-                    <col class="col-xs-5">
-                    <col class="col-xs-2">
+                    <col class="col-xs-3">
                 </colgroup>
                 <thead>
                     <tr>
-                        <th>사이트</th>
-                        <th class="text-right">카테고리</th>
+                        <th class="text-center">사이트</th>
+                        <th class="text-center">카테고리</th>
                         <th class="text-center">글쓰기</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for site in source %}
                     <tr>
-                        <td><img class="website-line" src="{% static {{site.site_image_url }} %}"></td>
-                        <td class="text-right"><span class="text-priority-high">{{ site.category }}</span></td>
-                        <td class="text-right"><a href="" ><span class="label label-default">글쓰기</span></a></td>
+                        <td class="text-center"><img class="website-line" src="{% static site.site_image_url %}"></td>
+                        <td class="text-center"><span class="text-priority-high">{{ site.category }}</span></td>
+                        {% if site.name == "세티즌" %}
+                            <td class="text-center"><a href="http://market.cetizen.com/market.php?auc_sale=1" target="_blank" ><span class="label label-default">글쓰기</span></a></td>
+                        {% else %}
+                            <td class="text-center"><a href="https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=LRrB5VpRxkF0nWoMiTaQ&redirect_uri={{ site.url }}" target="_blank" >
+                                <span class="label label-default">글쓰기</span></a></td>
+                        {% endif %}
+
                     </tr>
                 {% endfor %}
                 </tbody>
