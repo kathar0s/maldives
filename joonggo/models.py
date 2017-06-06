@@ -18,6 +18,7 @@ class Source(models.Model):
     scraper_runtime = models.ForeignKey(SchedulerRuntime, blank=True, null=True, on_delete=models.SET_NULL)
     base_url = models.URLField('PC Base URL', blank=True, default='')
     mobile_base_url = models.URLField('mobile Base URL', blank=True, default='')
+    site_image_url = models.CharField('site base image', max_length=256, blank=True, default='')
 
     def __str__(self):
         return '[{name}] {category}'.format(name=self.name, category=self.category)
@@ -88,6 +89,14 @@ class ChatProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     chat = models.PositiveIntegerField('채팅 아이디', default=0)
     password = models.CharField('패스워드', max_length=50, default='')
+
+    def __unicode__(self):
+        return u'[{user}] {chat_id}'.format(user=self.user, chat_id=self.chat)
+
+    class Meta:
+        verbose_name = '알림(Telegram)'
+        verbose_name_plural = '알림(Telegram) 목록'
+
 
 # 사용자별 / ID별 알림 내용
 class Alarm(models.Model):

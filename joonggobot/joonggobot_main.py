@@ -114,7 +114,6 @@ class JoonggoBot:
 
         self.send_message(id, send_message)
 
-
     def handle_password_alarm(self, id, message):
 
         profile = self.get_chat_profile(id)
@@ -124,14 +123,13 @@ class JoonggoBot:
             keyword = message.split(u"/알림암호")
             if len(keyword) < 1 or len(keyword[1]) < 1:
                 Alarm.objects.filter(profile=profile).delete()
-                send_message = u"%d 토큰의 암호는 '%s' 입니다" % (id, profile.password)
+                send_message = u"%d 토큰의 암호는 \'%s\' 입니다" % (id, profile.password)
             else:
                 profile.password = keyword[1]
                 profile.save()
-                send_message = u"%d 토큰의 \"%s\" 암호를 '%s' 로 설정하였습니다" % (id, profile.password)
+                send_message = u"%d 토큰의 암호를 \'%s\' 로 설정하였습니다" % (id, profile.password)
 
         self.send_message(id, send_message)
-
 
     def handle_search(self, id, message):
         end_date = datetime.date.today()  # 현재 날짜 가져오기
@@ -170,8 +168,6 @@ class JoonggoBot:
                 query_result += default_url
 
         self.send_message(id, query_result)
-
-
 
     def send_message(self, id, message):
         self.telegram_bot.sendMessage(id, message)

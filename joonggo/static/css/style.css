@@ -968,13 +968,13 @@ div[class*="slider_shadow"]:before,div[class^="header_shadow"] {
     color: #777;
     font-size: 25px;
     resize: none;
-    font-weight: 900;
+    font-weight: 500;
     text-indent: 10px;
     line-height: 48px;
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     border-radius: 2px;
-    height: 48px;
+    height: 47px;
     margin-top: 10px;
 	padding-right: 104px;
 }

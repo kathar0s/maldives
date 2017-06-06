@@ -425,7 +425,7 @@
         data: function () {
             return {
                 /* 현재 활성화탭 */
-                isLogin: true,
+                isLogin: false,
                 isLoginProgress: false,
                 id: ''
             }
@@ -434,6 +434,8 @@
             onSubmit: function() {
                 var _this = this;
                 _this.isLoginProgress = true;
+
+                $.post('/api/')
 
                 setTimeout(function(){
                     _this.isLoginProgress = false;
