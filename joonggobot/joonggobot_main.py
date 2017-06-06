@@ -138,7 +138,7 @@ class JoonggoBot:
             query_result = u"검색 결과 = %d 개\n\n" % (len(item_list))
             for index, row in item_list.iterrows():
                 query_result += u"가격 : %s\n" % (row['price'])
-                query_result += u"날짜 : %s\n" % (row['created']).split('.')[0]
+                query_result += u"날짜 : %s\n" % (row['created'])
                 query_result += u"제목 : %s\n" % (row['title'])
 
                 default_url = u"%s\n\n" % (row['url'])
