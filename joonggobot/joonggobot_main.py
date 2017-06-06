@@ -72,7 +72,7 @@ class JoonggoBot:
         self.send_message(id, send_message)
 
     def handle_add_alarm(self, id, message):
-        keyword = message.split(u"/알림등록")[1]
+        keyword = message.split(u"/알림등록")[1].strip()
 
         profile = self.get_chat_profile(id)
         if profile is not None:
@@ -109,8 +109,8 @@ class JoonggoBot:
                 Alarm.objects.filter(profile=profile).delete()
                 send_message = u"%d 토큰의 모든 알림을 삭제하였습니다" % (id)
             else:
-                Alarm.objects.filter(profile=profile, keyword=keyword[1]).delete()
-                send_message = u"%d 토큰의 \"%s\" 알림을 삭제하였습니다" % (id, keyword[1])
+                Alarm.objects.filter(profile=profile, keyword=keyword[1].strip()).delete()
+                send_message = u"%d 토큰의 \"%s\" 알림을 삭제하였습니다" % (id, keyword[1].strip())
 
         self.send_message(id, send_message)
 
@@ -125,7 +125,7 @@ class JoonggoBot:
                 Alarm.objects.filter(profile=profile).delete()
                 send_message = u"%d 토큰의 암호는 \'%s\' 입니다" % (id, profile.password)
             else:
-                profile.password = keyword[1]
+                profile.password = keyword[1].strip()
                 profile.save()
                 send_message = u"%d 토큰의 암호를 \'%s\' 로 설정하였습니다" % (id, profile.password)
 
