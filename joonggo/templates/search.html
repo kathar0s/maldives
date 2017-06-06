@@ -28,7 +28,12 @@
             <h2>키워드를 입력해주세요.</h2>
             <p>키워드를 입력하시면 해당 물품이 검색됩니다. 검색어는 자세히 입력할 수록 결과가 더 정확해집니다.</p>
         </div>
-        <div class="result {% if not request.GET.q %}hide{% endif %}">
+        <div class="page-content text-center {% if articles.count  != 0 %}hide{% endif %}">
+            <i class="icon-warning-sign"></i>
+            <h2>검색결과를 찾을 수 없습니다.</h2>
+            <p>키워드를 입력하시면 해당 물품이 검색됩니다. 검색어는 자세히 입력할 수록 결과가 더 정확해집니다.</p>
+        </div>
+        <div class="result {% if not request.GET.q or articles.count == 0 %}hide{% endif %}">
             <h1 class="title">{{ request.GET.q }} <small>검색결과</small></h1>
             <div class="row">
                 <div class="col-md-8">
@@ -116,9 +121,7 @@
                 </aside>
                 <article class="col-md-12">
                     <ul class="nav nav-tabs">
-                        <li role="presentation" class="active"><a>판매 등록수 <span class="count">{{ articles | length }}</span></a></li>
-{#                                <li role="presentation"><a href="#">Profile</a></li>#}
-{#                                <li role="presentation"><a href="#">Messages</a></li>#}
+                        <li role="presentation" class="active"><a>판매 등록수 <span class="count">{{ articles | length | intcomma }}</span></a></li>
                     </ul>
                     <br/>
                     <strong>최저가순</strong>

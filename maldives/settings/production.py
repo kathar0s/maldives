@@ -50,6 +50,7 @@ THIRD_PARTY_APPS = [
     'dynamic_scraper',
     'kombu.transport.django',
     'djcelery',
+    'django_filters',
     'reversion',
     'rest_framework',
     'rest_framework_swagger'
@@ -189,3 +190,9 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
+
+# REST_FRAMEWORK 설정
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}

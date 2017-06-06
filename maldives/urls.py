@@ -19,23 +19,21 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from joonggo import views
-from rest_framework import routers
-from joonggo.views import ArticleViewSet, AlarmViewSet
-
-
-router = routers.DefaultRouter()
-router.register(r'Article', ArticleViewSet)
-router.register(r'Alarm', AlarmViewSet)
+from django.contrib.auth.views import logout
 
 
 urlpatterns = [
-    url(r'^api/', include(router.urls)),
+    url(r'^api/', include('api.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^search/$', views.search, name='search'),
     url(r'^alarm/$', views.alarm, name='alarm'),
     url(r'^sell/$', views.sell, name='sell'),
     url(r'^callback/$', views.callback, name='callback'),
+
+    url(r'^logout/$', logout, {'next_page': '/'}, name='logout'),
+
+    url(r'^logout/$', logout, {'next_page': '/'}, name='logout'),
 
     url(r'^joonggobot/', include('joonggobot.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
