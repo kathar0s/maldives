@@ -144,7 +144,7 @@ class JoonggoBot:
                 words = re.search(r"\[(\w+)\]", row['source'])
                 if words:
                     source = Source.objects.filter(name=words.group(0)).first()
-                    if not (source is None)
+                    if not (source is None):
                         row['url'] = source.mobile_base_url + row['uid']
                 query_result += u"%s\n\n" % (row['url'])
 
