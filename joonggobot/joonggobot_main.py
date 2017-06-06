@@ -11,6 +11,7 @@ import operator
 import telegram
 import sys
 import datetime
+import re
 
 class JoonggoBot:
     WEBHOOK_URL = 'http://52.78.186.61/joonggobot/webhook_polling'
@@ -124,7 +125,7 @@ class JoonggoBot:
             queryset = queryset.exclude(title__contains=t)
         if (queryset.count() > 0):
             article_data = read_frame(queryset,
-                                      fieldnames=['title', 'price', 'url', 'created', 'source', 'uid'])
+                                      fieldnames=['title', 'price', 'url', 'created', 'source_id', 'uid'])
             # title 중복 제거
             article_data = article_data.sort_values('price', ascending=True).drop_duplicates('title')
 
@@ -140,11 +141,15 @@ class JoonggoBot:
                 query_result += u"날짜 : %s\n" % (row['created'])
                 query_result += u"제목 : %s\n" % (row['title'])
 
-                source = Source.objects.filter(name=row['source'].split()[0])
-                query_result += u"%s%s\n" % (source.mobile_base_url, row['uid'])
+                default_url = u"%s\n\n" % (row['url'])
+                words = re.search(r"\[(\w+)\]", row['source_id'])
+                if words:
+                    source = Source.objects.filter(name=words.group(0)).first()
+                    if source is not None:
+                        default_url = u"%s%s\n\n" % (source.mobile_base_url, row['uid'])
+                query_result += default_url
 
         self.send_message(id, query_result)
-
 
 
 
