@@ -146,7 +146,7 @@ class JoonggoBot:
                 if words:
                     source = Source.objects.filter(name=words.group(0)).first()
                     if source is not None:
-                        default_url = u"%s%s\n" % (source.source.mobile_base_url, row['uid'])
+                        default_url = u"%s%s\n\n" % (source.mobile_base_url, row['uid'])
                 query_result += default_url
 
         self.send_message(id, query_result)
