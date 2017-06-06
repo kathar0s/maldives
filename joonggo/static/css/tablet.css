@@ -73,7 +73,7 @@
   /*home categories*/
   .home-cats-list li {
     margin-left: 2.63157894736842%;
-    width: 31.5803% /*3등분하기위한 비율*/
+    width: 31.5801%; /*3등분하기위한 비율*/
     /*width: 22.98245614035088%;*/
   }
   .home-cats-list li:nth-child(4n+1) {

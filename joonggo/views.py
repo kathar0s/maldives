@@ -17,7 +17,9 @@ import collections
 def index(request):
 
     counter = {
-        'joonggonara': Article.objects.filter(source__name='중고나라').count()
+        'joonggonara': Article.objects.filter(source__name='중고나라').count(),
+        'momsholic': Article.objects.filter(source__name='맘스홀릭').count(),
+        'cetizen': Article.objects.filter(source__name='세티즌').count()
     }
 
     template_data = {
