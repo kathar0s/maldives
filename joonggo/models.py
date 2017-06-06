@@ -110,6 +110,13 @@ class Alarm(models.Model):
     disabled = models.BooleanField('비활성화 여부', default=False)
     created = models.DateTimeField('등록일', auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+
+        if self.profile and not self.user:
+            self.user = self.profile.user
+
+        super(Alarm, self).save(*args, **kwargs)
+
     class Meta:
         verbose_name = '알림'
         verbose_name_plural = '알림 목록'

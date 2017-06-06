@@ -52,36 +52,11 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
 
 class AlarmViewSet(viewsets.ModelViewSet):
-    queryset = Alarm.objects.all().select_related('profile').order_by('-id')
+    queryset = Alarm.objects.all().select_related('profile').order_by('id')
     serializer_class = AlarmSerializer
     pagination_class = PaginationClass
     filter_backends = (filters.DjangoFilterBackend, )
     filter_fields = ('profile', 'id', 'profile__chat', 'profile__user')
-
-    # def get_queryset(self):
-    #     pass
-
-    # @list_route()
-    # def retrieve(self, request):
-    #     queryset = ChatProfile.objects.all()
-    #     get = request.GET.copy()
-    #     if 'id' in get:
-    #         queryset = queryset.filter(chat=get['chat_id'])
-    #         if queryset.count() > 0 :
-    #             df_user_info = read_frame(queryset, fieldnames=['id', 'chat', 'user'])
-    #             user_id = df_user_info.ix[0]['id']
-    #             print(user_id)
-    #             qs_alarm = Alarm.objects.filter(profile=user_id)
-    #             df_alarm_data = read_frame(qs_alarm, fieldnames=['id', 'keyword', 'price', 'created'])
-    #             df_alarm_data['created'] = df_alarm_data['created'].apply(lambda x: x.strftime('%Y-%m-%d %h:%m:%s'))
-    #             df_alarm_data = df_alarm_data.T
-    #             dict_alarm_data = df_alarm_data.to_dict()
-    #             dict_alarm_data = check_key_type(dict_alarm_data)
-    #             content = {'rsltCd': 'Y', 'rsltNsg': '정상', 'alarmData': dict_alarm_data }
-    #         else:
-    #             content = {'rsltCd': 'N', 'rsltNsg': '사용자 아이디가 없음'}
-    #
-    #     return Response(content)
 
 
 def retrieve_item(item_id):
@@ -187,6 +162,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 django_login(request, user)
+                response_data['user'] = user
                 response_data['error'] = False
                 response_data['message'] = 'You"re logged in'
             else:

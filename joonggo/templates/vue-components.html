@@ -1,0 +1,490 @@
+<script type="text/x-template" id="login-component">
+    <div class="login" v-show="!isLogin">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="page-content">
+                    <h2>중고다이브 텔레그램 봇</h2>
+                    <div class="form-style form-style-3">
+                        <div class="ask_form inputs">
+                            <form id="login-form" class="login-form ask_login" action="" method="post" @submit.stop.prevent="onSubmit">
+                                {% csrf_token %}
+                                <div class="form-inputs clearfix">
+                                    <p class="login-text" style="position: relative;">
+                                        <span class="loader_2" style="position: absolute; right: 10px; top: 10px;" v-show="isLoginProgress"></span>
+                                        <input class="required-item" type="text" v-model="user.id" placeholder="JGDV id" name="id">
+                                        <i class="icon-user"></i>
+                                    </p>
+                                </div>
+                                <div class="form-inputs clearfix">
+                                    <p class="login-text" style="position: relative;">
+                                        <span class="loader_2" style="position: absolute; right: 10px; top: 10px;" v-show="isLoginProgress"></span>
+                                        <input class="required-item" type="password" v-model="user.password" placeholder="비밀번호" name="password">
+                                        <i class="icon-lock"></i>
+                                    </p>
+                                </div>
+                                <p class="form-submit login-submit">
+                                    <input type="submit" value="로그인" class="button color small login-submit submit sidebar_submit" :disabled="isLoginProgress">
+                                </p>
+                                <div class="errorlogin"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- End page-content -->
+            </div>
+            <!-- End col-md-6 -->
+            <div class="col-md-6">
+                <div class="page-content">
+                    <h2>알림</h2>
+                    <p>
+                        중고다이브에서는 텔레그램을 통해 알림을 받을 수 있습니다.<br/>
+                        텔레그램을 통해 JGDV ID를 발급받으세요.<br/>
+                        텔레그램에서 Joonggodives bot을 검색하신 후에 등록을 어떻게 하면.. JGDV ID를 받을 수 있습니다.
+                        텔레그램에서 어떻게 하면 어떻게 등록을 할 수 있습니다.
+                    </p>
+                    <a class="button small color signup" style="padding: 20px;">등록하는 방법 알아보기</a>
+                </div>
+                <!-- End page-content -->
+            </div>
+            <!-- End col-md-6 -->
+        </div>
+        <!-- End row -->
+    </div>
+</script>
+<script type="text/x-template" id="keyword-component">
+    <div class="keyword-manager" v-show="app.$refs.login.isLogin">
+        <section class="keywordapp">
+            <h1>알림 등록</h1>
+            <header class="list-wrapper clearfix">
+                <input class="toggle-all" type="checkbox" v-model="allDone">
+                <div class="col-xs-7">
+                    <div class="checker">
+                        <input class="new-alarm new-keyword"
+                               autofocus autocomplete="off"
+                               placeholder="키워드"
+                               v-model="newAlarm"
+                               maxlength="14"
+                               @keyup.enter="addAlarm">
+                    </div>
+                </div>
+                <div class="col-xs-5 col-sm-3">
+                    <div class="checker">
+                        <input class="new-alarm text-right"
+                               autofocus autocomplete="off"
+                               placeholder="가격(옵션)"
+                               v-model="newPrice"
+                               maxlength="9"
+                               @keyup.enter="addAlarm">
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <div class="register">
+                        <button class="btn btn-block btn-secondary" @click="addAlarm">등록</button>
+                    </div>
+                </div>
+            </header>
+            <section class="main" v-show="alarms.length" v-cloak>
+                <ul class="alarm-list">
+                    <li v-for="alarm in filteredAlarms"
+                        class="alarm"
+                        :key="alarm.id"
+                        :class="{ disabled: alarm.disabled, editing: alarm == editedAlarm }">
+                        <div class="view">
+                            <div class="row">
+                                <input class="toggle" type="checkbox" v-model="alarm.disabled" @click="editDisabled(alarm)">
+                                <div class="col-xs-7">
+                                    <label class="keyword" @dblclick="editAlarm(alarm)">[[ alarm.keyword ]]</label>
+                                </div>
+                                <div class="col-xs-3">
+                                    <label class="price" @dblclick="editAlarm(alarm)">[[ alarm.price ]]</label>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="destroy-wrapper">
+                                        <button class="destroy outline" @click="removeAlarm(alarm)"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="view-edit">
+                            <div class="row">
+                                <div class="col-xs-7">
+                                    <input class="edit keyword" type="text"
+                                           v-model="alarm.keyword"
+                                            {#                                               @blur="doneEdit(alarm)"#}
+                                            {#                                               v-alarm-focus="{alarm == editedAlarm}"#}
+                                           maxlength="14"
+                                           @keydown.enter="doneEdit(alarm)"
+                                           @keyup.esc="cancelEdit(alarm)">
+                                </div>
+                                <div class="col-xs-3">
+                                    <input class="edit price text-right" type="text"
+                                           v-model="alarm.price"
+                                            {#                                               v-alarm-focus="{focus: alarm == editedAlarm, target: 'price'}"#}
+                                           maxlength="9"
+                                            {#                                               @blur="doneEdit(alarm)"#}
+                                           @keydown.enter="doneEdit(alarm)"
+                                           @keyup.esc="cancelEdit(alarm)">
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="register edit-element">
+                                        <button class="btn btn-block btn-info" @click="doneEdit(alarm)">수정</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+            <footer class="footer" v-show="alarms.length" v-cloak>
+                    <span class="alarm-count">
+                      <strong>[[ remaining ]]</strong> 개 활성화
+                    </span>
+                <ul class="filters">
+                    <li><a href="#/all" :class="{ selected: visibility == 'all' }">전체</a></li>
+                    <li><a href="#/enabled" :class="{ selected: visibility == 'enabled' }">활성화</a></li>
+                    <li><a href="#/disabled" :class="{ selected: visibility == 'disabled' }">비활성화</a></li>
+                </ul>
+                <button class="clear-disabled outline" @click="removeCompleted" v-show="alarms.length > remaining">
+                    비활성화 모두 삭제
+                </button>
+            </footer>
+        </section>
+        {#            <footer class="info">#}
+        {#                <p>더블클릭하시면 키워드/가격을 수정하실 수 있습니다.</p>#}
+        {#                <p>Written by <a href="http://evanyou.me">Evan You</a></p>#}
+        {#                <p>Part of <a href="http://alarmmvc.com">AlarmMVC</a></p>#}
+        {#            </footer>#}
+    </div>
+</script>
+<script type="text/x-template" id="top-bar">
+    <div class="top-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6 hidden-xs">
+
+                    <ul id="menu-left-top-bar" class="top-nav nav-left">
+                        <li><a href="{% url "index" %}">HOME</a></li>
+                    </ul>
+
+                </div><!-- End col-md-6 -->
+                <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+                    <ul id="menu-login-top-bar" class="top-nav nav-right" v-if="app.userName != ''">
+                        <li class="dropdown menu-item-even menu-item-depth-0 menu-item-has-children">
+                            <a href="http://localhost/wordpress/author/admin/" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-animations="fadeInUp">
+                                <i class="fa fa-user" aria-hidden="true"></i>[[ app.userName ]] &nbsp;<i class="fa fa-caret-down"></i>
+                            </a>
+                            <ul class="dropdown-menu menu-odd  menu-depth-1">
+    {#                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/author/admin/"><i class="fa fa-user-o" aria-hidden="true"></i>MY PROFILE</a></li>#}
+    {#                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-gears" aria-hidden="true"></i>PROFILE SETTINGS</a></li>#}
+    {#                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-bargraph" aria-hidden="true"></i>MY QUESTIONS</a></li>#}
+                                <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-heart" aria-hidden="true"></i>MY ANSWERS</a></li>
+                                <li class="menu-item-odd menu-item-depth-1"><a href="/logout/"><i class="icon-lock" aria-hidden="true"></i>LOGOUT</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- End col-md-6 -->
+            </div><!-- End row -->
+        </div><!-- End container -->
+    </div><!-- End header-top -->
+</script>
+<script>
+    var alarmStorage = {
+        fetch: function (storageKey) {
+            var alarms = JSON.parse(localStorage.getItem(storageKey) || '[]');
+            alarms.forEach(function (alarm, index) {
+                alarm.id = index;
+            });
+            alarmStorage.uid = alarms.length;
+            return alarms;
+        },
+        save: function (storageKey, alarms) {
+            localStorage.setItem(storageKey, JSON.stringify(alarms));
+        }
+    }
+
+    // visibility filters
+    var filters = {
+        all: function (alarms) {
+            return alarms;
+        },
+        enabled: function (alarms) {
+            return alarms.filter(function (alarm) {
+                return !alarm.disabled;
+            })
+        },
+        disabled: function (alarms) {
+            return alarms.filter(function (alarm) {
+                return alarm.disabled
+            })
+        }
+    }
+
+    Vue.component('keyword-component', {
+        props: ['app'],
+        delimiters: ['[[', ']]'],
+        template: '#keyword-component',
+        data: function () {
+            return {
+                token: '{% if request.user.id %}{{ request.user.chatprofile.chat }}{% endif %}',
+                alarms: [],
+                newAlarm: '',
+                newPrice: '',
+                editedAlarm: null,
+                visibility: 'all',
+                target: '',
+            }
+        },
+        // watch todos change for localStorage persistence
+        watch: {
+            alarms: {
+                handler: function (oldAlarms, newAlarms) {
+
+                },
+                deep: true
+            },
+            newPrice: function(value) {
+                var _this = this;
+                value = value || 0;
+
+                var n = setComma(value);
+                Vue.nextTick(function(){
+                    _this.newPrice = n;
+                });
+            }
+        },
+
+        // computed properties
+        // http://vuejs.org/guide/computed.html
+        computed: {
+            filteredAlarms: function () {
+                return filters[this.visibility](this.alarms)
+            },
+            remaining: function () {
+                return filters.enabled(this.alarms).length
+            },
+            allDone: {
+                get: function () {
+                    return this.remaining === 0
+                },
+                set: function (value) {
+                    var _this = this;
+                    this.alarms.forEach(function (alarm) {
+                        alarm.disabled = value;
+                        _this.editDisabled(alarm);
+                    })
+                }
+            }
+        },
+
+        // methods that implement data logic.
+        // note there's no DOM manipulation here at all.
+        methods: {
+            editDisabled: function (alarm) {
+                this.$http.put('/api/alarm/'+alarm.id+'/', alarm, {
+                    headers: {
+                        'X-CSRFTOKEN': '{{ csrf_token }}'
+                    }
+                })
+                    .then(function (data) {
+
+                    }, function(data){
+                        alarm.disabled = !alarm.disabled
+                    })
+            },
+            addAlarm: function () {
+                var _this = this;
+                var value = this.newAlarm && this.newAlarm.trim();
+                var price = this.newPrice && this.newPrice.trim();
+
+                if (!price) {
+                    price = "-";
+                }
+
+                if (!value) {
+                    return;
+                }
+                var alarm = _.find(this.alarms, function(alarm) { return alarm['keyword'] == value });
+
+                // 키워드가 없는 경우에만 등록한다.
+                if (!alarm) {
+                    alarm = {
+                        keyword: value,
+                        disabled: false,
+                        profile: _this.app.profileId,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    };
+
+                    if (price != "-") {
+                        alarm['price'] = price.replace(/\,/g,"");
+                    }
+                    this.$http.post('/api/alarm/', alarm, {
+                        emulateJSON: true
+                    })
+                        .then(function (data) {
+                            var result = data.body;
+                            alarm['id'] = result.id;
+                            if (price != "-") {
+                                alarm['price'] = setComma(alarm['price']);
+                            } else {
+                                alarm['price'] = '-';
+                            }
+                            _this.alarms.push(alarm);
+                        })
+                } else {
+                    alert('이미 등록된 키워드입니다');
+                }
+
+                this.newAlarm = '';
+                this.newPrice = '';
+            },
+
+            removeAlarm: function (alarm) {
+                var token = {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                };
+                this.$http.delete('/api/alarm/'+alarm.id+'/', {
+                    headers: {
+                        'X-CSRFTOKEN': '{{ csrf_token }}'
+                    }
+                })
+                    .then(function (data) {
+                        this.alarms.splice(this.alarms.indexOf(alarm), 1)
+                    })
+
+            },
+
+            editAlarm: function (alarm) {
+                this.beforeEditCacheKeyword = alarm.keyword
+                this.beforeEditCachePrice = alarm.price
+                this.editedAlarm = alarm
+            },
+
+            doneEdit: function (alarm) {
+                if (!this.editedAlarm) {
+                    return
+                }
+                this.editedAlarm = null
+
+                var test = _.filter(this.alarms, function(x) { return x['keyword'] == alarm.keyword });
+                var unique = (test.length < 2) ? true : false;
+
+                if (!unique) {
+                    this.cancelEdit(alarm);
+                    alert('이미 등록된 키워드입니다.');
+                } else {
+                    if (alarm.price != '-') {
+                        alarm.price = alarm.price.toString().replace(/\,/g,"");
+                    } else {
+                        alarm.price = 0;
+                    }
+                    this.$http.put('/api/alarm/'+alarm.id+'/', alarm, {
+                        headers: {
+                            'X-CSRFTOKEN': '{{ csrf_token }}'
+                        }
+                    })
+                        .then(function (data) {
+                            alarm.keyword = alarm.keyword.trim();
+                            alarm.price = setComma(alarm.price);
+                        })
+
+                    if (!alarm.keyword) {
+                        this.removeAlarm(alarm)
+                    }
+                }
+            },
+
+            cancelEdit: function (alarm) {
+                this.editedTodo = null
+                alarm.keyword = this.beforeEditCacheKeyword
+                alarm.price = this.beforeEditCachePrice
+            },
+
+            removeCompleted: function () {
+                this.alarms = filters.enabled(this.alarms)
+            }
+        },
+        mounted: function() {
+            // handle routing
+            var _this = this;
+            var onHashChange = function() {
+                var visibility = window.location.hash.replace(/#\/?/, '');
+                if (filters[visibility]) {
+                    _this.visibility = visibility;
+                } else {
+                    window.location.hash = '';
+                    _this.visibility = 'all';
+                }
+            }
+            window.addEventListener('hashchange', onHashChange);
+            onHashChange();
+
+            // 등록된 알림을 가져오는 일을 한다.
+            this.$http.get('/api/alarm/',
+                {params: {profile__chat: this.token}}
+            ).then(function(data){
+                var result = data.body;
+                _this.alarms = result.results;
+            });
+        }
+    });
+
+    Vue.component('login-component', {
+        props: ['app'],
+        delimiters: ['[[', ']]'],
+        template: '#login-component',
+        data: function () {
+            return {
+                /* 현재 활성화탭 */
+                isLogin: {% if request.user.id %}true{% else %}false{% endif %},
+                isLoginProgress: false,
+                user: {
+                    id: '',
+                    password: ''
+                }
+            }
+        },
+        methods: {
+            onSubmit: function() {
+                var _this = this;
+                var formData = new FormData(document.getElementById('login-form'));
+                var result = null;
+                _this.isLoginProgress = true;
+
+                this.$http.post('/api/login/', formData)
+                    .then(function(data){
+                        result = data.body;
+
+                        if (result.error) {
+                            alert('텔레그림 아이디와 비밀번호를 확인해주세요.');
+                        } else {
+                            // 정상적으로 로그인 되었으면 로그인 표시를 한다.
+                            _this.app.$refs.keyword.token = _this.user.id;
+                            _this.app.userId = result.user.id;
+                            _this.app.userName = result.user.username;
+                            _this.app.alarmId = _this.user.id;
+                            _this.app.profileId = _this.user.chatprofile.id;
+                            _this.isLogin = true;
+                        }
+                        _this.isLoginProgress = false;
+                    })
+                return false;
+            }
+        }
+    });
+
+    Vue.component('top-bar', {
+        props: ['app'],
+        delimiters: ['[[', ']]'],
+        template: '#top-bar'
+    });
+    var vm = new Vue({
+        el: '#app',
+        delimiters: ['[[', ']]'],
+        data: {
+            userId: '{% if request.user.id %}{{ request.user.id }}{% endif %}',
+            userName: '{% if request.user.id %}{{ request.user.username }}{% endif %}',
+            alarmId: '{% if request.user.id %}{{ request.user.chatprofile.chat }}{% endif %}',
+            profileId: '{% if request.user.id %}{{ request.user.chatprofile.id }}{% endif %}'
+        }
+    });
+</script>

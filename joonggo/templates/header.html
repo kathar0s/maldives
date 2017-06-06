@@ -1,35 +1,5 @@
 {% load staticfiles %}
-<div class="top-bar">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-6 hidden-xs">
-
-                <ul id="menu-left-top-bar" class="top-nav nav-left">
-                    <li><a href="{% url "index" %}">HOME</a></li>
-                </ul>
-
-            </div><!-- End col-md-6 -->
-            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-                {% if request.user.id %}
-                <ul id="menu-login-top-bar" class="top-nav nav-right">
-                    <li class="dropdown menu-item-even menu-item-depth-0 menu-item-has-children">
-                        <a href="http://localhost/wordpress/author/admin/" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-animations="fadeInUp">
-                            <i class="fa fa-user" aria-hidden="true"></i>{{ request.user.username }} &nbsp;<i class="fa fa-caret-down"></i>
-                        </a>
-                        <ul class="dropdown-menu menu-odd  menu-depth-1">
-{#                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/author/admin/"><i class="fa fa-user-o" aria-hidden="true"></i>MY PROFILE</a></li>#}
-{#                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-gears" aria-hidden="true"></i>PROFILE SETTINGS</a></li>#}
-{#                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-bargraph" aria-hidden="true"></i>MY QUESTIONS</a></li>#}
-                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-heart" aria-hidden="true"></i>MY ANSWERS</a></li>
-                            <li class="menu-item-odd menu-item-depth-1"><a href="/logout/"><i class="icon-lock" aria-hidden="true"></i>LOGOUT</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                {% endif %}
-            </div><!-- End col-md-6 -->
-        </div><!-- End row -->
-    </div><!-- End container -->
-</div><!-- End header-top -->
+<top-bar ref='top' :app="this"></top-bar>
 <header id="header" class=''>
     <div class="container clearfix" itemscope="" itemtype="http://schema.org/Thing">
         <div class="logo">
