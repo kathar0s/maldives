@@ -47,6 +47,7 @@ class Article(models.Model):
 
     # 옵션 항목
     tags = models.TextField('태그', default='', blank=True, help_text='콤마로 구분')
+    survival_count = models.PositiveIntegerField('글 유지', default=1, blank=True)
 
     is_include_parcel = models.BooleanField('택배포함여부', default=False, blank=True)
     is_sold_out = models.BooleanField('판매여부', default=False, blank=True)
