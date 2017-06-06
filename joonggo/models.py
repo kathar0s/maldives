@@ -88,6 +88,13 @@ class ChatProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     chat = models.PositiveIntegerField('채팅 아이디', default=0)
 
+    def __unicode__(self):
+        return u'[{user}] {chat_id}'.format(user=self.user, chat_id=self.chat)
+
+    class Meta:
+        verbose_name = '알림(Telegram)'
+        verbose_name_plural = '알림(Telegram) 목록'
+
 
 # 사용자별 / ID별 알림 내용
 class Alarm(models.Model):

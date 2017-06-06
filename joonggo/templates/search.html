@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load humanize %}
 {% block body %}
 
     <div class="section-warp infocenter-infotex light">
@@ -9,9 +10,9 @@
                     <div class="col-md-12">
                         <h2>중고 물품을 검색하세요</h2>
                         <div>
-                            <form role="search" class="form-style form-style-2" method="get" action="">
+                            <form role="search" class="form-style form-style-2" id="search-form" method="get" action="{% url "search" %}">
                                 <p>
-                                    <input name="q" type="search" value="{% if request.GET.q %}{{ request.GET.q }}{% endif %}" placeholder="중고 물품 검색어를 입력해주세요.">
+                                    <input name="q" type="search" placeholder="중고 물품 검색어를 입력해주세요." id="keyword" value="{{ request.GET.q }}">
                                     <button class="ask-question-new-class" type="submit"><span class="color button small publish-question">검색</span></button>
                                 </p>
                             </form>
@@ -37,12 +38,12 @@
                                 <h2 style="font-weight: bold;">최저가/최고가</h2>
                                 <div class="price-range">
                                     <div class="row">
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <div style="margin-bottom: 10px;">
-                                                <span class="lowest-price">{{ min_price }}</span><span class="unit">원</span> ~ <span class="highest-price">{{ max_price }}</span><span class="unit">원</span>
+                                                <span class="lowest-price">{{ min_price | intcomma }}</span><span class="unit">원</span> ~ <span class="highest-price">{{ max_price | intcomma }}</span><span class="unit">원</span>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div style="margin-bottom: 10px;">
                                                 <button class="btn btn-primary btn-md btn-block" style="font-size: 12px;">최저가 보러가기</button>
                                             </div>
@@ -67,28 +68,24 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {% for x in '111' %}
+                                        {% for article in articles_top10 %}
                                             <tr>
-                                                <td><img class="website-line" src="{% static "images/websites/joonggonara_line.png" %}"></td>
-                                                <td class="text-right"><span class="text-priority-high">10000</span></td>
+                                                <td>
+                                                    {% if article.source.name == '중고나라' %}
+                                                    <img class="website-line" src="{% static "images/websites/joonggonara_line.png" %}">
+                                                    {% elif article.source.name == '세티즌' %}
+                                                    <img class="website-line" src="{% static "images/websites/cetizen_line.png" %}">
+                                                    {% elif article.source.name == '맘스홀릭' %}
+                                                    <img class="website-line" src="{% static "images/websites/momsholic_line.png" %}">
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-right"><span class="text-priority-high">{{ article.price | intcomma }}</span></td>
                                                 <td class="text-center">-</td>
-                                                <td class="text-right"><span class="label label-default">바로가기</span></td>
-                                            </tr>
-                                        {% endfor %}
-                                        {% for x in '1111' %}
-                                            <tr>
-                                                <td><img class="website-line" src="{% static "images/websites/joonggonara_line.png" %}"></td>
-                                                <td class="text-right"><span class="text-priority-high">20000</span></td>
-                                                <td class="text-center">-</td>
-                                                <td class="text-right"><span class="label label-default">바로가기</span></td>
-                                            </tr>
-                                        {% endfor %}
-                                        {% for x in '111' %}
-                                            <tr>
-                                                <td><img class="website-line" src="{% static "images/websites/joonggonara_line.png" %}"></td>
-                                                <td class="text-right"><span class="text-priority-high">30000</span></td>
-                                                <td class="text-center">-</td>
-                                                <td class="text-right"><span class="label label-default">바로가기</span></td>
+                                                <td class="text-right">
+                                                    <a href="{{ article.url }}" target="_blank">
+                                                        <span class="label label-default">바로가기</span>
+                                                    </a>
+                                                </td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
@@ -119,7 +116,7 @@
                 </aside>
                 <article class="col-md-12">
                     <ul class="nav nav-tabs">
-                        <li role="presentation" class="active"><a>판매 등록수 <span class="count">23</span></a></li>
+                        <li role="presentation" class="active"><a>판매 등록수 <span class="count">{{ articles | length }}</span></a></li>
 {#                                <li role="presentation"><a href="#">Profile</a></li>#}
 {#                                <li role="presentation"><a href="#">Messages</a></li>#}
                     </ul>
@@ -142,45 +139,35 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for article in articles %}
                                 <tr>
-                                    <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/joonggonara_w150.png" %}"></td>
+                                    <td class="text-center">
+                                        {% if article.source.name == '중고나라' %}
+                                        <img class="website-line-detail" src="{% static "images/websites/joonggonara_w150.png" %}">
+                                        {% elif article.source.name == '세티즌' %}
+                                        <img class="website-line-detail" src="{% static "images/websites/cetizen_w150.png" %}">
+                                        {% elif article.source.name == '맘스홀릭' %}
+                                        <img class="website-line-detail" src="{% static "images/websites/momsholic_w150.png" %}">
+                                        {% endif %}
+                                    </td>
                                     <td class="article">
                                         <div class="title">
-                                            <a href="#">샤오미 2세대 보조배터리 PLM02ZM</a>
+                                            <a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
                                         </div>
                                         <div class="content">
-                                            [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
+                                            {{ article.content }}
                                         </div>
                                     </td>
-                                    <td class="text-right"><strong class="text-priority-high">최저 190,500</strong></td>
-                                    <td class="text-center">-</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/momsholic_w150.png" %}"></td>
-                                    <td class="article">
-                                        <div class="title">
-                                            <a href="#">샤오미 2세대 보조배터리 PLM02ZM</a>
-                                        </div>
-                                        <div class="content">
-                                            [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
-                                        </div>
+                                    <td class="text-right">
+                                        {% if forloop.first %}
+                                        <strong class="text-priority-high">최저 {{ article.price | intcomma }}</strong>
+                                        {% else %}
+                                        <strong>{{ article.price | intcomma }}</strong>
+                                        {% endif %}
                                     </td>
-                                    <td class="text-right"><strong>190,500</strong></td>
                                     <td class="text-center">-</td>
                                 </tr>
-                                <tr>
-                                    <td class="text-center"><img class="website-line-detail" src="{% static "images/websites/cetizen_w150.png" %}"></td>
-                                    <td class="article">
-                                        <div class="title">
-                                            <a href="#">샤오미 2세대 보조배터리 PLM02ZM</a>
-                                        </div>
-                                        <div class="content">
-                                            [신한/KB국민/현대/롯데 50만원 이상 최대 22개월 무이자] [신한, 삼성, BC, 롯데, 하나, NH농협, 씨티 5만원 이상 최대 12개월 무이자]
-                                        </div>
-                                    </td>
-                                    <td class="text-right"><strong>190,500</strong></td>
-                                    <td class="text-center">-</td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>

@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 from reversion.admin import VersionAdmin
-from joonggo.models import Source, Article
+from joonggo.models import Source, Article, ChatProfile
 
 
 class SourceAdmin(VersionAdmin):
@@ -25,3 +25,10 @@ class ArticleAdmin(VersionAdmin):
             url=instance.url, title=instance.url)
     url_.allow_tags = True
 admin.site.register(Article, ArticleAdmin)
+
+
+class ChatProfileAdmin(VersionAdmin):
+    list_display = ('user', 'chat')
+    ordering = ('-id', )
+
+admin.site.register(ChatProfile, ChatProfileAdmin)

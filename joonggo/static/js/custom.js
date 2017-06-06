@@ -5,7 +5,15 @@
 jQuery(document).ready(function($) {
 	
 	/* Go up */
-	
+	jQuery('#search-form').on('submit', function() {
+		var value = jQuery('#keyword').val();
+		jQuery('#keyword').val(jQuery.trim(value));
+		if (value.length < 2) {
+			alert('검색어는 2글자 이상 입력해주세요.');
+			return false;
+		}
+	});
+
 	jQuery(window).scroll(function () {
 		if(jQuery(this).scrollTop() > 100) {
 			jQuery(".go-up").css("right","20px");

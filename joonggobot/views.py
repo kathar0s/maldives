@@ -6,15 +6,11 @@ from joonggobot.joonggobot_main import JoonggoBot
 import telegram
 
 
-# Create your views here.
-
 @api_view(['POST'])
 @csrf_exempt
 def webhook(request):
     return HttpResponse('Hello Maldives bot, webhook!')
 
-
-# Create your views here.
 
 @api_view(['POST'])
 @csrf_exempt

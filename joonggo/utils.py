@@ -1,34 +1,47 @@
 # -*- coding: utf-8 -*-
-from urllib.request import urlopen
-import scrapy
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
-class Crawler(object):
-    url = ''
-    html = ''
-    rating = None
-    categories = None
+def paginate_list(request, object_list):
+    if 'p' in request.GET:
+        page = request.GET['p']
+    else:
+        page = 1
 
-    def __init__(self, url=""):
-        self.url = url
-        self.rating = dict()
-        self.categories = ['종합', '지역별', '연령별', '성별']
+    per_page = 40
+    page_per_section = 5  # 한번에 몇개의 페이지를 출력할 것인가?
 
-        # url이 존재하는 경우에는 html을 먼저 읽어온다.
-        if self.url != "":
-            self.get_html()
+    paginator = Paginator(object_list, per_page)
 
-    def get_html(self):
-        f = urlopen(self.url)
-        self.html = f.read()
-        f.close()
-        return self.html
+    try:
+        page_objects = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        page = 1
+        page_objects = paginator.page(page)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        page_objects = paginator.page(paginator.num_pages)
 
-    def set_url(self, url):
-        self.url = url
+    page = int(page)
 
-    def get_url(self):
-        return self.url
+    # 페이지 섹션 구하기
+    start_page_section_num = int((page - 1) / page_per_section) * page_per_section + 1
 
-    def get_json(self):
-        pass
+    page_objects.previous_page_section = start_page_section_num - page_per_section
+    if page_objects.previous_page_section < 0:
+        page_objects.previous_page_section = 0
+        page_objects.has_previous_section = False
+    else:
+        page_objects.has_previous_section = True
+
+    page_objects.next_page_section = start_page_section_num + page_per_section
+    if page_objects.next_page_section >= page_objects.paginator.num_pages:
+        page_objects.next_page_section = page_objects.paginator.num_pages + 1
+        page_objects.has_next_section = False
+    else:
+        page_objects.has_next_section = True
+
+    page_objects.page_range = range(start_page_section_num, page_objects.next_page_section)
+
+    return page_objects

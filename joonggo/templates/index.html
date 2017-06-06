@@ -10,9 +10,9 @@
                         <h2>중고 물품을 검색하세요</h2>
                         <p>찾는 물건 검색어를 입력하시면 해당 물품의 최저가 추이를 알려드립니다.</p>
                         <div>
-                            <form role="search" class="form-style form-style-2" method="get" action="{% url "search" %}">
+                            <form role="search" class="form-style form-style-2" id="search-form" method="get" action="{% url "search" %}">
                                 <p>
-                                    <input name="q" type="search" value="중고 물품 검색어를 입력해주세요." onfocus="if(this.value==this.defaultValue)this.value='';" onblur="if(this.value=='')this.value=this.defaultValue;">
+                                    <input name="q" type="search" placeholder="중고 물품 검색어를 입력해주세요." id="keyword" value="{{ request.GET.q }}">
                                     <button class="ask-question-new-class" type="submit"><span class="color button small publish-question">검색</span></button>
                                 </p>
                             </form>
@@ -36,7 +36,7 @@
                 </div>
                 <ul class="home-cats-list">
                     <li>
-                        <a href="http://fluentthemes.com/wp/knowledgebase/category/account-settings/" title="Account Settings">
+                        <a href="http://www.joonggonara.co.kr" title="중고나라" target="_blank">
                             <span class="wrap-icon">
                                 <img src="{% static "images/websites/joonggonara_w150.png" %}">
                             </span>
@@ -44,7 +44,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="http://fluentthemes.com/wp/knowledgebase/category/account-settings/" title="Account Settings">
+                        <a href="http://cafe.naver.com/imsanbu" title="맘스홀릭" target="_blank">
                             <span class="wrap-icon">
                                 <img src="{% static "images/websites/momsholic_w150.png" %}">
                             </span>
@@ -52,7 +52,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="http://fluentthemes.com/wp/knowledgebase/category/account-settings/" title="Account Settings">
+                        <a href="http://www.cetizen.com/" title="세티즌" target="_blank">
                             <span class="wrap-icon">
                                 <img src="{% static "images/websites/cetizen_w150.png" %}">
                             </span>

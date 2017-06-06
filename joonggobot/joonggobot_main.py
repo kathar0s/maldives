@@ -113,7 +113,6 @@ class JoonggoBot:
 
         self.send_message(id, send_message)
 
-
     def handle_search(self, id, message):
         end_date = datetime.date.today()  # 현재 날짜 가져오기
         period = datetime.timedelta(days=13)
@@ -151,8 +150,6 @@ class JoonggoBot:
                 query_result += default_url
 
         self.send_message(id, query_result)
-
-
 
     def send_message(self, id, message):
         self.telegram_bot.sendMessage(id, message)
