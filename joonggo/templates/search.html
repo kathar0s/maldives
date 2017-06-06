@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block body %}
+
     <div class="section-warp infocenter-infotex light">
         <div class="container clearfix">
             <div class="box_icon box_warp box_no_border box_no_background">
@@ -38,7 +39,7 @@
                                     <div class="row">
                                         <div class="col-md-9">
                                             <div style="margin-bottom: 10px;">
-                                                <span class="lowest-price">190,500</span><span class="unit">원</span> ~ <span class="highest-price">200,500</span><span class="unit">원</span>
+                                                <span class="lowest-price">{{ min_price }}</span><span class="unit">원</span> ~ <span class="highest-price">{{ max_price }}</span><span class="unit">원</span>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -66,26 +67,26 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {% for x in "111" %}
+                                        {% for x in '111' %}
                                             <tr>
                                                 <td><img class="website-line" src="{% static "images/websites/joonggonara_line.png" %}"></td>
-                                                <td class="text-right"><span class="text-priority-high">최저 190,500</span></td>
+                                                <td class="text-right"><span class="text-priority-high">10000</span></td>
                                                 <td class="text-center">-</td>
                                                 <td class="text-right"><span class="label label-default">바로가기</span></td>
                                             </tr>
                                         {% endfor %}
-                                        {% for x in "111" %}
+                                        {% for x in '1111' %}
                                             <tr>
-                                                <td><img class="website-line" src="{% static "images/websites/cetizen_line.png" %}"></td>
-                                                <td class="text-right"><span class="">190,500</span></td>
+                                                <td><img class="website-line" src="{% static "images/websites/joonggonara_line.png" %}"></td>
+                                                <td class="text-right"><span class="text-priority-high">20000</span></td>
                                                 <td class="text-center">-</td>
                                                 <td class="text-right"><span class="label label-default">바로가기</span></td>
                                             </tr>
                                         {% endfor %}
-                                        {% for x in "1111" %}
+                                        {% for x in '111' %}
                                             <tr>
-                                                <td><img class="website-line" src="{% static "images/websites/momsholic_line.png" %}"></td>
-                                                <td class="text-right"><span class="">190,500</span></td>
+                                                <td><img class="website-line" src="{% static "images/websites/joonggonara_line.png" %}"></td>
+                                                <td class="text-right"><span class="text-priority-high">30000</span></td>
                                                 <td class="text-center">-</td>
                                                 <td class="text-right"><span class="label label-default">바로가기</span></td>
                                             </tr>
@@ -100,14 +101,14 @@
                 <aside class="col-md-4 sidebar">
                     <div id="questions-widget-2" class="widget questions-widget">
                         <h3 class="widget_title">최저가 추이</h3>
-                        <div class="">
-                            최저가 차트 들어가는 곳
+                        <div id="chart_min" class="">
+
                         </div>
                     </div>
                     <div id="questions_categories-widget-2" class="widget questions_categories-widget">
                         <h3 class="widget_title">평균가 추이</h3>
-                        <div class="">
-                            평균가 차트 들어가는 곳
+                        <div id="chart_avg" class="">
+
                         </div>
                     </div>
                     <div class="advertising">
@@ -187,4 +188,96 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascript %}
+    {{ block.super }}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+
+        Highcharts.chart('chart_min', {
+           chart: {
+                type: 'line',
+                height: 250,
+                //spacingRight: 30,
+                //marginRight: 130
+            },
+            title: {
+              text: ''
+            },
+            xAxis: {
+                labels: {
+                    y: 40,
+                    style: {
+                        fontSize: 9,
+                        fontFamily: 'Nanum Gothic'
+                    },
+                },
+                showLastLabel: true,
+                lineWidth: 0,
+                tickLength: 0,
+                title: {
+                    text: null
+                },
+                categories : {{ trend_day|safe  }},
+
+            },
+            yAxis: {
+                title: {
+                    text: '가격',
+                    align: 'center'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            series: [{
+                name: '최저가',
+                data: {{ trend_min_price|safe  }},
+                color : '#FF0000'
+            }]
+
+        });
+        Highcharts.chart('chart_avg', {
+        chart: {
+            type: 'line',
+            height: 250,
+            //spacingRight: 30,
+            //marginRight: 130
+        },
+        title: {
+          text: ''
+        },
+         xAxis: {
+            labels: {
+                y: 40,
+                style: {
+                    fontSize: 9,
+                    fontFamily: 'Nanum Gothic'
+                },
+            },
+            showLastLabel: true,
+            lineWidth: 0,
+            tickLength: 0,
+            categories : {{ trend_day|safe  }},
+
+
+        },
+        yAxis: {
+            title: {
+                text: '가격',
+                align: 'center'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        series: [{
+            name: '평균가',
+            data: {{ trend_avg_price|safe  }},
+            color : '#0000FF'
+        }]
+        });
+
+</script>
 {% endblock %}
