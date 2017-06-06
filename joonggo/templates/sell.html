@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load to_pc_url %}
 {% block body %}
     <div class="container">
         <div class="table-responsive" style="margin: 10px 0;">
@@ -24,7 +25,7 @@
                         {% if site.name == "세티즌" %}
                             <td class="text-center"><a href="http://market.cetizen.com/market.php?auc_sale=1" target="_blank" ><span class="label label-default">글쓰기</span></a></td>
                         {% else %}
-                            <td class="text-center"><a href="https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=LRrB5VpRxkF0nWoMiTaQ&redirect_uri={{ site.url }}" target="_blank" >
+                            <td class="text-center"><a href="https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=LRrB5VpRxkF0nWoMiTaQ&redirect_uri={{ site.url|to_pc_url }}" target="_blank" >
                                 <span class="label label-default">글쓰기</span></a></td>
                         {% endif %}
 
