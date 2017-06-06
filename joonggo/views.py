@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
 from django.shortcuts import render, render_to_response
-from joonggo.models import Article
+from joonggo.models import Article, Source
 
 
 def index(request):
@@ -68,17 +68,17 @@ def alarm(request):
 
 
 def sell(request):
-    template_data = {}
-    return render(request, 'sell.html', template_data)
-
-
-def write(request):
-    if request.session.get('naverTokenId') is None:
-        print('naverTokenId : None')
-        return render_to_response('write_test.html')
+    get = request.GET.copy()
+    print(get)
+    if 'token' in get:
+        html_file = 'sell.html'
+        source = Source.objects.all()
+        template_data = {'source': source}
     else:
-        return HttpResponse('글쓰기로 이동!!')
+        html_file = 'naverlogin.html'
+        template_data = {}
+    return render(request, html_file,  template_data)
 
-
-def getNaverLoginResult(request):
-    return HttpResponse('Testing!!!')
+def callback(request):
+    template_data = {}
+    return render(request, 'callback.html', template_data)
