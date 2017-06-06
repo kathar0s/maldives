@@ -55,6 +55,9 @@ def list_alarm(bot, update):
 def remove_alarm(bot, update):
     sendToJoonggodives({'type': "remove_alarm", 'id': update.message.chat_id, 'text': update.message.text})
 
+def password_alarm(bot, update):
+    sendToJoonggodives({'type': "password_alarm", 'id': update.message.chat_id, 'text': update.message.text})
+
 def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
 
@@ -77,6 +80,7 @@ def main():
     dp.add_handler(CommandHandler(u"알림등록", add_alarm))
     dp.add_handler(CommandHandler(u"알림목록", list_alarm))
     dp.add_handler(CommandHandler(u"알림삭제", remove_alarm))
+    dp.add_handler(CommandHandler(u"알림암호", password_alarm))
     dp.add_handler(MessageHandler(Filters.text, search))
 
     # on noncommand i.e message - echo the message on Telegram
