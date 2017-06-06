@@ -18,6 +18,7 @@ class Source(models.Model):
     scraper_runtime = models.ForeignKey(SchedulerRuntime, blank=True, null=True, on_delete=models.SET_NULL)
     base_url = models.URLField('PC Base URL', blank=True, default='')
     mobile_base_url = models.URLField('mobile Base URL', blank=True, default='')
+    site_image_url = models.CharField('site base image', max_length=256, blank=True, default='')
 
     def __str__(self):
         return '[{name}] {category}'.format(name=self.name, category=self.category)
