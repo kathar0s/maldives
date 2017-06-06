@@ -130,13 +130,14 @@ def retrieve_item(item_id):
         df_article_data = df_article_data.sort_values('price', ascending=True).drop_duplicates('title')
 
         # 날짜 형식 변환 및 trend date 생성
-        df_article_data['trend_date'] = df_article_data['created'].apply(lambda x: x.strftime('%Y-%m-%d'))
+        df_article_data['trend_date'] = df_article_data['created'].apply(lambda x: x.strftime('%m-%d'))
         df_article_data['created'] = df_article_data['created'].apply(lambda x: x.strftime('%Y-%m-%d %hh:%mm:%ss'))
 
         # 평균값의 20%의 가격으로 최저가 책정/ 평균값의 3배 가격으로 최고가 책정
         avg_price = df_article_data['price'].mean()
         df_article_data = df_article_data[df_article_data['price'] >= avg_price * 0.2]
         df_article_data = df_article_data[df_article_data['price'] < avg_price * 3]
+        df_article_data = df_article_data[df_article_data['price'] % 100 == 0]
         df_article_data = df_article_data.reset_index(drop=True)
 
         # 최저가, 최고가

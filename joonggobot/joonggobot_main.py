@@ -125,7 +125,7 @@ class JoonggoBot:
             queryset = queryset.exclude(title__contains=t)
         if (queryset.count() > 0):
             article_data = read_frame(queryset,
-                                      fieldnames=['title', 'price', 'url', 'created', 'source', 'uid'])
+                                      fieldnames=['title', 'price', 'url', 'created', 'source_id', 'uid'])
             # title 중복 제거
             article_data = article_data.sort_values('price', ascending=True).drop_duplicates('title')
 
@@ -141,12 +141,13 @@ class JoonggoBot:
                 query_result += u"날짜 : %s\n" % (row['created'])
                 query_result += u"제목 : %s\n" % (row['title'])
 
-                words = re.search(r"\[(\w+)\]", row['source'])
+                default_url = u"%s\n\n" % (row['url'])
+                words = re.search(r"\[(\w+)\]", row['source_id'])
                 if words:
                     source = Source.objects.filter(name=words.group(0)).first()
-                    if not (source is None):
-                        row['url'] = source.mobile_base_url + row['uid']
-                query_result += u"%s\n\n" % (row['url'])
+                    if source is not None:
+                        default_url = u"%s%s\n\n" % (source.mobile_base_url, row['uid'])
+                query_result += default_url
 
         self.send_message(id, query_result)
 
