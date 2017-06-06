@@ -64,16 +64,24 @@
                         <h2>중고다이브 텔레그램 봇</h2>
                         <div class="form-style form-style-3">
                             <div class="ask_form inputs">
-                                <form class="login-form ask_login" action="" method="post" @submit.stop.prevent="onSubmit">
+                                <form id="login-form" class="login-form ask_login" action="" method="post" @submit.stop.prevent="onSubmit">
+                                    {% csrf_token %}
                                     <div class="form-inputs clearfix">
                                         <p class="login-text" style="position: relative;">
                                             <span class="loader_2" style="position: absolute; right: 10px; top: 10px;" v-show="isLoginProgress"></span>
-                                            <input class="required-item" type="text" v-model="id" placeholder="JGDV id" name="id">
+                                            <input class="required-item" type="text" v-model="user.id" placeholder="JGDV id" name="id">
                                             <i class="icon-user"></i>
                                         </p>
                                     </div>
+                                    <div class="form-inputs clearfix">
+                                        <p class="login-text" style="position: relative;">
+                                            <span class="loader_2" style="position: absolute; right: 10px; top: 10px;" v-show="isLoginProgress"></span>
+                                            <input class="required-item" type="password" v-model="user.password" placeholder="비밀번호" name="password">
+                                            <i class="icon-lock"></i>
+                                        </p>
+                                    </div>
                                     <p class="form-submit login-submit">
-                                        <input type="submit" value="로그인" class="button color small login-submit submit sidebar_submit">
+                                        <input type="submit" value="로그인" class="button color small login-submit submit sidebar_submit" :disabled="isLoginProgress">
                                     </p>
                                     <div class="errorlogin"></div>
                                 </form>
@@ -220,18 +228,19 @@
         return n;
     }
 
-    var STORAGE_KEY = 'alarms-vuejs-2.0'
     var alarmStorage = {
-        fetch: function () {
-            var alarms = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        fetch: function (storageKey) {
+            var alarms = JSON.parse(localStorage.getItem(storageKey) || '[]');
             alarms.forEach(function (alarm, index) {
                 alarm.id = index;
             });
             alarmStorage.uid = alarms.length;
+
+            console.log('fetch');
             return alarms;
         },
-        save: function (alarms) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(alarms));
+        save: function (storageKey, alarms) {
+            localStorage.setItem(storageKey, JSON.stringify(alarms));
         }
     }
 
@@ -258,7 +267,8 @@
         template: '#keyword-component',
         data: function () {
             return {
-                alarms: alarmStorage.fetch(),
+                token: '340859851',
+                alarms: alarmStorage.fetch(this.token),
                 newAlarm: '',
                 newPrice: '',
                 editedAlarm: null,
@@ -270,6 +280,7 @@
         watch: {
             alarms: {
                 handler: function (alarms) {
+                    console.log(alarms);
                     alarmStorage.save(alarms)
                 },
                 deep: true
@@ -279,9 +290,6 @@
                 value = value || 0;
 
                 var n = setComma(value);
-                console.log(n);
-
-
                 Vue.nextTick(function(){
                     _this.newPrice = n;
                 });
@@ -327,6 +335,7 @@
 
                 // 키워드가 없는 경우에만 등록한다.
                 if (!alarm) {
+{#                    this.$http.post('')#}
                     this.alarms.push({
                         id: alarmStorage.uid++,
                         keyword: value,
@@ -415,6 +424,14 @@
             }
             window.addEventListener('hashchange', onHashChange);
             onHashChange();
+
+            // 등록된 알림을 가져오는 일을 한다.
+            this.$http.get('/api/alarm',
+                { 'profile__chat': this.token }
+            ).then(function(data){
+                var result = data.body;
+                _this.alarms = result.results;
+            });
         }
     });
 
@@ -425,22 +442,33 @@
         data: function () {
             return {
                 /* 현재 활성화탭 */
-                isLogin: false,
+                isLogin: {% if request.user.id %}true{% else %}false{% endif %},
                 isLoginProgress: false,
-                id: ''
+                user: {
+                    id: '',
+                    password: ''
+                }
             }
         },
         methods: {
             onSubmit: function() {
                 var _this = this;
+                var formData = new FormData(document.getElementById('login-form'));
+                var result = null;
                 _this.isLoginProgress = true;
 
-                $.post('/api/')
+                this.$http.post('/api/login/', formData)
+                    .then(function(data){
+                        result = data.body;
 
-                setTimeout(function(){
-                    _this.isLoginProgress = false;
-                    _this.isLogin = true;
-                }, 1000);
+                        if (result.error) {
+                            alert('텔레그림 아이디와 비밀번호를 확인해주세요.');
+                        } else {
+                            // 정상적으로 로그인 되었으면 로그인 표시를 한다.
+                            _this.isLogin = true;
+                        }
+                        _this.isLoginProgress = false;
+                    })
                 return false;
             }
         }
