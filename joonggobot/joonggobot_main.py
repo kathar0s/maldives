@@ -122,7 +122,6 @@ class JoonggoBot:
         else:
             keyword = message.split(u"/알림암호")
             if len(keyword) < 1 or len(keyword[1]) < 1:
-                Alarm.objects.filter(profile=profile).delete()
                 send_message = u"%d 토큰의 암호는 \'%s\' 입니다" % (id, profile.password)
             else:
                 profile.password = keyword[1].strip()
