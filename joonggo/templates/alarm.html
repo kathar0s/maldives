@@ -280,8 +280,18 @@
         watch: {
             alarms: {
                 handler: function (alarms) {
-                    console.log(alarms);
+
                     alarmStorage.save(alarms)
+                    console.log('changed');
+
+                     this.$http.put('/api/alarm/' + alarm.id + '/', alarm, {
+                        headers: {
+                            'X-CSRF-Token': '{{ csrf_token }}'
+                        }
+                    })
+                        .then(function(data){
+                            console.log(data);
+                        })
                 },
                 deep: true
             },
@@ -369,12 +379,12 @@
                 var test = _.filter(this.alarms, function(x) { return x['keyword'] == alarm.keyword });
                 var unique = (test.length < 2) ? true : false;
 
-                alarm.keyword = alarm.keyword.trim();
-                alarm.price = setComma(alarm.price);
                 if (!unique) {
                     this.cancelEdit(alarm);
                     alert('이미 등록된 키워드입니다.');
                 } else {
+                    alarm.keyword = alarm.keyword.trim();
+                    alarm.price = setComma(alarm.price);
 
                     if (!alarm.keyword) {
                         this.removeAlarm(alarm)

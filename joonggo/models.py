@@ -106,7 +106,7 @@ class Alarm(models.Model):
     keyword = models.CharField('키워드', max_length=50, default='')
     price = models.PositiveIntegerField('가격', default=0)
 
-    disabled = models.BooleanField('활성화 여부', default=True)
+    disabled = models.BooleanField('비활성화 여부', default=False)
     created = models.DateTimeField('등록일', auto_now_add=True)
 
     class Meta:
