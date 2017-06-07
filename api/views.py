@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 import collections
+from collections import OrderedDict
 import json
 import datetime
 
 from django.contrib.auth import authenticate, login as django_login
+from django.db.models import Avg, Min, Max
 from django.http import JsonResponse
 from django_pandas.io import read_frame
-from requests import Response
 from rest_framework import viewsets, filters
 from rest_framework.decorators import list_route
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 
 from joonggo.models import Article, Alarm
 from joonggo.serializers import ArticleSerializer, AlarmSerializer
@@ -21,26 +23,66 @@ class PaginationClass(PageNumberPagination):
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
-    queryset = Article.objects.all().select_related('source').order_by('price')
+    queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     pagination_class = PaginationClass
 
+    info = {}
+
+    # def get_paginated_response(self, data):
+    #     return Response(OrderedDict([
+    #         ('count', self.page.paginator.count),
+    #         ('next', self.get_next_link()),
+    #         ('previous', self.get_previous_link()),
+    #         ('info', self.info),
+    #         ('results', data)
+    #     ]))
+
+    # 키워드로 검색하는 경우에 대해서 처리한다.
     @list_route()
     def search(self, request):
         get = request.GET.copy()
         if 'q' in get:
             query = get['q']
             # template_data = retrieve_item(query)
-            results = self.queryset.filter(title__icontains=query, price__gte=10000).order_by('price')
+            queryset = self.get_queryset()
 
-            page = self.paginate_queryset(results)
+            # 해당 검색어에 대해 평균가격을 구한다. (1만원 이상에 대해서만)
+            # 현재 존재하는 글에 대해서만 구한다. (survival_count == 1)
+            # 현재 판매중인 내용에 대해서만 찾는다.
+            queryset = queryset.filter(is_sold_out=False, survival_count__gte=1, price__gte=10000,
+                                       title__icontains=query).order_by('price')
+
+            # 검색이 된 경우에만 평균가격을 산출하고 진행한다.
+            if queryset.count() > 0:
+                result = queryset.aggregate(avg_price=Avg('price'))
+                avg_price = result['avg_price']
+
+                # 검색결과의 노이즈가 있을 수 있으니
+                # 최저가격은 평균가격의 20%보다 작은 것들은 제외하고
+                # 최고가격은 평균가격의 3배보다 큰 것들은 제외한다.
+                queryset = queryset.filter(price__gte=avg_price * 0.2, price__lt=avg_price * 3)
+
+                # 해당 검색결과에서 최대, 최소 가격을 구한다.
+                result = queryset.aggregate(max_price=Max('price'), min_price=Min('price'))
+                self.info = result
+            else:
+                info = None
+
+            page = self.paginate_queryset(queryset)
 
             if page is not None:
                 serializer = self.get_serializer(page, many=True)
-                return self.get_paginated_response(serializer.data)
+                return Response(OrderedDict([
+                    ('count', self.paginator.page.paginator.count),
+                    ('next', self.paginator.get_next_link()),
+                    ('previous', self.paginator.get_previous_link()),
+                    ('info', self.info),
+                    ('results', serializer.data)
+                ]))
 
             # 그 외의 경우에는 모든 값을 반환한다.
-            serializer = self.get_serializer(results, many=True)
+            serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data)
 
         else:
@@ -48,6 +90,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
                 'rsltCd': 'N',
                 'rsltNsg': '조회 조건 없음'
             }
+
         return Response(template_data)
 
 

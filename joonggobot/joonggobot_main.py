@@ -125,6 +125,8 @@ class JoonggoBot:
                 send_message = u"%d 토큰의 암호는 \'%s\' 입니다" % (id, profile.password)
             else:
                 profile.password = keyword[1].strip()
+                profile.user.set_password(keyword[1].strip())
+                profile.user.save()
                 profile.save()
                 send_message = u"%d 토큰의 암호를 \'%s\' 로 설정하였습니다" % (id, profile.password)
 

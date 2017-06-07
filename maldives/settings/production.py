@@ -66,6 +66,7 @@ INSTALLED_APPS = PROJECT_APPS + THIRD_PARTY_APPS + [
     'django.contrib.humanize',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+    'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [
