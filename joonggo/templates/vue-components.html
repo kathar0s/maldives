@@ -98,7 +98,7 @@
                                     <label class="keyword" @dblclick="editAlarm(alarm)">[[ alarm.keyword ]]</label>
                                 </div>
                                 <div class="col-xs-3">
-                                    <label class="price" @dblclick="editAlarm(alarm)">[[ alarm.price ]]</label>
+                                    <label class="price" @dblclick="editAlarm(alarm)">[[ alarm.price | intcomma ]]</label>
                                 </div>
                                 <div class="col-xs-2">
                                     <div class="destroy-wrapper">
@@ -385,7 +385,7 @@
                 var _this = this;
                 value = value || 0;
 
-                var n = setComma(value);
+                var n = value;
                 Vue.nextTick(function(){
                     _this.newPrice = n;
                 });
@@ -421,7 +421,7 @@
             editDisabled: function (alarm) {
                 this.$http.put('/api/alarm/'+alarm.id+'/', alarm, {
                     headers: {
-                        'X-CSRFTOKEN': 'getCookie("csrftoken")'
+                        'X-CSRFTOKEN': getCookie("csrftoken")
                     }
                 })
                     .then(function (data) {
@@ -463,7 +463,7 @@
                             var result = data.body;
                             alarm['id'] = result.id;
                             if (price != "-") {
-                                alarm['price'] = setComma(alarm['price']);
+                                alarm['price'] = alarm['price'];
                             } else {
                                 alarm['price'] = '-';
                             }
@@ -520,7 +520,7 @@
                     })
                         .then(function (data) {
                             alarm.keyword = alarm.keyword.trim();
-                            alarm.price = setComma(alarm.price);
+                            alarm.price = alarm.price;
                         })
 
                     if (!alarm.keyword) {
@@ -561,6 +561,11 @@
                     var result = data.body;
                     _this.alarms = result.results;
                 });
+            }
+        },
+        filters: {
+            intcomma: function (str) {
+                return setComma(str);
             }
         }
     });
