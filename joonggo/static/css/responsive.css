@@ -365,7 +365,9 @@
 	}
 	.infocenter-infotex .col-md-12 p input {
 		/*margin-top: 51px;*/
-		padding-right: 12px;
+		/*padding-right: 12px;*/
+		padding: 3px 12px;
+    	font-size: 20px;
 	}
 
 	.result-section .header-content {
@@ -526,8 +528,7 @@
 	}
 	.infocenter-infotex .col-md-12 p input {
 		margin-top: 10px;
-		padding: 3px 12px;
-    	font-size: 20px;
+		padding-right: 12px;
 	}
 	.infocenter-infotex .flexslider.blog_silder {
 		position: static;
