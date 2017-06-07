@@ -526,7 +526,8 @@
 	}
 	.infocenter-infotex .col-md-12 p input {
 		margin-top: 10px;
-		padding-right: 12px;
+		padding: 3px 12px;
+    	font-size: 20px;
 	}
 	.infocenter-infotex .flexslider.blog_silder {
 		position: static;
