@@ -29,12 +29,16 @@ class CetizenStandaloneChecker(DjangoSpider):
 
     def request_next_url(self):
         #article = Article.objects.get(id=self.check_article_ids[self.check_current_index])
-        articles = Article.objects.filter(Q(source=self.ref_object) & Q(survival_count=1)).order_by("id")[:10]
+        articles = Article.objects.filter(Q(source=self.ref_object) & Q(survival_count=1)).order_by("id")[:1]
 
-        article = articles[0]
-        print(u"checking : %d %s %s %s\n" % (article.id, article.title, article.uid, article.url))
-        self.check_current_index += 1
-        return Request(article.url, callback=self.detail_parse, meta={'article': article})
+        if len(articles) > 0:
+            article = articles[0]
+            print(u"checking : %d %s %s %s\n" % (article.id, article.title, article.uid, article.url))
+            self.check_current_index += 1
+            return Request(article.url, callback=self.detail_parse, meta={'article': article})
+        else:
+            print(u"checking ended!\n")
+            return None
 
 
     def start_requests(self):
@@ -53,6 +57,7 @@ class CetizenStandaloneChecker(DjangoSpider):
         if uid is None or uid not in article.uid:
             print(u"%s, %s mismatch\n%s" % (article.uid, uid, article.url))
             article.survival_count = 0
+            article.is_sold_out = True
         else:
             print(u"%s, %s match\n%s" % (article.uid, uid, article.url))
             article.survival_count += 1
