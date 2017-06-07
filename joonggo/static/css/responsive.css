@@ -355,6 +355,11 @@
 	.sidebar {
 		position: static !important;
 	}
+	.result-section .website-line-detail {
+		max-width: 120px;
+		height: 120px;
+		width: 120px;
+	}
 	.infocenter-infotex .col-md-12 {
 		padding-top: 31px;
 		padding-bottom: 41px;

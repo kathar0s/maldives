@@ -254,7 +254,23 @@
         </ul>
         <br/>
         <strong>최저가순</strong>
-        <div class="table-responsive article-detail" style="margin: 10px 0 30px;">
+        <div class="mobile-list hidden-md hidden-sm hidden-lg">
+            <div class="media" v-for="article in articles">
+                <div class="media-left">
+                    <a :href="article.url | refined" target="_blank">
+                        <img class="website-line-detail" src="{% static "images/websites/joonggonara_w150.png" %}" v-if="article.source == '중고나라'">
+                        <img class="website-line-detail" src="{% static "images/websites/cetizen_w150.png" %}" v-if="article.source == '세티즌'">
+                        <img class="website-line-detail" src="{% static "images/websites/momsholic_w150.png" %}" v-if="article.source == '맘스홀릭'">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading"><a :href="article.url | refined" target="_blank">[[ article.title ]]</a></h4>
+                    <strong class="text-priority-high" v-if="article.price == minPrice">최저 [[ article.price | intcomma ]]원</strong>
+                    <strong v-if="article.price != minPrice">[[ article.price | intcomma ]]원</strong>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive article-detail hidden-xs" style="margin: 10px 0 30px;">
             <table class="table">
                 <colgroup>
                     <col style="width: 16%">
@@ -286,8 +302,8 @@
                             </div>
                         </td>
                         <td class="text-right">
-                            <strong class="text-priority-high" v-if="article.price == min_price">최저 [[ article.price | intcomma ]]</strong>
-                            <strong v-if="article.price != min_price">[[ article.price | intcomma ]]</strong>
+                            <strong class="text-priority-high" v-if="article.price == minPrice">최저 [[ article.price | intcomma ]]</strong>
+                            <strong v-if="article.price != minPrice">[[ article.price | intcomma ]]</strong>
                         </td>
                         <td class="text-center">-</td>
                     </tr>
@@ -682,7 +698,7 @@
                 currentPage: 1,
                 perPage: 5,
                 limit: 10,
-                min_price: 0
+                minPrice: 0
             }
         },
         computed: {
@@ -747,7 +763,7 @@
                     _this.count = result.count;
                     if (result.count > 0) {
                         _this.articles = result.results;
-                        _this.min_price = result.min_price;
+                        _this.minPrice = result.info.min_price;
                     }
                 })
             }

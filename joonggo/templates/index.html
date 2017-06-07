@@ -12,7 +12,7 @@
                         <div>
                             <form role="search" class="form-style form-style-2" id="search-form" method="get" action="{% url "search" %}">
                                 <p>
-                                    <input name="q" type="search" placeholder="중고 물품 검색어를 입력해주세요." id="keyword" value="{{ request.GET.q }}">
+                                    <input name="q" type="search" placeholder="중고 물품 검색어를 입력해주세요." id="keyword" value="{{ request.GET.q }}" autocomplete="false">
                                     <button class="ask-question-new-class" type="submit"><span class="color button small publish-question">검색</span></button>
                                 </p>
                             </form>
