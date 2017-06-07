@@ -257,14 +257,14 @@
         <div class="mobile-list hidden-md hidden-sm hidden-lg">
             <div class="media" v-for="article in articles">
                 <div class="media-left">
-                    <a :href="article.url | refined" target="_blank">
+                    <a :href="article.url" target="_blank">
                         <img class="website-line-detail" src="{% static "images/websites/joonggonara_w150.png" %}" v-if="article.source == '중고나라'">
                         <img class="website-line-detail" src="{% static "images/websites/cetizen_w150.png" %}" v-if="article.source == '세티즌'">
                         <img class="website-line-detail" src="{% static "images/websites/momsholic_w150.png" %}" v-if="article.source == '맘스홀릭'">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading"><a :href="article.url | refined" target="_blank">[[ article.title ]]</a></h4>
+                    <h4 class="media-heading"><a :href="article.url" target="_blank">[[ article.title ]]</a></h4>
                     <strong class="text-priority-high" v-if="article.price == minPrice">최저 [[ article.price | intcomma ]]원</strong>
                     <strong v-if="article.price != minPrice">[[ article.price | intcomma ]]원</strong>
                 </div>
