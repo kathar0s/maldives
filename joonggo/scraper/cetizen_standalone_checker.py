@@ -28,7 +28,7 @@ class CetizenStandaloneChecker(DjangoSpider):
 
         if len(articles) > 0:
             article = articles[0]
-            print(u"checking : %d %s %s %s\n" % (article.id, article.title, article.uid, article.url))
+            #print(u"checking : %d %s %s %s\n" % (article.id, article.title, article.uid, article.url))
             return Request(article.url, callback=self.detail_parse, meta={'article': article})
         else:
             print(u"checking ended!\n")
