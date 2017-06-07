@@ -68,7 +68,13 @@ class JoonggoBot:
         self.send_message(id, send_message)
 
     def handle_help(self, id, message):
-        send_message = u"지원 명령어 모음\n\n종고 물품 키워드 검색\n/알림등록 키워드\n/알림보기\n/알림삭제 키워드"
+        send_message = u"명령어 도움말\n\n"
+        send_message += u"1.키워드 검색 예)\n\"아이폰7\"\n\n"
+        send_message += u"2.알림 등록 예\n\"/알림등록 아이폰7\"\n\n"
+        send_message += u"3.알림 확인 예\n\"/알림목록\"\n\n"
+        send_message += u"2.알림 삭제 예\n\"/알림삭제 아이폰7\"\n\n"
+        send_message += u"2.알림 암호 예\n\"/알림암호 *****\"\n\n"
+
         self.send_message(id, send_message)
 
     def handle_add_alarm(self, id, message):
@@ -122,12 +128,10 @@ class JoonggoBot:
         else:
             keyword = message.split(u"/알림암호")
             if len(keyword) < 1 or len(keyword[1]) < 1:
-                send_message = u"%d 토큰의 암호는 \'%s\' 입니다" % (id, profile.password)
+                send_message = u"%d 토큰의 암호를 지정하세요" % (id)
             else:
-                profile.password = keyword[1].strip()
                 profile.user.set_password(keyword[1].strip())
                 profile.user.save()
-                profile.save()
                 send_message = u"%d 토큰의 암호를 \'%s\' 로 설정하였습니다" % (id, profile.password)
 
         self.send_message(id, send_message)
@@ -167,6 +171,8 @@ class JoonggoBot:
                     if source is not None:
                         default_url = u"%s%s\n\n" % (source.mobile_base_url, row['uid'])
                 query_result += default_url
+        else:
+            query_result = u"검색 결과가 존재하지 않습니다\n\n"
 
         self.send_message(id, query_result)
 
