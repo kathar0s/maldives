@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load humanize %}
 <script type="text/x-template" id="login-component">
     <div class="login" v-show="!isLogin">
         <div class="row">
@@ -243,6 +244,75 @@
                     </table>
                 </div>
             </div>
+        </div>
+    </article>
+</script>
+<script type="text/x-template" id="article-paginator">
+    <article>
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a>판매 등록수 <span class="count">[[ count | intcomma ]]</span></a></li>
+        </ul>
+        <br/>
+        <strong>최저가순</strong>
+        <div class="table-responsive article-detail" style="margin: 10px 0 30px;">
+            <table class="table">
+                <colgroup>
+                    <col style="width: 16%">
+                    <col style="width: 50%">
+                    <col style="width: 17%">
+                    <col style="width: 17%">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>사이트</th>
+                    <th>제목</th>
+                    <th class="text-right">판매가</th>
+                    <th class="text-center">배송비</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="article in articles">
+                        <td class="text-center">
+                            <img class="website-line-detail" src="{% static "images/websites/joonggonara_w150.png" %}" v-if="article.source == '중고나라'">
+                            <img class="website-line-detail" src="{% static "images/websites/cetizen_w150.png" %}" v-if="article.source == '세티즌'">
+                            <img class="website-line-detail" src="{% static "images/websites/momsholic_w150.png" %}" v-if="article.source == '맘스홀릭'">
+                        </td>
+                        <td class="article">
+                            <div class="title">
+                                <a :href="article.url | refined" target="_blank">[[ article.title ]]</a>
+                            </div>
+                            <div class="content">
+                                [[ article.content | trim | truncate ]]
+                            </div>
+                        </td>
+                        <td class="text-right">
+                            <strong class="text-priority-high" v-if="article.price == min_price">최저 [[ article.price | intcomma ]]</strong>
+                            <strong v-if="article.price != min_price">[[ article.price | intcomma ]]</strong>
+                        </td>
+                        <td class="text-center">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li :class="{'disabled': !pagination.hasPrevious}">
+                        <a href="#" aria-label="Previous" @click.prevent="updateArticles(currentPage - 1)">
+                            <span aria-hidden="true">이전</span>
+                        </a>
+                    </li>
+                    <li v-for="page in pagination.pageRange" :class="{ 'active': page == currentPage }"
+                        @click.prevent="updateArticles(page)">
+                        <a href="#">[[ page ]]</a>
+                    </li>
+                    <li :class="{'disabled': !pagination.hasNext}">
+                        <a href="#" aria-label="Next" @click.prevent="updateArticles(currentPage + 1)">
+                            <span aria-hidden="true">다음</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </article>
 </script>
@@ -578,6 +648,115 @@
             },
             refined: function (url) {
                 return url.replace('/m.', '/');
+            }
+        }
+    });
+    Vue.component('article-paginator', {
+        props: ['app'],
+        delimiters: ['[[', ']]'],
+        template: '#article-paginator',
+        data: function() {
+            return {
+                articles: [],
+                count: 0,
+                currentPage: 1,
+                perPage: 5,
+                limit: 10,
+                min_price: 0
+            }
+        },
+        computed: {
+            totalPage: function (){
+                return Math.ceil(this.count / this.limit);
+            },
+            pagination: function() {
+                var numPages = this.totalPage;
+                var lastIndex = 0;
+                var startIndex = 0;
+                var pageRange = [];
+                var number = this.currentPage;
+
+                startIndex = number - Math.floor(this.perPage / 2);
+                lastIndex = startIndex + this.perPage;
+
+                lastIndex = lastIndex > numPages + 1 ? numPages + 1: lastIndex;
+
+                if (this.currentPage < Math.ceil(this.perPage / 2)) {
+                    startIndex = 1
+                    lastIndex = 1 + this.perPage;
+                } else if (this.currentPage > numPages - Math.ceil(this.perPage / 2)) {
+                    lastIndex = numPages + 1;
+                    startIndex = lastIndex - this.perPage;
+                }
+                pageRange = _.range(startIndex, lastIndex);                             // 페이지 범위
+
+                var hasNext = this.currentPage + 1 > numPages ? false: true;
+                var hasPrevious = this.currentPage - 1 < 1 ? false: true;
+
+                return {
+                    number: number,
+                    numPages: numPages,
+                    pageRange: pageRange,
+                    hasPrevious: hasPrevious,
+                    hasNext: hasNext,
+                }
+            }
+        },
+        methods: {
+            updateArticles: function (page){
+                var _this = this;
+                page = page || this.currentPage;
+
+                // 페이지가 최대 페이지를 넘어서면 처리하지 않는다.
+                if (this.totalPage > 0 && page > this.totalPage) {
+                    return;
+                }
+                this.currentPage = page;
+
+                this.$http.get('/api/article/search/',
+                    {
+                        params: {
+                            q: '{% if request.GET.q %}{{ request.GET.q }}{% endif %}',
+                            page: page,
+                            format: 'json'
+                        }
+                    }
+                ).then(function(response){
+                    var result = response.body;
+                    _this.count = result.count;
+                    if (result.count > 0) {
+                        _this.articles = result.results;
+                        _this.min_price = result.min_price;
+                    }
+                })
+            }
+        },
+        mounted: function() {
+            this.updateArticles();
+        },
+        filters: {
+            intcomma: function (str) {
+                return setComma(str);
+            },
+            refined: function (url) {
+                return url.replace('/m.', '/');
+            },
+            truncate: function(text, length, clamp) {
+                length = length || 100;
+                clamp = clamp || '...';
+                var node = document.createElement('div');
+                node.innerHTML = text;
+                var content = node.textContent;
+                return content.length > length ? content.slice(0, length) + clamp : content;
+            },
+            trim: function(str) {
+                var re = /^\s+|\s+$/g;
+                if (_.isString(str)) {
+                    return str.replace(re, '');
+                } else {
+                    util.type('trim', str, 'string');
+                    return str;
+                }
             }
         }
     });

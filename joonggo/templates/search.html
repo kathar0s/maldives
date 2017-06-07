@@ -57,62 +57,9 @@
                         </a>
                     </div>
                 </aside>
-                <article class="col-md-12">
-                    <ul class="nav nav-tabs">
-                        <li role="presentation" class="active"><a>판매 등록수 <span class="count">{{ articles | length | intcomma }}</span></a></li>
-                    </ul>
-                    <br/>
-                    <strong>최저가순</strong>
-                    <div class="table-responsive article-detail" style="margin: 10px 0 30px;">
-                        <table class="table">
-                            <colgroup>
-                                <col style="width: 16%">
-                                <col style="width: 50%">
-                                <col style="width: 17%">
-                                <col style="width: 17%">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th>사이트</th>
-                                    <th>제목</th>
-                                    <th class="text-right">판매가</th>
-                                    <th class="text-center">배송비</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for article in articles %}
-                                <tr>
-                                    <td class="text-center">
-                                        {% if article.source.name == '중고나라' %}
-                                        <img class="website-line-detail" src="{% static "images/websites/joonggonara_w150.png" %}">
-                                        {% elif article.source.name == '세티즌' %}
-                                        <img class="website-line-detail" src="{% static "images/websites/cetizen_w150.png" %}">
-                                        {% elif article.source.name == '맘스홀릭' %}
-                                        <img class="website-line-detail" src="{% static "images/websites/momsholic_w150.png" %}">
-                                        {% endif %}
-                                    </td>
-                                    <td class="article">
-                                        <div class="title">
-                                            <a href="{{ article.url }}" target="_blank">{{ article.title }}</a>
-                                        </div>
-                                        <div class="content">
-                                            {{ article.content }}
-                                        </div>
-                                    </td>
-                                    <td class="text-right">
-                                        {% if forloop.first %}
-                                        <strong class="text-priority-high">최저 {{ article.price | intcomma }}</strong>
-                                        {% else %}
-                                        <strong>{{ article.price | intcomma }}</strong>
-                                        {% endif %}
-                                    </td>
-                                    <td class="text-center">-</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </article>
+                <div class="col-md-12">
+                    <article-paginator :app="this" ref="article-paginator"></article-paginator>
+                </div>
             </div>
         </div>
     </div>

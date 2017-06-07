@@ -13,7 +13,7 @@ class ArticleSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Article
-        fields = ('id', 'uid', 'title', 'price', 'url', 'created', 'source', 'source_id')
+        fields = ('id', 'uid', 'title', 'content', 'price', 'url', 'created', 'source', 'source_id')
 
 
 class AlarmSerializer(serializers.ModelSerializer):
