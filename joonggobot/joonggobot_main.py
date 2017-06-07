@@ -141,7 +141,7 @@ class JoonggoBot:
         period = datetime.timedelta(days=13)
         start_date = end_date - period
         queryset = Article.objects.filter(created__gte=start_date).order_by('-created')
-        queryset = queryset.filter(title__contains=message)
+        queryset = queryset.filter(title__contains=message, is_sold_out=False)
         title_exclude = ['삽니다', '구합니다', '배터리']
         for t in title_exclude:
             queryset = queryset.exclude(title__contains=t)
