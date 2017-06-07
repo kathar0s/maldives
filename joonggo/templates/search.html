@@ -27,35 +27,19 @@
             <h2>키워드를 입력해주세요.</h2>
             <p>키워드를 입력하시면 해당 물품이 검색됩니다. 검색어는 자세히 입력할 수록 결과가 더 정확해집니다.</p>
         </div>
-        <div class="page-content text-center {% if articles.count  != 0 %}hide{% endif %}">
-            <i class="icon-warning-sign"></i>
-            <h2>검색결과를 찾을 수 없습니다.</h2>
-            <p>키워드를 입력하시면 해당 물품이 검색됩니다. 검색어는 자세히 입력할 수록 결과가 더 정확해집니다.</p>
-        </div>
         <div class="result {% if not request.GET.q or articles.count == 0 %}hide{% endif %}">
             <h1 class="title">{{ request.GET.q }} <small>검색결과</small></h1>
+            <div class="page-content text-center" v-if="noResult">
+                <i class="icon-warning-sign"></i>
+                <h2>검색결과를 찾을 수 없습니다.</h2>
+                <p>키워드를 입력하시면 해당 물품이 검색됩니다. 검색어는 자세히 입력할 수록 결과가 더 정확해집니다.</p>
+            </div>
             <div class="row">
                 <div class="col-md-8">
                     <article-summary ref="summary" :app="this"></article-summary>
                 </div>
                 <aside class="col-md-4 sidebar">
-                    <div id="questions-widget-2" class="widget questions-widget">
-                        <h3 class="widget_title">최저가 추이</h3>
-                        <div id="chart_min" class="">
-
-                        </div>
-                    </div>
-                    <div id="questions_categories-widget-2" class="widget questions_categories-widget">
-                        <h3 class="widget_title">평균가 추이</h3>
-                        <div id="chart_avg" class="">
-
-                        </div>
-                    </div>
-                    <div class="advertising">
-                        <a href="javascript:void(0)">
-                            <img alt="" src="http://fluentthemes.com/wp/knowledge/wp-content/uploads/2017/02/your-ad-here.jpg" style="width: 100%;">
-                        </a>
-                    </div>
+                    <trend-component ref="trend" :app="this"></trend-component>
                 </aside>
                 <div class="col-md-12">
                     <article-paginator :app="this" ref="article-paginator"></article-paginator>
@@ -66,91 +50,4 @@
 {% endblock %}
 {% block javascript %}
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script>
-
-{#        Highcharts.chart('chart_min', {#}
-{#           chart: {#}
-{#                type: 'line',#}
-{#                height: 250,#}
-{#                //spacingRight: 30,#}
-{#                //marginRight: 130#}
-{#            },#}
-{#            title: {#}
-{#              text: ''#}
-{#            },#}
-{#            xAxis: {#}
-{#                labels: {#}
-{#                    y: 40,#}
-{#                    style: {#}
-{#                        fontSize: 9,#}
-{#                        fontFamily: 'Nanum Gothic'#}
-{#                    },#}
-{#                },#}
-{#                showLastLabel: true,#}
-{#                lineWidth: 0,#}
-{#                tickLength: 0,#}
-{#                title: {#}
-{#                    text: null#}
-{#                },#}
-{#                categories : {{ trend_day|safe  }},#}
-{##}
-{#            },#}
-{#            yAxis: {#}
-{#                title: {#}
-{#                    text: '가격',#}
-{#                    align: 'center'#}
-{#                },#}
-{#                labels: {#}
-{#                    overflow: 'justify'#}
-{#                }#}
-{#            },#}
-{#            series: [{#}
-{#                name: '최저가',#}
-{#                data: {{ trend_min_price|safe  }},#}
-{#                color : '#FF0000'#}
-{#            }]#}
-{##}
-{#        });#}
-{#        Highcharts.chart('chart_avg', {#}
-{#        chart: {#}
-{#            type: 'line',#}
-{#            height: 250,#}
-{#            //spacingRight: 30,#}
-{#            //marginRight: 130#}
-{#        },#}
-{#        title: {#}
-{#          text: ''#}
-{#        },#}
-{#         xAxis: {#}
-{#            labels: {#}
-{#                y: 40,#}
-{#                style: {#}
-{#                    fontSize: 9,#}
-{#                    fontFamily: 'Nanum Gothic'#}
-{#                },#}
-{#            },#}
-{#            showLastLabel: true,#}
-{#            lineWidth: 0,#}
-{#            tickLength: 0,#}
-{#            categories : {{ trend_day|safe  }},#}
-{##}
-{##}
-{#        },#}
-{#        yAxis: {#}
-{#            title: {#}
-{#                text: '가격',#}
-{#                align: 'center'#}
-{#            },#}
-{#            labels: {#}
-{#                overflow: 'justify'#}
-{#            }#}
-{#        },#}
-{#        series: [{#}
-{#            name: '평균가',#}
-{#            data: {{ trend_avg_price|safe  }},#}
-{#            color : '#0000FF'#}
-{#        }]#}
-{#        });#}
-
-</script>
 {% endblock %}

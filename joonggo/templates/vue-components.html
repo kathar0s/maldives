@@ -190,7 +190,7 @@
     </div><!-- End header-top -->
 </script>
 <script type="text/x-template" id="article-summary-component">
-    <article class="post single-post post-249 type-post status-publish format-standard has-post-thumbnail hentry category-web-design tag-design tag-knowledge">
+    <article class="post single-post post-249 type-post status-publish format-standard has-post-thumbnail hentry category-web-design tag-design tag-knowledge" :class="{hide: top10.length == 0}">
         <div class="post-inner">
             <div class="header-content">
                 <h2 style="font-weight: bold;">최저가/최고가</h2>
@@ -248,7 +248,7 @@
     </article>
 </script>
 <script type="text/x-template" id="article-paginator">
-    <article>
+    <article :class="{hide: count == 0}">
         <ul class="nav nav-tabs">
             <li role="presentation" class="active"><a>판매 등록수 <span class="count">[[ count | intcomma ]]</span></a></li>
         </ul>
@@ -315,6 +315,21 @@
             </nav>
         </div>
     </article>
+</script>
+<script type="text/x-template" id="trend-component">
+    <aside :class="{hide: count == 0}">
+        <div id="questions-widget-2" class="widget questions-widget">
+            <h3 class="widget_title">중고가격 추이</h3>
+            <div id="chart_min" class="">
+
+            </div>
+        </div>
+        <div class="advertising">
+            <a href="#">
+                <img alt="" src="http://fluentthemes.com/wp/knowledge/wp-content/uploads/2017/02/your-ad-here.jpg" style="width: 100%;">
+            </a>
+        </div>
+    </aside>
 </script>
 <script>
     var alarmStorage = {
@@ -639,6 +654,8 @@
                     this.top10 = result.results;
                     this.max_price = result.info.max_price;
                     this.min_price = result.info.min_price;
+                } else {
+                    this.app.noResult = true;
                 }
 
                 jQuery(".loader").fadeOut(500);
@@ -653,6 +670,7 @@
             }
         }
     });
+
     Vue.component('article-paginator', {
         props: ['app'],
         delimiters: ['[[', ']]'],
@@ -762,6 +780,98 @@
             }
         }
     });
+
+    Vue.component('trend-component', {
+        props: ['app'],
+        delimiters: ['[[', ']]'],
+        template: '#trend-component',
+        data: function () {
+            return {
+                count: 0,
+                categories: [],
+                trend: {
+                    minPriceData: [],
+                    avgPriceData: []
+                }
+
+            }
+        },
+        methods: {
+            updateCharts: function(){
+                Highcharts.chart('chart_min', {
+                    credits: {enabled: false},
+                    chart: {
+                        type: 'line',
+                        height: 250,
+                    },
+                    title: {
+                        text: ''
+                    },
+                    xAxis: {
+                        labels: {
+                            y: 40,
+                            style: {
+                                fontSize: 9,
+                                fontFamily: 'Nanum Gothic'
+                            },
+                        },
+                        showLastLabel: true,
+                        lineWidth: 0,
+                        tickLength: 0,
+                        title: {
+                            text: null
+                        },
+                        categories : this.categories,
+
+                    },
+                    yAxis: {
+                        title: {
+                            text: '가격',
+                            align: 'center'
+                        },
+                        labels: {
+                            overflow: 'justify',
+                            formatter: function () {
+                                return Highcharts.numberFormat(this.value, 0, 0, ',');
+                            }
+                        }
+                    },
+                    series: [{
+                        name: '최저가',
+                        data: this.trend.minPriceData,
+                        color : '#FF0000'
+                    },{
+                        name: '평균가',
+                        data: this.trend.avgPriceData,
+                        color : '#0000FF'
+                    }]
+
+                });
+            }
+        },
+        mounted: function () {
+            var _this = this;
+            this.$http.get('/api/article/trend', {
+                params: {
+                    q: '{{ request.GET.q }}',
+                    format: 'json'
+                }
+            }).then(function(response){
+                var result = response.body;
+
+                if (result.rsltCd == 'Y') {
+                    _this.count = 1;
+                    _this.categories = result.trend_day;
+                    _this.trend.minPriceData = result.trend_min_price;
+                    _this.trend.avgPriceData = result.trend_avg_price;
+
+                    this.updateCharts();
+                }
+
+            })
+        }
+    });
+
     var vm = new Vue({
         el: '#app',
         delimiters: ['[[', ']]'],
@@ -769,7 +879,8 @@
             userId: '{% if request.user.id %}{{ request.user.id }}{% endif %}',
             userName: '{% if request.user.id %}{{ request.user.username }}{% endif %}',
             alarmId: '{% if request.user.id %}{{ request.user.chatprofile.chat }}{% endif %}',
-            profileId: '{% if request.user.id %}{{ request.user.chatprofile.id }}{% endif %}'
+            profileId: '{% if request.user.id %}{{ request.user.chatprofile.id }}{% endif %}',
+            noResult: false
         }
     });
 </script>
