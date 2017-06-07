@@ -346,6 +346,24 @@
 /*                    width : 767px 
 /*------------------------------------------------------------------------------*/
 @media (max-width: 767px) {
+
+	.keywordapp {
+		margin: 50px auto 0;
+	}
+
+	.keywordapp h1 {
+		font-size: 50px;
+		top: -80px;
+	}
+
+	.keywordapp .footer {
+      height: 80px;
+    }
+
+    .keywordapp .filters {
+      bottom: 10px;
+    }
+
 	.grid_970 .container {
 		width: auto;
 	}
@@ -356,7 +374,7 @@
 		position: static !important;
 	}
 	.result-section .website-line-detail {
-		max-width: 120px;u
+		max-width: 120px;
 		height: 120px;
 		width: 120px;
 	}

@@ -3914,8 +3914,8 @@ span.date i,span.comment i {
 	margin-bottom: 0 !important;
 }
 .breadcrumbs .container {
-	padding-top: 35px;
-    padding-bottom: 35px;
+	padding-top: 20px;
+    padding-bottom: 20px;
     position: relative;
     z-index: 991;
    

@@ -733,15 +733,15 @@ jQuery(document).ready(function($) {
 	
 	/* Ask Question */
 	
-	jQuery(".infocenter-infotex .ask-question,.publish-question.publish-question-widget").click(function () {
-		jQuery(".loader").fadeIn(500);
-		var question_title = jQuery("#question_title").val();
-		jQuery.get(add_question,question_title,function () {
-			window.location.href = add_question+"?question_title="+question_title;
-			jQuery(".the-title").val(question_title);
-		})
-		return false;
-	});
+	// jQuery(".infocenter-infotex .ask-question,.publish-question.publish-question-widget").click(function () {
+	// 	jQuery(".loader").fadeIn(500);
+	// 	var question_title = jQuery("#question_title").val();
+	// 	jQuery.get(add_question,question_title,function () {
+	// 		window.location.href = add_question+"?question_title="+question_title;
+	// 		jQuery(".the-title").val(question_title);
+	// 	})
+	// 	return false;
+	// });
 	
 	function getParameterByName(name) {
 	    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");

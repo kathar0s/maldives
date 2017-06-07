@@ -20,16 +20,15 @@
                 <tbody>
                 {% for site in source %}
                     <tr>
-                        <td class="text-center"><img class="website-line" src="{% static site.site_image_url %}"></td>
-                        <td class="text-center"><span class="text-priority-high">{{ site.category }}</span></td>
+                        <td class="text-center"><img class="website-line" src="{% static site.site_image_url %}" style="width: 120px;"></td>
+                        <td class="text-center" style="vertical-align: middle;"><span class="text-priority-high">{{ site.category }}</span></td>
                         {% if site.name == "세티즌" %}
-                            <td class="text-center"><a href="http://market.cetizen.com/market.php?auc_sale=1" target="_blank" ><span class="label label-default">글쓰기</span></a></td>
+                            <td class="text-center" style="vertical-align: middle;"><a href="http://market.cetizen.com/market.php?auc_sale=1" target="_blank" ><span class="label label-default"><i class="icon-pencil"></i> 글쓰기</span></a></td>
                         {% else %}
                             <!--<td class="text-center"><a href="https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=LRrB5VpRxkF0nWoMiTaQ&redirect_uri={{ site.url|to_pc_url }}" target="_blank" > -->
-                            <td class="text-center"><a href="{{ site.url|to_pc_url }}" target="_blank" >
+                            <td class="text-center" style="vertical-align: middle;"><a href="{{ site.url|to_pc_url }}" target="_blank" >
                                 <span class="label label-default">글쓰기</span></a></td>
                         {% endif %}
-
                     </tr>
                 {% endfor %}
                 </tbody>

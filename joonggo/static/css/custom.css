@@ -2641,7 +2641,7 @@ article.single-question {
 }
 @media (max-width: 430px) {
   .keywordapp .footer {
-    height: 50px;
+    height: 80px;
   }
   .keywordapp .filters {
     bottom: 10px;

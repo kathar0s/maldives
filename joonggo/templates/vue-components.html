@@ -97,10 +97,10 @@
                                 <div class="col-xs-7">
                                     <label class="keyword" @dblclick="editAlarm(alarm)">[[ alarm.keyword ]]</label>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-xs-5 col-sm-3">
                                     <label class="price" @dblclick="editAlarm(alarm)">[[ alarm.price | intcomma ]]</label>
                                 </div>
-                                <div class="col-xs-2">
+                                <div class="col-sm-2 hidden-xs">
                                     <div class="destroy-wrapper">
                                         <button class="destroy outline" @click="removeAlarm(alarm)"></button>
                                     </div>
@@ -127,7 +127,7 @@
                                            @keydown.enter="doneEdit(alarm)"
                                            @keyup.esc="cancelEdit(alarm)">
                                 </div>
-                                <div class="col-xs-2">
+                                <div class="col-xs-2 hidden-xs">
                                     <div class="register edit-element">
                                         <button class="btn btn-block btn-info" @click="doneEdit(alarm)">수정</button>
                                     </div>
@@ -138,17 +138,34 @@
                 </ul>
             </section>
             <footer class="footer" v-show="alarms.length" v-cloak>
+                <div class="hidden-xs">
                     <span class="alarm-count">
                       <strong>[[ remaining ]]</strong> 개 활성화
                     </span>
-                <ul class="filters">
-                    <li><a href="#/all" :class="{ selected: visibility == 'all' }">전체</a></li>
-                    <li><a href="#/enabled" :class="{ selected: visibility == 'enabled' }">활성화</a></li>
-                    <li><a href="#/disabled" :class="{ selected: visibility == 'disabled' }">비활성화</a></li>
-                </ul>
-                <button class="clear-disabled outline" @click="removeCompleted" v-show="alarms.length > remaining">
-                    비활성화 모두 삭제
-                </button>
+                    <ul class="filters">
+                        <li><a href="#/all" :class="{ selected: visibility == 'all' }">전체</a></li>
+                        <li><a href="#/enabled" :class="{ selected: visibility == 'enabled' }">활성화</a></li>
+                        <li><a href="#/disabled" :class="{ selected: visibility == 'disabled' }">비활성화</a></li>
+                    </ul>
+                    <button class="clear-disabled outline" @click="removeCompleted" v-show="alarms.length > remaining">
+                        비활성화 모두 삭제
+                    </button>
+                </div>
+                <div class="visible-xs">
+                    <div class="clearfix">
+                        <span class="alarm-count">
+                            <strong>[[ remaining ]]</strong> 개 활성화
+                        </span>
+                        <button class="clear-disabled outline" @click="removeCompleted" v-show="alarms.length > remaining">
+                            비활성화 모두 삭제
+                        </button>
+                    </div>
+                    <ul class="filters">
+                        <li><a href="#/all" :class="{ selected: visibility == 'all' }">전체</a></li>
+                        <li><a href="#/enabled" :class="{ selected: visibility == 'enabled' }">활성화</a></li>
+                        <li><a href="#/disabled" :class="{ selected: visibility == 'disabled' }">비활성화</a></li>
+                    </ul>
+                </div>
             </footer>
         </section>
         {#            <footer class="info">#}
@@ -450,6 +467,9 @@
         // note there's no DOM manipulation here at all.
         methods: {
             editDisabled: function (alarm) {
+                if (alarm.price == '-') {
+                    alarm.price = 0;
+                }
                 this.$http.put('/api/alarm/'+alarm.id+'/', alarm, {
                     headers: {
                         'X-CSRFTOKEN': getCookie("csrftoken")
@@ -463,7 +483,7 @@
             },
             addAlarm: function () {
                 var _this = this;
-                var value = this.newAlarm && this.newAlarm.trim();
+                var value = this.newAlarm && this.newAlarm.trim().toUpperCase();
                 var price = this.newPrice && this.newPrice.trim();
 
                 if (!price) {
@@ -530,9 +550,8 @@
                 if (!this.editedAlarm) {
                     return
                 }
-                this.editedAlarm = null
-
-                var test = _.filter(this.alarms, function(x) { return x['keyword'] == alarm.keyword });
+                this.editedAlarm = null;
+                var test = _.filter(this.alarms, function(x) { return x['keyword'].toUpperCase() == alarm.keyword.toUpperCase() });
                 var unique = (test.length < 2) ? true : false;
 
                 if (!unique) {
@@ -555,19 +574,25 @@
                         })
 
                     if (!alarm.keyword) {
-                        this.removeAlarm(alarm)
+                        this.removeAlarm(alarm);
                     }
                 }
             },
 
             cancelEdit: function (alarm) {
-                this.editedTodo = null
-                alarm.keyword = this.beforeEditCacheKeyword
-                alarm.price = this.beforeEditCachePrice
+                this.editedTodo = null;
+                alarm.keyword = this.beforeEditCacheKeyword;
+                alarm.price = this.beforeEditCachePrice;
             },
 
             removeCompleted: function () {
-                this.alarms = filters.enabled(this.alarms)
+                var _this = this;
+                var removeAlarms = filters.disabled(this.alarms);
+
+                removeAlarms.forEach(function (alarm) {
+                    _this.removeAlarm(alarm);
+                });
+{#                this.alarms = filters.enabled(this.alarms)#}
             }
         },
         mounted: function() {
@@ -596,6 +621,9 @@
         },
         filters: {
             intcomma: function (str) {
+                if (str == '-' || str == '0') {
+                    return '-';
+                }
                 return setComma(str);
             }
         }
