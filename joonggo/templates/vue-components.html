@@ -265,7 +265,7 @@
     </article>
 </script>
 <script type="text/x-template" id="article-paginator">
-    <article :class="{hide: count == 0}">
+    <article :class="{hide: count == 0}" id="_content_area">
         <ul class="nav nav-tabs">
             <li role="presentation" class="active"><a>판매 등록수 <span class="count">[[ count | intcomma ]]</span></a></li>
         </ul>
@@ -792,6 +792,7 @@
                     if (result.count > 0) {
                         _this.articles = result.results;
                         _this.minPrice = result.info.min_price;
+                        location.href = '#_content_area'
                     }
                 })
             }
