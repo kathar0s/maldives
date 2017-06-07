@@ -8,7 +8,7 @@ from joonggobot.joonggobot_main import JoonggoBot
 @receiver(post_save, sender=Article)
 def create_crawler_item(sender, instance, created, **kwargs):
     if created:
-        for alarm in Alarm.objects.all():
+        for alarm in Alarm.objects.filter(disabled=False):
             keyword_list = alarm.keyword.split()
 
             full_contents = instance.title + ' ' + instance.content + ' ' + instance.tags
