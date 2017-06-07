@@ -72,8 +72,8 @@ class JoonggoBot:
         send_message += u"1.키워드 검색 예)\n\"아이폰7\"\n\n"
         send_message += u"2.알림 등록 예\n\"/알림등록 아이폰7\"\n\n"
         send_message += u"3.알림 확인 예\n\"/알림목록\"\n\n"
-        send_message += u"2.알림 삭제 예\n\"/알림삭제 아이폰7\"\n\n"
-        send_message += u"2.알림 암호 예\n\"/알림암호 *****\"\n\n"
+        send_message += u"4.알림 삭제 예\n\"/알림삭제 아이폰7\"\n\n"
+        send_message += u"5.알림 암호 예\n\"/알림암호 *****\"\n\n"
 
         self.send_message(id, send_message)
 
