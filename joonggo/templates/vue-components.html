@@ -421,7 +421,7 @@
             editDisabled: function (alarm) {
                 this.$http.put('/api/alarm/'+alarm.id+'/', alarm, {
                     headers: {
-                        'X-CSRFTOKEN': '{{ csrf_token }}'
+                        'X-CSRFTOKEN': 'getCookie("csrftoken")'
                     }
                 })
                     .then(function (data) {
@@ -450,7 +450,7 @@
                         keyword: value,
                         disabled: false,
                         profile: _this.app.profileId,
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                        csrfmiddlewaretoken: getCookie('csrftoken')
                     };
 
                     if (price != "-") {
@@ -478,12 +478,9 @@
             },
 
             removeAlarm: function (alarm) {
-                var token = {
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                };
                 this.$http.delete('/api/alarm/'+alarm.id+'/', {
                     headers: {
-                        'X-CSRFTOKEN': '{{ csrf_token }}'
+                        'X-CSRFTOKEN': getCookie('csrftoken')
                     }
                 })
                     .then(function (data) {
@@ -518,7 +515,7 @@
                     }
                     this.$http.put('/api/alarm/'+alarm.id+'/', alarm, {
                         headers: {
-                            'X-CSRFTOKEN': '{{ csrf_token }}'
+                            'X-CSRFTOKEN': getCookie('csrftoken')
                         }
                     })
                         .then(function (data) {
