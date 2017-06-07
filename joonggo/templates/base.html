@@ -161,6 +161,12 @@
     /* ]]> */
 </script>
 {% block javascript %}
+    <script>
+        jQuery(window).load(function() {
+            /* Loader */
+            jQuery(".loader").fadeOut(500);
+        });
+    </script>
 {% endblock %}
 {% include "vue-components.html" %}
 <!--<![endif]-->

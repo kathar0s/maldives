@@ -1694,11 +1694,7 @@ jQuery(document).ready(function($) {
 	/* Page load */
 	
 	jQuery(window).load(function() {
-		
-		/* Loader */
-		
-		jQuery(".loader").fadeOut(500);
-		
+
 		/* Carousel */
 		
 		jQuery(".carousel-all").each(function(){

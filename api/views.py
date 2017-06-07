@@ -23,7 +23,7 @@ class PaginationClass(PageNumberPagination):
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
-    queryset = Article.objects.all()
+    queryset = Article.objects.all().select_related('source')
     serializer_class = ArticleSerializer
     pagination_class = PaginationClass
 
@@ -42,7 +42,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     @list_route()
     def search(self, request):
         get = request.GET.copy()
-        if 'q' in get:
+        if 'q' in get and get['q'] != '':
             query = get['q']
             # template_data = retrieve_item(query)
             queryset = self.get_queryset()

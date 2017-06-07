@@ -1685,12 +1685,7 @@ jQuery(document).ready(function($) {
 	
 	jQuery(window).load(function() {
 		
-		/* Loader */
-		
-		jQuery(".loader").fadeOut(500);
-		
 		/* Carousel */
-		
 		jQuery(".carousel-all").each(function(){
 		    var $current = jQuery(this);
 		    var $prev = jQuery(this).find(".carousel-prev");

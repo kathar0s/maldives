@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% load humanize %}
 {% block body %}
-
     <div class="section-warp infocenter-infotex light">
         <div class="container clearfix">
             <div class="box_icon box_warp box_no_border box_no_background">
@@ -37,68 +36,7 @@
             <h1 class="title">{{ request.GET.q }} <small>검색결과</small></h1>
             <div class="row">
                 <div class="col-md-8">
-                    <article class="post single-post post-249 type-post status-publish format-standard has-post-thumbnail hentry category-web-design tag-design tag-knowledge">
-                        <div class="post-inner">
-                            <div class="header-content">
-                                <h2 style="font-weight: bold;">최저가/최고가</h2>
-                                <div class="price-range">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <div style="margin-bottom: 10px;">
-                                                <span class="lowest-price">{{ min_price | intcomma }}</span><span class="unit">원</span> ~ <span class="highest-price">{{ max_price | intcomma }}</span><span class="unit">원</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div style="margin-bottom: 10px;">
-                                                <button class="btn btn-primary btn-md btn-block" style="font-size: 12px;">최저가 보러가기</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <strong>최저가 상위 10개</strong>
-                                <div class="table-responsive" style="margin: 10px 0;">
-                                    <table class="table" style="margin-bottom: 0;">
-                                        <colgroup>
-                                            <col class="col-xs-3">
-                                            <col class="col-xs-5">
-                                            <col class="col-xs-2">
-                                            <col class="col-xs-2">
-                                        </colgroup>
-                                        <thead>
-                                            <tr>
-                                                <th>사이트</th>
-                                                <th class="text-right">판매가</th>
-                                                <th class="text-center">배송비</th>
-                                                <th class="text-right">보러가기</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for article in articles_top10 %}
-                                            <tr>
-                                                <td>
-                                                    {% if article.source.name == '중고나라' %}
-                                                    <img class="website-line" src="{% static "images/websites/joonggonara_line.png" %}">
-                                                    {% elif article.source.name == '세티즌' %}
-                                                    <img class="website-line" src="{% static "images/websites/cetizen_line.png" %}">
-                                                    {% elif article.source.name == '맘스홀릭' %}
-                                                    <img class="website-line" src="{% static "images/websites/momsholic_line.png" %}">
-                                                    {% endif %}
-                                                </td>
-                                                <td class="text-right"><span class="text-priority-high">{{ article.price | intcomma }}</span></td>
-                                                <td class="text-center">-</td>
-                                                <td class="text-right">
-                                                    <a href="{{ article.url }}" target="_blank">
-                                                        <span class="label label-default">바로가기</span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+                    <article-summary ref="summary" :app="this"></article-summary>
                 </div>
                 <aside class="col-md-4 sidebar">
                     <div id="questions-widget-2" class="widget questions-widget">
@@ -180,94 +118,92 @@
     </div>
 {% endblock %}
 {% block javascript %}
-    {{ block.super }}
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script>
 
-        Highcharts.chart('chart_min', {
-           chart: {
-                type: 'line',
-                height: 250,
-                //spacingRight: 30,
-                //marginRight: 130
-            },
-            title: {
-              text: ''
-            },
-            xAxis: {
-                labels: {
-                    y: 40,
-                    style: {
-                        fontSize: 9,
-                        fontFamily: 'Nanum Gothic'
-                    },
-                },
-                showLastLabel: true,
-                lineWidth: 0,
-                tickLength: 0,
-                title: {
-                    text: null
-                },
-                categories : {{ trend_day|safe  }},
-
-            },
-            yAxis: {
-                title: {
-                    text: '가격',
-                    align: 'center'
-                },
-                labels: {
-                    overflow: 'justify'
-                }
-            },
-            series: [{
-                name: '최저가',
-                data: {{ trend_min_price|safe  }},
-                color : '#FF0000'
-            }]
-
-        });
-        Highcharts.chart('chart_avg', {
-        chart: {
-            type: 'line',
-            height: 250,
-            //spacingRight: 30,
-            //marginRight: 130
-        },
-        title: {
-          text: ''
-        },
-         xAxis: {
-            labels: {
-                y: 40,
-                style: {
-                    fontSize: 9,
-                    fontFamily: 'Nanum Gothic'
-                },
-            },
-            showLastLabel: true,
-            lineWidth: 0,
-            tickLength: 0,
-            categories : {{ trend_day|safe  }},
-
-
-        },
-        yAxis: {
-            title: {
-                text: '가격',
-                align: 'center'
-            },
-            labels: {
-                overflow: 'justify'
-            }
-        },
-        series: [{
-            name: '평균가',
-            data: {{ trend_avg_price|safe  }},
-            color : '#0000FF'
-        }]
-        });
+{#        Highcharts.chart('chart_min', {#}
+{#           chart: {#}
+{#                type: 'line',#}
+{#                height: 250,#}
+{#                //spacingRight: 30,#}
+{#                //marginRight: 130#}
+{#            },#}
+{#            title: {#}
+{#              text: ''#}
+{#            },#}
+{#            xAxis: {#}
+{#                labels: {#}
+{#                    y: 40,#}
+{#                    style: {#}
+{#                        fontSize: 9,#}
+{#                        fontFamily: 'Nanum Gothic'#}
+{#                    },#}
+{#                },#}
+{#                showLastLabel: true,#}
+{#                lineWidth: 0,#}
+{#                tickLength: 0,#}
+{#                title: {#}
+{#                    text: null#}
+{#                },#}
+{#                categories : {{ trend_day|safe  }},#}
+{##}
+{#            },#}
+{#            yAxis: {#}
+{#                title: {#}
+{#                    text: '가격',#}
+{#                    align: 'center'#}
+{#                },#}
+{#                labels: {#}
+{#                    overflow: 'justify'#}
+{#                }#}
+{#            },#}
+{#            series: [{#}
+{#                name: '최저가',#}
+{#                data: {{ trend_min_price|safe  }},#}
+{#                color : '#FF0000'#}
+{#            }]#}
+{##}
+{#        });#}
+{#        Highcharts.chart('chart_avg', {#}
+{#        chart: {#}
+{#            type: 'line',#}
+{#            height: 250,#}
+{#            //spacingRight: 30,#}
+{#            //marginRight: 130#}
+{#        },#}
+{#        title: {#}
+{#          text: ''#}
+{#        },#}
+{#         xAxis: {#}
+{#            labels: {#}
+{#                y: 40,#}
+{#                style: {#}
+{#                    fontSize: 9,#}
+{#                    fontFamily: 'Nanum Gothic'#}
+{#                },#}
+{#            },#}
+{#            showLastLabel: true,#}
+{#            lineWidth: 0,#}
+{#            tickLength: 0,#}
+{#            categories : {{ trend_day|safe  }},#}
+{##}
+{##}
+{#        },#}
+{#        yAxis: {#}
+{#            title: {#}
+{#                text: '가격',#}
+{#                align: 'center'#}
+{#            },#}
+{#            labels: {#}
+{#                overflow: 'justify'#}
+{#            }#}
+{#        },#}
+{#        series: [{#}
+{#            name: '평균가',#}
+{#            data: {{ trend_avg_price|safe  }},#}
+{#            color : '#0000FF'#}
+{#        }]#}
+{#        });#}
 
 </script>
 {% endblock %}

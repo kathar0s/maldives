@@ -5,10 +5,15 @@ from joonggo.models import Article, Alarm
 
 
 class ArticleSerializer(serializers.ModelSerializer):
-
+    
+    source = serializers.SerializerMethodField(read_only=True)
+    
+    def get_source(self, obj):
+        return obj.source.name
+    
     class Meta:
         model = Article
-        fields = ('id', 'uid', 'title', 'price', 'url', 'created', 'source_id')
+        fields = ('id', 'uid', 'title', 'price', 'url', 'created', 'source', 'source_id')
 
 
 class AlarmSerializer(serializers.ModelSerializer):

@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <script type="text/x-template" id="login-component">
     <div class="login" v-show="!isLogin">
         <div class="row">
@@ -186,6 +187,64 @@
             </div><!-- End row -->
         </div><!-- End container -->
     </div><!-- End header-top -->
+</script>
+<script type="text/x-template" id="article-summary-component">
+    <article class="post single-post post-249 type-post status-publish format-standard has-post-thumbnail hentry category-web-design tag-design tag-knowledge">
+        <div class="post-inner">
+            <div class="header-content">
+                <h2 style="font-weight: bold;">최저가/최고가</h2>
+                <div class="price-range">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div style="margin-bottom: 10px;">
+                                <span class="lowest-price">[[ min_price | intcomma ]]</span><span class="unit">원</span> ~ <span class="highest-price">[[ max_price | intcomma ]]</span><span class="unit">원</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div style="margin-bottom: 10px;" v-if="top10.length > 0">
+                                <a :href="top10[0].url | refined" target="_blank" class="btn btn-primary btn-md btn-block" style="font-size: 12px;">최저가 보러가기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <strong>최저가 상위 10개</strong>
+                <div class="table-responsive" style="margin: 10px 0;">
+                    <table class="table" style="margin-bottom: 0;">
+                        <colgroup>
+                            <col class="col-xs-3">
+                            <col class="col-xs-5">
+                            <col class="col-xs-2">
+                            <col class="col-xs-2">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>사이트</th>
+                            <th class="text-right">판매가</th>
+                            <th class="text-center">배송비</th>
+                            <th class="text-right">보러가기</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="article in top10">
+                                <td>
+                                    <img class="website-line" src="{% static "images/websites/joonggonara_line.png" %}" v-if="article.source == '중고나라'">
+                                    <img class="website-line" src="{% static "images/websites/cetizen_line.png" %}" v-if="article.source == '세티즌'">
+                                    <img class="website-line" src="{% static "images/websites/momsholic_line.png" %}" v-if="article.source == '맘스홀릭'">
+                                </td>
+                                <td class="text-right"><span class="text-priority-high">[[ article.price | intcomma ]]</span></td>
+                                <td class="text-center">-</td>
+                                <td class="text-right">
+                                    <a :href="article.url | refined" target="_blank">
+                                        <span class="label label-default">바로가기</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </article>
 </script>
 <script>
     var alarmStorage = {
@@ -464,7 +523,6 @@
                 this.$http.post('/api/login/', formData)
                     .then(function(data){
                         result = data.body;
-
                         if (result.error) {
                             alert('텔레그림 아이디와 비밀번호를 확인해주세요.');
                         } else {
@@ -487,6 +545,41 @@
         props: ['app'],
         delimiters: ['[[', ']]'],
         template: '#top-bar'
+    });
+
+    Vue.component('article-summary', {
+        props: ['app'],
+        delimiters: ['[[', ']]'],
+        template: '#article-summary-component',
+        data: function() {
+            return {
+                top10: [],
+                max_price: 0,
+                min_price: 0
+            }
+        },
+        mounted: function() {
+            this.$http.get('/api/article/search/',
+                {params: {q: '{% if request.GET.q %}{{ request.GET.q }}{% endif %}', format: 'json'}}
+            ).then(function(response){
+                var result = response.body;
+                if (result.count > 0) {
+                    this.top10 = result.results;
+                    this.max_price = result.info.max_price;
+                    this.min_price = result.info.min_price;
+                }
+
+                jQuery(".loader").fadeOut(500);
+            })
+        },
+        filters: {
+            intcomma: function (str) {
+                return setComma(str);
+            },
+            refined: function (url) {
+                return url.replace('/m.', '/');
+            }
+        }
     });
     var vm = new Vue({
         el: '#app',
