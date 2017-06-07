@@ -699,8 +699,6 @@
                 startIndex = number - Math.floor(this.perPage / 2);
                 lastIndex = startIndex + this.perPage;
 
-                lastIndex = lastIndex > numPages + 1 ? numPages + 1: lastIndex;
-
                 if (this.currentPage < Math.ceil(this.perPage / 2)) {
                     startIndex = 1
                     lastIndex = 1 + this.perPage;
@@ -708,6 +706,9 @@
                     lastIndex = numPages + 1;
                     startIndex = lastIndex - this.perPage;
                 }
+
+                lastIndex = lastIndex > numPages + 1 ? numPages + 1: lastIndex;
+
                 pageRange = _.range(startIndex, lastIndex);                             // 페이지 범위
 
                 var hasNext = this.currentPage + 1 > numPages ? false: true;
