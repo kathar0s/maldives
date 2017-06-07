@@ -54,20 +54,20 @@ class ArticleViewSet(viewsets.ModelViewSet):
                                        title__icontains=query).order_by('price')
 
             # 검색이 된 경우에만 평균가격을 산출하고 진행한다.
-            if queryset.count() > 0:
-                result = queryset.aggregate(avg_price=Avg('price'))
-                avg_price = result['avg_price']
+            #if queryset.count() > 0:
+            result = queryset.aggregate(avg_price=Avg('price'))
+            avg_price = result['avg_price']
 
-                # 검색결과의 노이즈가 있을 수 있으니
-                # 최저가격은 평균가격의 20%보다 작은 것들은 제외하고
-                # 최고가격은 평균가격의 3배보다 큰 것들은 제외한다.
-                queryset = queryset.filter(price__gte=avg_price * 0.2, price__lt=avg_price * 3)
+            # 검색결과의 노이즈가 있을 수 있으니
+            # 최저가격은 평균가격의 20%보다 작은 것들은 제외하고
+            # 최고가격은 평균가격의 3배보다 큰 것들은 제외한다.
+            queryset = queryset.filter(price__gte=avg_price * 0.2, price__lt=avg_price * 3)
 
-                # 해당 검색결과에서 최대, 최소 가격을 구한다.
-                result = queryset.aggregate(max_price=Max('price'), min_price=Min('price'))
-                self.info = result
-            else:
-                info = None
+            # 해당 검색결과에서 최대, 최소 가격을 구한다.
+            result = queryset.aggregate(max_price=Max('price'), min_price=Min('price'))
+            self.info = result
+            #else:
+            #    info = None
 
             page = self.paginate_queryset(queryset)
 

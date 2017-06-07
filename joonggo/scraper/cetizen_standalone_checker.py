@@ -21,20 +21,14 @@ class CetizenStandaloneChecker(DjangoSpider):
         self.scheduler_runtime = self.ref_object.scraper_runtime
         self.scraped_obj_class = Article
         self.scraped_obj_item_class = ArticleItem
-        self.check_article_ids = Article.objects.filter(
-            Q(source=self.ref_object) & Q(survival_count=1)).order_by("id").values_list("id", flat=True)
-        self.check_current_index = 0
-
         super(CetizenStandaloneChecker, self).__init__(self, *args, **kwargs)
 
     def request_next_url(self):
-        #article = Article.objects.get(id=self.check_article_ids[self.check_current_index])
         articles = Article.objects.filter(Q(source=self.ref_object) & Q(survival_count=1)).order_by("id")[:1]
 
         if len(articles) > 0:
             article = articles[0]
-            print(u"checking : %d %s %s %s\n" % (article.id, article.title, article.uid, article.url))
-            self.check_current_index += 1
+            #print(u"checking : %d %s %s %s\n" % (article.id, article.title, article.uid, article.url))
             return Request(article.url, callback=self.detail_parse, meta={'article': article})
         else:
             print(u"checking ended!\n")
