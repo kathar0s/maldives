@@ -85,8 +85,6 @@ class ArticleSpider(DjangoSpider):
         print('login try')
 
         login_data = {'id': 'sep521', 'pw': 'sep521sep521'}
-        if self.ref_object.name == "맘스홀릭":
-            login_data = {'id': 'sweetyjei', 'pw': 'wldus123!'}
 
         return FormRequest.from_response(response,
                                          formdata=login_data,
