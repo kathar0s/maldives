@@ -196,7 +196,7 @@
     {#                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/author/admin/"><i class="fa fa-user-o" aria-hidden="true"></i>MY PROFILE</a></li>#}
     {#                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-gears" aria-hidden="true"></i>PROFILE SETTINGS</a></li>#}
     {#                            <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-bargraph" aria-hidden="true"></i>MY QUESTIONS</a></li>#}
-                                <li class="menu-item-odd menu-item-depth-1"><a href="http://localhost/wordpress/sample-page/?u=1"><i class="icon-heart" aria-hidden="true"></i>MY ANSWERS</a></li>
+                                <li class="menu-item-odd menu-item-depth-1"><a href="{% url "alarm" %}"><i class="icon-heart" aria-hidden="true"></i>알림 관리</a></li>
                                 <li class="menu-item-odd menu-item-depth-1"><a href="/logout/"><i class="icon-lock" aria-hidden="true"></i>LOGOUT</a></li>
                             </ul>
                         </li>
@@ -358,8 +358,8 @@
             </div>
         </div>
         <div class="advertising">
-            <a href="#">
-                <img alt="" src="http://fluentthemes.com/wp/knowledge/wp-content/uploads/2017/02/your-ad-here.jpg" style="width: 100%;">
+            <a href="http://www.haezoom.com" target="_blank">
+                <img alt="" src="{% static "images/banner/haezoom.png" %}" style="width: 100%;">
             </a>
         </div>
     </aside>
