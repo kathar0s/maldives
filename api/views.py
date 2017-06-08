@@ -41,8 +41,13 @@ class ArticleViewSet(viewsets.ModelViewSet):
             # 해당 검색어에 대해 평균가격을 구한다. (1만원 이상에 대해서만)
             # 현재 존재하는 글에 대해서만 구한다. (survival_count == 1)
             # 현재 판매중인 내용에 대해서만 찾는다.
-            queryset = queryset.filter(is_sold_out=False, survival_count__gte=1, price__gte=10000,
-                                       title__icontains=query).order_by('price')
+            # queryset = queryset.filter(is_sold_out=False, survival_count__gte=1, price__gte=10000,
+            #                            title__icontains=query).order_by('price')
+
+            qs = (Q(is_sold_out=False) & Q(survival_count__gte=1) & Q(price__gte=10000))
+            for kw in query.split(' '):
+                qs &= Q(title__icontains=kw)
+            queryset = queryset.filter(qs).order_by('price')
 
             # 검색이 된 경우에만 평균가격을 산출하고 진행한다.
             if queryset.count() > 0:
