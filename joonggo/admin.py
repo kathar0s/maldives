@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib import admin
 from reversion.admin import VersionAdmin
-from joonggo.models import Source, Article, ChatProfile
+from joonggo.models import Source, Article, ChatProfile, Advertise
 
 
 class SourceAdmin(VersionAdmin):
@@ -32,3 +32,10 @@ class ChatProfileAdmin(VersionAdmin):
     ordering = ('-id', )
 
 admin.site.register(ChatProfile, ChatProfileAdmin)
+
+
+class AdvertiseAdmin(VersionAdmin):
+    list_display = ('title', )
+    ordering = ('-id', )
+
+admin.site.register(Advertise, AdvertiseAdmin)

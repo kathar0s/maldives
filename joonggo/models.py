@@ -133,3 +133,16 @@ class SearchKeyword(models.Model):
         verbose_name = '검색 키워드'
         verbose_name_plural = '검색 키워드 목록'
 
+
+class Advertise(models.Model):
+
+    title = models.CharField('제목', max_length=50, default='')
+    banner = models.ImageField('배너', upload_to='banner/')
+    created = models.DateTimeField('등록일', auto_now_add=True)
+
+    def __unicode__(self):
+        return u'{title}'.format(title=self.title)
+
+    class Meta:
+        verbose_name = '광고'
+        verbose_name_plural = '광고 목록'
