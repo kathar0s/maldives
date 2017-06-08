@@ -1,0 +1,16 @@
+{
+  "short_name": "중고다이브",
+  "name": "중고다이브",
+  "start_url": "./?utm_source=web_app_manifest",
+  "icons": [
+    {
+      "src": "/s/images/favicon_192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "background_color": "#FAFAFA",
+  "theme_color": "#be161e",
+  "display": "standalone",
+  "orientation": "portrait"
+}
