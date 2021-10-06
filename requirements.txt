@@ -59,7 +59,7 @@ queuelib==1.4.2
 requests==2.14.2
 Scrapy==1.4.0
 scrapy-djangoitem==1.1.1
-scrapy-splash==0.7.2
+scrapy-splash==0.8.0
 service-identity==16.0.0
 simplejson==3.10.0
 six==1.10.0
