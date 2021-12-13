@@ -33,7 +33,7 @@ itypes==1.1.0
 Jinja2==2.9.6
 jsonpath-rw==1.4.0
 kombu==3.0.37
-lxml==3.7.3
+lxml==4.6.5
 MarkupSafe==1.0
 numpy==1.12.1
 olefile==0.44
